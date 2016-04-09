@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'Arno Pro Light';
+  src: url(../static/fonts/ArnoProLight.ttf);
+}
+@font-face {
+  font-family: 'Modern No 20';
+  src: url(../static/fonts/ModernNo20.ttf);
+}
+
+:global {
+  @import 'base';
+  @import 'vendor/normalize';
+  @import 'variables';
+
+  // Some best-practice CSS that's useful for most apps
+  // Just remove them if they're not what you want
+  html {
+    font-family: 'Arno Pro Light';
+    box-sizing: border-box;
+    color: $textColor;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Helvetica';
+  }
+
+  @media screen and (max-width: 414px) {
+    font-size: 14px;
+  }
+
+  p {
+    font-size: 1.25rem;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: $primary1Color;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+}
