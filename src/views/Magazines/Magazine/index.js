@@ -25,28 +25,18 @@ export class MagazineView extends Component {
     let pageBackward = onPageFlip.bind(this, 'backward')
     let pageForward = onPageFlip.bind(this, 'forward')
     let flippingForward = this.state.flipDirection === 'forward'
-    let {
-      goDown,
-      startDownOnBottomFromLeft,
-      startDownOnTopFromLeft,
-      startUpFromLeft,
-      goUpFromLeft,
-      startDownOnBottomFromRight,
-      startDownOnTopFromRight,
-      startUpFromRight,
-      goUpFromRight
-    } = styles
+    let { leftFaceUpTop, leftFaceUpBottom, leftFlip, leftFaceDown, rightFaceUpTop, rightFaceUpBottom, rightFlip, rightFaceDown } = styles
     let transitionClassesLeft = {
-      enter: flippingForward ? startUpFromLeft : startDownOnBottomFromLeft,
-      enterActive: flippingForward ? goDown : goUpFromRight,
-      leave: flippingForward ? startDownOnBottomFromLeft : startDownOnTopFromLeft,
-      leaveActive: flippingForward ? goDown : goUpFromLeft
+      enter: flippingForward ? leftFaceDown : leftFaceUpBottom,
+      enterActive: flippingForward ? leftFlip : 'blah',
+      leave: flippingForward ? leftFaceUpBottom : leftFaceUpTop,
+      leaveActive: flippingForward ? 'blah' : leftFaceDown
     }
     let transitionClassesRight = {
-      enter: flippingForward ? startDownOnBottomFromRight : startUpFromRight,
-      enterActive: 'blah', // flippingForward ? goUpFromRight : goDown,
-      leave: flippingForward ? startDownOnTopFromRight : startUpFromRight,
-      leaveActive: flippingForward ? goUpFromRight : goDown
+      enter: flippingForward ? rightFaceUpBottom : rightFaceDown,
+      enterActive: flippingForward ? 'blah' : rightFlip,
+      leave: flippingForward ? rightFaceUpTop : rightFaceUpBottom,
+      leaveActive: flippingForward ? rightFaceDown : 'blah'
     }
 
     let left = this.props.left ? <img src={this.props.left} className={styles.page} onClick={pageBackward} /> : <h1>Winter 2015</h1>
@@ -57,8 +47,8 @@ export class MagazineView extends Component {
           <div className={`col-xs-12 col-lg-6 ${styles.pageWrapper}`}>
             <TransitionGroup
               transitionName={transitionClassesLeft}
-              transitionEnterTimeout={3000}
-              transitionLeaveTimeout={3000}
+              transitionEnterTimeout={800}
+              transitionLeaveTimeout={800}
             >
               <img key={this.props.left} src={this.props.left} className={styles.page} onClick={pageBackward} />
             </TransitionGroup>
@@ -66,8 +56,8 @@ export class MagazineView extends Component {
           <div className={`col-xs-12 col-lg-6 ${styles.pageWrapper}`}>
             <TransitionGroup
               transitionName={transitionClassesRight}
-              transitionEnterTimeout={3000}
-              transitionLeaveTimeout={3000}
+              transitionEnterTimeout={800}
+              transitionLeaveTimeout={800}
             >
               <img key={this.props.right} src={this.props.right} className={styles.page} onClick={pageForward} />
             </TransitionGroup>

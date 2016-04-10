@@ -1,70 +1,62 @@
 // used with react-addons-css-transition-group
-.goDown {
-  transform: rotateY(0deg) !important;
-}
 
-
-.goUpFromLeft {
-  transform: rotateY(90deg);
-  z-index: 1000;
+._positionPage {
+  position: absolute;
+  top: 0;
 }
 
 ._positionPageLeft {
-  position: absolute;
-  top: 0;
+  @extend ._positionPage;
   right: 0;
 }
 
-._startDownFromLeft {
-  @extend ._positionPageLeft;
-}
-
-.startDownOnBottomFromLeft {
-  @extend ._startDownFromLeft;
-  z-index: 999;
-}
-
-.startDownOnTopFromLeft {
-  @extend ._startDownFromLeft;
-  z-index: 1000;
-}
-
-.startUpFromLeft {
-  @extend ._positionPageLeft;
-  z-index: 1000;
-  transform: rotateY(90deg);
-}
-
-.goUpFromRight {
-  transform: rotateY(-90deg);
-  z-index: 1000;
-}
-
 ._positionPageRight {
-  position: absolute;
-  top: 0;
+  @extend ._positionPage;
   left: 0;
 }
 
-._startDownFromRight {
-  @extend ._positionPageRight;
+.leftFaceUpBottom {
+  @extend ._positionPageLeft;
+  z-index: 998;
 }
 
-.startDownOnBottomFromRight {
-  @extend ._startDownFromRight;
+.rightFaceUpBottom {
+  @extend ._positionPageRight;
+  z-index: 998;
+}
+
+// left page to flip
+.leftFaceUpTop {
+  position: relative;
   z-index: 999;
+  transform: rotateY(0deg);
+}
+.leftFlip {
+  @extend .leftFaceUpTop;
+  transform: rotateY(0deg) !important; // right to left works
+}
+.leftFaceDown {
+  position: relative;
+  z-index: 1000;
+  transform: rotateY(180deg);
 }
 
-.startDownOnTopFromRight {
-  @extend ._startDownFromRight;
+// right page to flip
+.rightFaceUpTop {
+  position: relative;
+  z-index: 999;
+  transform: rotateY(0deg);
+}
+.rightFlip {
+  @extend .rightFaceUpTop;
+  transform: rotateY(0deg) !important; // right to left works
+}
+.rightFaceDown {
+  position: relative;
   z-index: 1000;
+  transform: rotateY(-180deg);
 }
 
-.startUpFromRight {
-  @extend ._positionPageRight;
-  z-index: 1000;
-  transform: rotateY(-90deg);
-}
 
 .magazine {
   position: relative;
@@ -87,7 +79,8 @@
       }
     }
     img {
-      transition: all 3000ms;
+      backface-visibility: hidden;
+      transition: transform 800ms;
     }
   }
 }
@@ -98,5 +91,5 @@
 }
 
 .pageWrapper {
-  perspective: 2500px;
+  perspective: 4000px;
 }

@@ -23,7 +23,6 @@ export default class Magazine extends Component {
 
   onPageFlip (direction) {
     let currentPage = this.state.currentPage + (direction === 'forward' ? 2 : -2)
-    console.log('direction', direction)
     this.setState({
       currentPage: currentPage,
       left: `/images/rswinter/rswinter ${currentPage}.jpeg`,
