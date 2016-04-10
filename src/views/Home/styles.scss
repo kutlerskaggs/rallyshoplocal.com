@@ -10,7 +10,7 @@
 .card {
   position: relative;
   cursor: pointer;
-  transition: all 500ms;
+  transition: transform 500ms;
   overflow: hidden;
   padding: 30% 0; // set height to 60% of parent width
   width: 100%; // fill parent width
@@ -20,6 +20,7 @@
   position: absolute;
   left: 0;
   top: 0;
+  width: 100%;
   height: 100%;
   text-align: left;
   .title {
@@ -32,43 +33,20 @@
   }
   .reveal {
     position: absolute;
-    bottom: -1px;
+    bottom: 0px;
     height: 50%;
-    transition: all 300ms;
-    transform: translateY(100%);
+    transition: transform 300ms;
+    transform: translate3d(0, 102%, 0);
     padding: 30px;
     background-color: #fff;
     color: $alternateTextColor;
     > p {
+      height: 100%;
       margin: 0;
       overflow: hidden;
     }
   }
-  &:hover {
-    .reveal {
-      transform: translateY(0);
-    }
-  }
 }
-
-// mobile
-@media screen and (max-width: 414px) {
-  .cardContent {
-    > div {
-      &:first-of-type {
-        margin: 15px;
-        padding: 10px;
-        > h1 {
-          font-size: 1.2rem;
-        }
-      }
-      &:nth-of-type(2) {
-        padding: 14px 15px;
-      }
-    }
-  }
-}
-
 
 .cardImage {
   width: 100%;
@@ -81,20 +59,11 @@
   filter: brightness(.7);
 }
 
-.cardWrapper {
+.cardContainer {
   > div {
     display: flex;
     &:nth-child(odd) {
       justify-content: flex-end;
-    }
-  }
-}
-
-@media screen and (max-width: 1199px) {
-  .cardWrapper {
-    > div {
-      padding: 0px;
-      justify-content: center !important;
     }
   }
 }
@@ -108,4 +77,48 @@
 
 .splashContent {
   padding: 50px 0;
+}
+
+@media screen and (min-width: 1200px) {
+  .cardContent {
+    &:hover {
+      .reveal {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+  }
+}
+
+// tablet-ish
+@media screen and (max-width: 1199px) {
+  .cardContainer {
+    > div {
+      justify-content: center !important;
+    }
+  }
+  .splashContent {
+    padding: 0;
+  }
+}
+
+// mobile
+@media screen and (max-width: 414px) {
+  .card {
+    padding: 40% 0; // set height to 80% of parent width
+  }
+  .cardContent {
+    .title {
+      margin: 15px;
+      padding: 10px;
+    }
+    .reveal {
+      height: 100%;
+    }
+  }
+  .cardContainer {
+    > div {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }

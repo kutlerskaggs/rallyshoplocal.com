@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import styles from './styles.scss'
+import Window from 'HOC/Window'
 
-export class HomeView extends React.Component {
+class _HomeView extends Component {
+
+  static propTypes = {
+    window: PropTypes.object.isRequired
+  }
+
+  constructor (props) {
+    super(props)
+    // for use on mobile and tablet only
+    this.state = { reveal: {} }
+  }
+
+  onTouchTap (id) {
+    let { window } = this.props
+    if (window.isTablet || window.isMobile) {
+      this.setState({
+        reveal: {
+          [id]: !this.state.reveal[id]
+        }
+      })
+    }
+  }
 
   render () {
-
     let content = [{
       id: 1,
       title: 'THE NOT COSMO GUIDE TO GETTING IT ON',
@@ -43,17 +64,22 @@ export class HomeView extends React.Component {
       image: 'images/period.jpg'
     }]
 
+    let showRevealStyle = {
+      transform: 'translate3d(0, 0, 0)'
+    }
+
     let _content = content.map((item) => {
+      let onTouchTap = this.onTouchTap.bind(this, item.id)
       return (
-        <div key={item.id} className={`col-xs-12 col-lg-6`}>
+        <div key={item.id} className='col-xs-12 col-lg-6' onClick={onTouchTap}>
           <div className={styles.cardWrapper}>
             <div className={styles.card}>
-              <div className={styles.cardImage} style={{backgroundImage: `url("${item.image}")`}}></div>
+              <div className={styles.cardImage} style={{backgroundImage: `url('${item.image}')`}}></div>
               <div className={styles.cardContent}>
                 <div className={styles.title}>
                   <h1>{item.title}</h1>
                 </div>
-                <div className={styles.reveal}>
+                <div className={styles.reveal} style={this.state.reveal[item.id] ? showRevealStyle : {}}>
                   <p>{item.body}</p>
                 </div>
                 <i className={`fa fa-${item.type === 'blog' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
@@ -67,9 +93,9 @@ export class HomeView extends React.Component {
     return (
       <div>
         <div className={styles.splashContent}>
-          <div className={`container-fluid`}>
+          <div className='container-fluid'>
             <div className={'row center-xs middle-xs'}>
-              <div className={`row col-xs-12 col-lg-10 ${styles.cardWrapper}`}>
+              <div className={`row col-xs-12 col-lg-10 ${styles.cardContainer}`}>
                 {_content}
               </div>
             </div>
@@ -80,4 +106,5 @@ export class HomeView extends React.Component {
   }
 }
 
+export const HomeView = Window(_HomeView)
 export default HomeView

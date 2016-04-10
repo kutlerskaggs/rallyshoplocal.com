@@ -24,6 +24,7 @@
 
 .socialIcon {
   position: relative;
+  vertical-align: bottom;
   z-index: 10;
   margin: 20px 15px;
   display: block !important;
@@ -41,12 +42,24 @@
   }
 }
 
+// tablet-ish
+@media screen and (max-width: 1199px) {
+  .content {
+    margin-top: 80px;
+  }
+}
+
 // mobile
 @media screen and (max-width: 414px) {
+  .content {
+    margin-top: 70px;
+  }
   .social {
+    margin: 5px;
     position: static;
   }
   .socialIcon {
     display: inline-block !important;
+    margin: 10px;
   }
 }

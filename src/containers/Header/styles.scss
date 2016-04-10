@@ -43,13 +43,14 @@
   &::after {
     transform: translateY(20px);
   }
-  &:hover {
-    &::before {
-      transform: rotate(45deg);
-    }
-    &::after {
-      transform: rotate(-45deg);
-    }
+}
+
+.navItem:hover, .navItemActive {
+  &::before {
+    transform: rotate(45deg);
+  }
+  &::after {
+    transform: rotate(-45deg);
   }
 }
 
@@ -81,4 +82,27 @@
 .links {
   font-size: 1.5rem;
   z-index: 100;
+}
+
+@media screen and (max-width: 1199px) {
+  .logo > img {
+    height: 50px;
+    margin: 0;
+  }
+  .navWrapper {
+    display: none;
+  }
+  .wrapper {
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .logo > img {
+    height: 40px;
+  }
+  .wrapper {
+    height: 70px;
+    padding: 0 15px;
+  }
 }

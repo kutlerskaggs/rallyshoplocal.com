@@ -24,10 +24,6 @@
     font-family: 'Helvetica';
   }
 
-  @media screen and (max-width: 414px) {
-    font-size: 14px;
-  }
-
   p {
     font-size: 1.25rem;
   }
@@ -43,5 +39,23 @@
   *:before,
   *:after {
     box-sizing: inherit;
+  }
+
+  @media screen and (max-width: 1199px) {
+    h1 {
+      font-size: 1.7rem;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media screen and (max-width: 414px) {
+    h1 {
+      font-size: 1.2rem;
+    }
+    p {
+      font-size: 1.1rem;
+    }
   }
 }

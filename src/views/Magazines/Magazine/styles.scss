@@ -1,0 +1,10 @@
+.magazine {
+  padding-top: 10px;
+  > div {
+    display: flex;
+    padding: 0;
+    &:nth-child(odd) {
+      justify-content: flex-end;
+    }
+  }
+}
