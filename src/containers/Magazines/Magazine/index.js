@@ -11,13 +11,32 @@ export default class Magazine extends Component {
     super(props)
     this.onPageFlip = this.onPageFlip.bind(this)
     this.state = {
-      left: '/images/rswinter/rswinter 1.jpeg',
-      right: '/images/rswinter/rswinter 2.jpeg'
+      currentPage: 0,
+      left: undefined,
+      right: '/images/rswinter/rswinter 1.jpeg'
     }
   }
 
-  onPageFlip (forward) {
-    console.log(forward ? 'forward' : 'backward')
+  componentWillMount () {
+    this.preloadImages(this.state.currentPage)
+  }
+
+  onPageFlip (direction) {
+    let currentPage = this.state.currentPage + (direction === 'forward' ? 2 : -2)
+    console.log('direction', direction)
+    this.setState({
+      currentPage: currentPage,
+      left: `/images/rswinter/rswinter ${currentPage}.jpeg`,
+      right: `/images/rswinter/rswinter ${currentPage + 1}.jpeg`
+    })
+    this.preloadImages(this.state.currentPage)
+  }
+
+  preloadImages (start) {
+    for (let end = start + 4; end > start; end--) {
+      let image = new Image()
+      image.src = `/images/rswinter/rswinter ${end}.jpeg`
+    }
   }
 
   render () {
