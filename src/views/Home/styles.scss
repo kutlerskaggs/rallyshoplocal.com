@@ -17,6 +17,7 @@
 }
 
 .cardContent {
+  transform-style: preserve-3d;
   position: absolute;
   left: 0;
   top: 0;
@@ -49,6 +50,8 @@
 }
 
 .cardImage {
+  background-color: #000;
+  transform: translate3d(0, 0, 0);
   width: 100%;
   height: 100%;
   position: absolute;

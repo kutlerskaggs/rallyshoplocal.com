@@ -1,31 +1,48 @@
 import React, { Component, PropTypes } from 'react'
 import styles from './styles.scss'
 import TransitionGroup from 'react-addons-css-transition-group'
+import { throttle } from 'lodash'
 
 export class MagazineView extends Component {
 
   static propTypes = {
-    left: PropTypes.string,
-    right: PropTypes.string,
-    onPageFlip: PropTypes.func.isRequired
+    onPageFlip: PropTypes.func.isRequired,
+    pageCount: PropTypes.number.isRequired
   }
 
   constructor (props) {
     super(props)
-    this.state = { flipDirection: undefined }
+    this.state = { flipDirection: undefined, page: 0 }
   }
 
-  onPageFlip (direction) {
-    this.setState({ flipDirection: direction })
+  onPageFlip = throttle((direction) => {
+    this.setState({
+      flipDirection: direction,
+      page: this.state.page + (direction === 'forward' ? 2 : -2)
+    })
     this.props.onPageFlip(direction)
-  }
+  }, 800, { leading: true, trailing: false })
 
   render () {
+    let { page } = this.state
+    console.log('render', page > 1)
+    let { pageCount } = this.props
+    let leftPage = page > 1 ? `/images/rswinter/rswinter ${page}.jpeg` : undefined
+    let rightPage = (page + 1) <= pageCount ? `/images/rswinter/rswinter ${page + 1}.jpeg` : undefined
     let { onPageFlip } = this
+    let flippingForward = this.state.flipDirection === 'forward'
     let pageBackward = onPageFlip.bind(this, 'backward')
     let pageForward = onPageFlip.bind(this, 'forward')
-    let flippingForward = this.state.flipDirection === 'forward'
-    let { leftFaceUpTop, leftFaceUpBottom, leftFlip, leftFaceDown, rightFaceUpTop, rightFaceUpBottom, rightFlip, rightFaceDown } = styles
+    let {
+      leftFaceDown,
+      leftFaceUpBottom,
+      leftFaceUpTop,
+      leftFlip,
+      rightFaceDown,
+      rightFaceUpBottom,
+      rightFaceUpTop,
+      rightFlip
+    } = styles
     let transitionClassesLeft = {
       enter: flippingForward ? leftFaceDown : leftFaceUpBottom,
       enterActive: flippingForward ? leftFlip : 'blah',
@@ -39,28 +56,52 @@ export class MagazineView extends Component {
       leaveActive: flippingForward ? rightFaceDown : 'blah'
     }
 
-    let left = this.props.left ? <img src={this.props.left} className={styles.page} onClick={pageBackward} /> : <h1>Winter 2015</h1>
-
     return (
       <div className='container-fluid'>
         <div className={`row ${styles.magazine}`}>
           <div className={`col-xs-12 col-lg-6 ${styles.pageWrapper}`}>
-            <TransitionGroup
-              transitionName={transitionClassesLeft}
-              transitionEnterTimeout={800}
-              transitionLeaveTimeout={800}
-            >
-              <img key={this.props.left} src={this.props.left} className={styles.page} onClick={pageBackward} />
-            </TransitionGroup>
+            <div className={styles.pageLeft}>
+              {leftPage
+              ? (
+                <div className={styles.arrow} onClick={pageBackward}>
+                  <i className='fa fa-3x fa-angle-left fa-fw'></i>
+                </div>
+              )
+              : ''}
+              <TransitionGroup
+                transitionName={transitionClassesLeft}
+                transitionEnterTimeout={800}
+                transitionLeaveTimeout={800}
+              >
+                {leftPage
+                ? <img key={leftPage} src={leftPage} onClick={pageBackward} />
+                : (
+                  <div className={styles.info}>
+                    <h1>Winter 2015</h1>
+                  </div>
+                )}
+              </TransitionGroup>
+            </div>
           </div>
           <div className={`col-xs-12 col-lg-6 ${styles.pageWrapper}`}>
-            <TransitionGroup
-              transitionName={transitionClassesRight}
-              transitionEnterTimeout={800}
-              transitionLeaveTimeout={800}
-            >
-              <img key={this.props.right} src={this.props.right} className={styles.page} onClick={pageForward} />
-            </TransitionGroup>
+            <div className={styles.pageRight}>
+              <TransitionGroup
+                transitionName={transitionClassesRight}
+                transitionEnterTimeout={800}
+                transitionLeaveTimeout={800}
+              >
+                {rightPage
+                ? <img key={rightPage} src={rightPage} onClick={pageForward} />
+                : ''}
+              </TransitionGroup>
+              {rightPage
+              ? (
+                <div className={styles.arrow} onClick={pageForward}>
+                  <i className='fa fa-3x fa-angle-right fa-fw'></i>
+                </div>
+              )
+              : ''}
+            </div>
           </div>
         </div>
       </div>

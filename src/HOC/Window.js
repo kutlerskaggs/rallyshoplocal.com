@@ -24,7 +24,7 @@ export default (_Component) => {
     }
 
     render () {
-      return <_Component window={this.state.window} />
+      return <_Component window={this.state.window} {...this.props} />
     }
   }
 }

@@ -9,38 +9,32 @@ export default class Magazine extends Component {
 
   constructor (props) {
     super(props)
-    this.onPageFlip = this.onPageFlip.bind(this)
-    this.state = {
-      currentPage: 0,
-      left: undefined,
-      right: '/images/rswinter/rswinter 1.jpeg'
-    }
+    this.preloadImages = this.preloadImages.bind(this)
+    this.state = { maxPage: 0, pageCount: 70 }
   }
 
   componentWillMount () {
-    this.preloadImages(this.state.currentPage)
+    this.preloadImages(this.state.maxPage)
   }
 
-  onPageFlip (direction) {
-    let currentPage = this.state.currentPage + (direction === 'forward' ? 2 : -2)
-    this.setState({
-      currentPage: currentPage,
-      left: `/images/rswinter/rswinter ${currentPage}.jpeg`,
-      right: `/images/rswinter/rswinter ${currentPage + 1}.jpeg`
-    })
-    this.preloadImages(this.state.currentPage)
-  }
-
-  preloadImages (start) {
-    for (let end = start + 4; end > start; end--) {
-      let image = new Image()
-      image.src = `/images/rswinter/rswinter ${end}.jpeg`
+  preloadImages (pageNumber) {
+    let { maxPage, pageCount } = this.state
+    maxPage++
+    if (pageNumber > pageCount && pageNumber > maxPage) {
+      // load up to 4 new pages
+      let newMaxPage = Math.min(maxPage + 4, pageCount)
+      this.preloadImages(newMaxPage)
+      for (maxPage; maxPage <= newMaxPage; maxPage++) {
+        let image = new Image()
+        image.src = `/images/rswinter/rswinter ${maxPage}.jpeg`
+      }
+      this.setState({ maxPage: newMaxPage })
     }
   }
 
   render () {
     return (
-      <MagazineView left={this.state.left} right={this.state.right} onPageFlip={this.onPageFlip} />
+      <MagazineView onPageFlip={this.preloadImages} pageCount={this.state.pageCount} />
     )
   }
 }

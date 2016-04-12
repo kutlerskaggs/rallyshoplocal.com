@@ -1,5 +1,16 @@
-// used with react-addons-css-transition-group
+@import 'variables';
 
+.info {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 5vw;
+  > h1 {
+    font-size: 4rem;
+  }
+}
+
+// used with react-addons-css-transition-group
 ._positionPage {
   position: absolute;
   top: 0;
@@ -61,35 +72,71 @@
 .magazine {
   position: relative;
   z-index: 995;
-  padding-top: 10px;
-  > div {
+  padding: 10px 0px;
+  height: calc(100vh - 100px)
+}
+
+._page {
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+  img, span {
+    height: 100%;
+    user-select: none;
+  }
+  .arrow {
+    cursor: pointer;
     display: flex;
-    padding: 0;
-    &:nth-child(odd) {
-      perspective-origin: 100%;
-      justify-content: flex-end;
-      img {
-        transform-origin: right;
-      }
+    height: 100%;
+    > i {
+      color: darken($textColor, 50%);
+      align-self: center;
+      transition: all 300ms;
     }
-    &:nth-child(even) {
-      perspective-origin: 0;
-      img {
-        transform-origin: left;
-      }
-    }
-    img {
-      backface-visibility: hidden;
-      transition: transform 800ms;
+  }
+  &:hover > .arrow > i {
+    color: $textColor !important;
+  }
+}
+
+.pageLeft {
+  @extend ._page;
+  &:hover {
+    > .arrow > i {
+      transform: translateX(-10px);
     }
   }
 }
 
-.page {
-  height: 680px;
-  cursor: pointer;
+.pageRight {
+  @extend ._page;
+  &:hover {
+    > .arrow > i {
+      transform: translateX(10px);
+    }
+  }
 }
 
 .pageWrapper {
   perspective: 4000px;
+  display: flex;
+  padding: 0 !important;
+  height: 100%;
+  &:nth-child(odd) {
+    perspective-origin: 100%;
+    justify-content: flex-end;
+    img {
+      transform-origin: right;
+    }
+  }
+  &:nth-child(even) {
+    perspective-origin: 0;
+    img {
+      transform-origin: left;
+    }
+  }
+  img {
+    backface-visibility: hidden;
+    transition: transform 800ms;
+  }
 }
