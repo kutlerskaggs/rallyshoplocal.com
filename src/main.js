@@ -7,6 +7,11 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import makeRoutes from './routes'
 import Root from './containers/Root'
 import configureStore from './redux/configureStore'
+import 'isomorphic-fetch' // creates global fetch
+import promise from 'es6-promise'
+
+// ES6 promises polyfill (isomorphic-fetch)
+promise.polyfill()
 
 // Configure history for react-router
 const browserHistory = useRouterHistory(createBrowserHistory)({

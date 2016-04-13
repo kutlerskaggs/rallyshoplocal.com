@@ -14,8 +14,8 @@ export class CoreLayout extends React.Component {
     let _socialItems = [
       { icon: 'facebook', href: 'http://www.facebook.com/rally-casper' },
       { icon: 'twitter', href: 'http://www.twitter.com/RallyCasper' },
-      { icon: 'instagram', href: 'http://www.pinterest.com/rallycasper/' },
-      { icon: 'pinterest', href: 'http://instagram.com/rallylocal/' }
+      { icon: 'pinterest', href: 'http://www.pinterest.com/rallycasper/' },
+      { icon: 'instagram', href: 'http://instagram.com/rallylocal/' }
     ]
     let socialItems = _socialItems.map((item) => {
       return (

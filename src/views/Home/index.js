@@ -1,62 +1,28 @@
 import React, { Component, PropTypes } from 'react'
 import styles from './styles.scss'
-import Window from 'HOC/Window'
+// components
+import Post from 'components/Post'
 
-class _HomeView extends Component {
+export default class HomeView extends Component {
 
   static propTypes = {
-    content: PropTypes.array.isRequired,
-    window: PropTypes.object.isRequired
-  }
-
-  constructor (props) {
-    super(props)
-    // for use on mobile and tablet only
-    this.state = { reveal: {} }
-  }
-
-  onTouchTap (id) {
-    let { window } = this.props
-    if (window.isTablet || window.isMobile) {
-      this.setState({
-        reveal: {
-          [id]: !this.state.reveal[id]
-        }
-      })
-    }
+    content: PropTypes.array.isRequired
   }
 
   render () {
     let { content } = this.props
-
-    let showRevealStyle = {
-      transform: 'translate3d(0, 0, 0)'
-    }
+    let onClick = () => console.log('click!')
 
     let _content = content.map((item) => {
-      let onTouchTap = this.onTouchTap.bind(this, item.id)
+      let { post, type } = item
       let el = document.createElement('div')
-      el.innerHTML = item.content
+      el.innerHTML = post.content
       let image = el.getElementsByTagName('img')[0]
       // get biggest image available up to 600px wide
       let imgSrc = image.src.replace(/\/s[0-9]+\//, '/w600/')
+      let preview = el.textContent.slice(0, 500)
       return (
-        <div key={item.id} className='col-xs-12 col-lg-6' onClick={onTouchTap}>
-          <div className={styles.cardWrapper}>
-            <div className={styles.card}>
-              <div className={styles.cardImage} style={{backgroundImage: `url('${imgSrc}')`}}></div>
-              <div className={styles.cardContent}>
-                <div className={styles.title}>
-                  <h1>{item.title}</h1>
-                </div>
-                <div className={styles.reveal} style={this.state.reveal[item.id] ? showRevealStyle : {}}>
-                  <p>{el.textContent.slice(0, 500)}</p>
-                </div>
-                <i className={`fa fa-${item.type === 'blog' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Post key={post.id} content={preview} imgSrc={imgSrc} post={post} type={type} onClick={onClick} />
       )
     })
 
@@ -75,6 +41,3 @@ class _HomeView extends Component {
     )
   }
 }
-
-export const HomeView = Window(_HomeView)
-export default HomeView

@@ -6,15 +6,15 @@ export const getBlogPosts = (blogIds, apiKey) => {
   blogIds = Array.isArray(blogIds) ? blogIds : [blogIds]
 
   return (dispatch, getState) => {
-    dispatch(requestBlogPosts())
-
     // fetch blogs
     let promises = []
     let { blogs: currentState } = getState()
     blogIds.forEach((blogId) => {
       let { nextPageToken, posts } = currentState.byId[blogId] || {}
+
       // only fetch posts if necessary
       if (nextPageToken || !posts) {
+        dispatch(requestBlogPosts())
         let urlBase = 'https://www.googleapis.com/blogger/v3/blogs'
         let pageQuery = nextPageToken ? `&pageToken=${nextPageToken}` : ''
         let url = `${urlBase}/${blogId}/posts?key=${apiKey}&maxResults=6${pageQuery}`

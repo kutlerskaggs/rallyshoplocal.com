@@ -3,8 +3,25 @@ import { Link } from 'react-router'
 import styles from './styles.scss'
 
 export default class Header extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = { openMobileMenu: false }
+    this.closeMobileMenu = this.closeMobileMenu.bind(this)
+    this.toggleMobileMenu = this.toggleMobileMenu.bind(this)
+  }
+
+  closeMobileMenu () {
+    this.setState({ openMobileMenu: false })
+  }
+
+  toggleMobileMenu () {
+    this.setState({ openMobileMenu: !this.state.openMobileMenu })
+  }
+
   render () {
     // desktop/mobile menu links
+    let { openMobileMenu } = this.state
     let _menuItems = ['HOME', 'BLOGS', 'PODCASTS', 'MAGAZINES', 'CREATIVES', 'ABOUT']
     let menuItems = _menuItems.map((item) => {
       let isHome = item === 'HOME'
@@ -13,16 +30,18 @@ export default class Header extends Component {
       // TODO apply 3d transforms to :before/after, but not the label
       // TODO ---------------------
       return (
-        <Link
-          key={item}
-          to={`/${isHome ? '' : item.toLowerCase()}`}
-          className={`menu-list-item-content ${styles.navItem}`}
-          activeClassName={styles.navItemActive}
-          onlyActiveOnIndex={isHome}
-          data-hover={item}
-        >
-          {item}
-        </Link>
+        <div key={item} className={styles.navItemWrapper}>
+          <Link
+            to={`/${isHome ? '' : item.toLowerCase()}`}
+            className={`menu-list-item-content ${styles.navItem}`}
+            activeClassName={styles.navItemActive}
+            onlyActiveOnIndex={isHome}
+            data-hover={item}
+            onClick={this.closeMobileMenu}
+          >
+            {item}
+          </Link>
+        </div>
       )
     })
 
@@ -31,9 +50,13 @@ export default class Header extends Component {
         <div className={styles.logo}>
           <img src='/images/logo_full_white.svg' />
         </div>
-        <nav className={styles.navWrapper}>
+        <nav className={`${styles.navWrapper} ${openMobileMenu ? styles.openMobileMenu : ''}`}>
           {menuItems}
         </nav>
+        <a
+          className={`fa fa-${openMobileMenu ? 'times' : 'bars'} fa-fw ${styles.mobileToggle}`}
+          onClick={this.toggleMobileMenu}>
+        </a>
       </div>
     )
   }

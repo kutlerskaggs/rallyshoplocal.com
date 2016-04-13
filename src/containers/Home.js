@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getBlogPosts } from 'redux/modules/actions/blogs'
 // components
 import HomeView from 'views/Home'
-import Loader from 'components/loader'
+import Loader from 'components/Loader'
 // utils
 import { forOwn, sortBy } from 'lodash'
 
@@ -39,7 +39,7 @@ export class Home extends Component {
         content = content.concat(blog.posts)
       })
       content = sortBy(content, 'published').reverse().slice(0, 6) // TODO update this, add podcasts
-      this.setState({ content })
+      this.setState({ content: content.map((post) => ({ post, type: 'blog' })) })
     })
   }
 
