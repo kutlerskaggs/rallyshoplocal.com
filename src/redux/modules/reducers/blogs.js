@@ -1,5 +1,6 @@
 import {
   RECEIVE_BLOG_POSTS,
+  RECEIVE_BLOGS,
   REQUEST_BLOG_POSTS,
   ERROR_FETCHING_BLOGS
 } from 'redux/modules/actions/blogs'
@@ -18,13 +19,19 @@ export function blogs (state = defaultState, action) {
       blogs.forEach((blog) => {
         let { id, nextPageToken, posts } = blog
         let currentState = nextState.byId[id]
-        currentState = {
-          nextPageToken: nextPageToken,
-          posts: currentState ? currentState.posts.concat(posts) : posts // TODO check for duplicates
-        }
-        nextState.byId[id] = currentState
+        currentState = Object.assign(currentState, {
+          nextPageToken,
+          posts: currentState.posts.concat(posts) // TODO check for duplicates
+        })
       })
       nextState.loading = false
+      return nextState
+    }
+    case RECEIVE_BLOGS: {
+      action.blogs.forEach((blog) => {
+        blog.posts = []
+        nextState.byId[blog.id] = blog
+      })
       return nextState
     }
     case REQUEST_BLOG_POSTS: {

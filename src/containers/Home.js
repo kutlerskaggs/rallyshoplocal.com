@@ -22,6 +22,7 @@ export class Home extends Component {
   }
 
   componentWillMount () {
+    console.log('home component will mount')
     let { getBlogPosts } = this.props
     let apiKey = 'AIzaSyA3zd8Vp7IDsWvkepT0h0fNKBkCFku58j0'
     let blogs = ['2901360073818541851', '4269772225470041486']

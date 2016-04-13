@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router'
+import Loader from 'components/Loader'
+// redux
+import { getBlogs } from 'redux/modules/actions/blogs'
 // styles
 import 'styles/vendor/styles'
 
@@ -10,6 +13,17 @@ export default class Root extends React.Component {
     routes: PropTypes.element.isRequired,
     store: PropTypes.object.isRequired
   };
+
+  constructor (props) {
+    super(props)
+    this.state = { initialLoad: true }
+  }
+
+  componentWillMount () {
+    getBlogs(this.props.store.dispatch).then(() =>
+      this.setState({ initialLoad: false })
+    )
+  }
 
   get content () {
     return (
@@ -38,7 +52,9 @@ export default class Root extends React.Component {
     return (
       <Provider store={this.props.store}>
         <div>
-          {this.content}
+          {this.state.initialLoad
+          ? <Loader />
+          : this.content}
           {this.devTools}
         </div>
       </Provider>

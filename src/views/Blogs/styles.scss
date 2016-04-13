@@ -1,1 +1,86 @@
 @import 'variables';
+
+.cardWrapper {
+  display: flex;
+  flex: 1;
+  margin: 20px 0px;
+  max-width: 600px;
+}
+
+.card {
+  position: relative;
+  cursor: pointer;
+  transition: transform 500ms;
+  overflow: hidden;
+  padding: 30% 0; // set height to 60% of parent width
+  width: 100%; // fill parent width
+}
+
+.cardContent {
+  transform-style: preserve-3d;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  .title {
+    margin: 0;
+    padding: 15px;
+    > h1 {
+      margin: 0;
+    }
+  }
+}
+
+.cardImage {
+  background-color: #000;
+  transform: translate3d(0, 0, 0);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(.7);
+}
+
+.cardContainer {
+  > h1 {
+    width: 100%;
+    text-align: left;
+  }
+  > div {
+    display: flex;
+    &:nth-child(odd) {
+      justify-content: flex-end;
+    }
+  }
+}
+
+// tablet-ish
+@media screen and (max-width: 1199px) {
+  .cardContainer {
+    > div {
+      justify-content: center !important;
+    }
+  }
+}
+
+// mobile
+@media screen and (max-width: 414px) {
+  .card {
+    padding: 40% 0; // set height to 80% of parent width
+  }
+  .cardContent {
+    .title {
+      padding: 10px;
+    }
+  }
+  .cardContainer {
+    > div {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

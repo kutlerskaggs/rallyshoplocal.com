@@ -15,22 +15,25 @@ export class Blogs extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { featuredPosts: [] }
+    this.state = { blogs: [], featuredPosts: [] }
   }
 
   componentWillMount () {
     // TODO getBlogs() if none in store
+    let blogs = []
     let featuredPosts = []
     forOwn(this.props.blogs.byId, (blog) => {
+      blogs.push(blog)
       featuredPosts = featuredPosts.concat(blog.posts)
     })
     featuredPosts = sortBy(featuredPosts, 'published').reverse().slice(0, 2)
-    this.setState({ featuredPosts })
+    this.setState({ blogs, featuredPosts })
   }
 
   render () {
+    let { blogs, featuredPosts } = this.state
     return (
-      this.props.children || <BlogsView featuredPosts={this.state.featuredPosts} />
+      this.props.children || <BlogsView blogs={blogs} featuredPosts={featuredPosts} />
     )
   }
 }

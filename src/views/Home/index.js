@@ -5,16 +5,20 @@ import Post from 'components/Post'
 
 export default class HomeView extends Component {
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
   static propTypes = {
     content: PropTypes.array.isRequired
   }
 
   render () {
     let { content } = this.props
-    let onClick = () => console.log('click!')
 
     let _content = content.map((item) => {
       let { post, type } = item
+      let onClick = () => this.context.router.push(`/${type}s/${post.blog.id}/${post.id}`)
       let el = document.createElement('div')
       el.innerHTML = post.content
       let image = el.getElementsByTagName('img')[0]

@@ -37,8 +37,8 @@ export class Post extends Component {
     }
 
     return (
-      <div key={post.id} className='col-xs-12 col-lg-6' onClick={this.onClick}>
-        <div className={styles.cardWrapper}>
+      <div key={post.id} className='col-xs-12 col-lg-6'>
+        <div className={styles.cardWrapper} onClick={this.onClick}>
           <div className={styles.card}>
             <div className={styles.cardImage} style={{backgroundImage: `url('${imgSrc}')`}}></div>
             <div className={styles.cardContent}>
