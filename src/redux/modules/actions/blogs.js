@@ -4,7 +4,7 @@ export const REQUEST_BLOG_POSTS = 'REQUEST_BLOG_POSTS'
 export const ERROR_FETCHING_BLOGS = 'ERROR_FETCHING_BLOGS'
 
 let apiKey = 'AIzaSyA3zd8Vp7IDsWvkepT0h0fNKBkCFku58j0'
-let blogs = ['2901360073818541851', '4269772225470041486']
+let blogs = ['2901360073818541851', '4269772225470041486', '6224536896252388655']
 let podcasts = []
 let urlBase = 'https://www.googleapis.com/blogger/v3/blogs'
 
@@ -30,18 +30,25 @@ export const getBlogs = (dispatch) => {
   })
 }
 
-export const getBlogPosts = (blogIds, apiKey) => {
-  blogIds = Array.isArray(blogIds) ? blogIds : [blogIds]
+export const getBlogPost = (blogId, postId) => {
+  
+}
+
+export const getBlogPosts = (blogIds) => {
+  let _blogIds = blogIds ? Array.isArray(blogIds) ? blogIds : [blogIds] : blogs
 
   return (dispatch, getState) => {
     // fetch blogs
     let promises = []
     let { blogs: currentState } = getState()
-    blogIds.forEach((blogId) => {
+    _blogIds.forEach((blogId) => {
       let { nextPageToken, posts, totalPosts } = currentState.byId[blogId] || {}
+      // fetch if blog has no records in the store
+      // or blogs were explicitly passed then page
+      let shouldFetch = !posts.length || (blogIds && posts.length < totalPosts)
 
       // only fetch posts if necessary
-      if (posts.length < totalPosts) {
+      if (shouldFetch) {
         dispatch(requestBlogPosts())
         let pageQuery = nextPageToken ? `&pageToken=${nextPageToken}` : ''
         let url = `${urlBase}/${blogId}/posts?key=${apiKey}&maxResults=6${pageQuery}&view=READER`
@@ -66,6 +73,8 @@ export const getBlogPosts = (blogIds, apiKey) => {
     if (promises.length) {
       return Promise.all(promises).then((results) => dispatch(receiveBlogPosts(results)))
     }
+    // no action required, resolve immediately
+    return Promise.resolve()
   }
 }
 

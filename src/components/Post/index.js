@@ -26,14 +26,18 @@ export class Post extends Component {
     let { onClick, window } = this.props
     if (window.isTablet || window.isMobile) {
       this.setState({ reveal: !this.state.reveal })
+    } else {
+      onClick()
     }
-    onClick()
   }
 
   render () {
-    let { content, imgSrc, post, type } = this.props
+    let { content, imgSrc, onClick, post, type } = this.props
     let showRevealStyle = {
       transform: 'translate3d(0, 0, 0)'
+    }
+    function truncate (text) {
+      return `${text.slice(0, 150)}...`
     }
 
     return (
@@ -46,7 +50,8 @@ export class Post extends Component {
                 <h1>{post.title}</h1>
               </div>
               <div className={styles.reveal} style={this.state.reveal ? showRevealStyle : {}}>
-                <p>{content}</p>
+                <p>{truncate(content)}</p>
+                <a className={styles.more} onClick={onClick}>Read more</a>
               </div>
               <i className={`fa fa-${type === 'blog' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
             </div>

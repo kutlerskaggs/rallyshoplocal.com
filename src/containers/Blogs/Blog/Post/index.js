@@ -28,7 +28,6 @@ export class Blog extends Component {
 }
 
 let stateToProps = (state, props) => {
-  console.log(props)
   let blog = state.blogs.byId[props.params.blogId]
   return { blog }
 }
