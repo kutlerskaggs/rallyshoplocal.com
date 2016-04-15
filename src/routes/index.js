@@ -7,7 +7,6 @@ import Blog from 'containers/Blogs/Blog'
 import Post from 'containers/Blogs/Blog/Post'
 import Podcasts from 'containers/Podcasts'
 import Magazines from 'containers/Magazines'
-import Magazine from 'containers/Magazines/Magazine'
 import Creatives from 'containers/Creatives'
 import About from 'containers/About'
 
@@ -20,9 +19,7 @@ export default (store) => (
       </Route>
     </Route>
     <Route path='/podcasts' component={Podcasts} />
-    <Route path='/magazines' component={Magazines}>
-      <Route path='/magazines/:id' component={Magazine} />
-    </Route>
+    <Route path='/magazines' component={Magazines} />
     <Route path='/creatives' component={Creatives} />
     <Route path='/about' component={About} />
   </Route>

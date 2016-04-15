@@ -8,19 +8,12 @@
   }
 }
 
-.splashContent {
-  padding: 50px 0;
-}
-
 // tablet-ish
 @media screen and (max-width: 1199px) {
   .cardContainer {
     > div {
       justify-content: center !important;
     }
-  }
-  .splashContent {
-    padding: 0;
   }
 }
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><page num="1" id="e71qm9jfpfas8s3q4mhlsapx6jo8u0wu" label="1">
+  <thumbnail file="Thumbnail_1.jpg" width="150" height="194"/>
+  <normal file="Page_1.jpg" width="612" height="792"/>
+  <hi file="ZPage_1.swf" width="612" height="792"/>
+  <htmlview file="Page_1.html"/>
+  <links>
+    <link loc="32 32 533 101" opacity="0.30" color="0xcccccc" linktype="1" target="1" text="Emailrallylocal@gmail.com" url="rallylocal@gmail.com" playonhover="false" popupwidth="320" popupheight="260"/>
+    <link loc="35 486 53 11" opacity="0.30" color="0xcccccc" linktype="0" target="0" text="Open Page http://rallycasper.com/" url="http://rallycasper.com/" playonhover="false" popupwidth="320" popupheight="260"/>
+    <link loc="181 523 59 13" opacity="0.30" color="0xcccccc" linktype="0" target="0" text="Open Page https://www.facebook.com/rallycasper" url="https://www.facebook.com/rallycasper" playonhover="false" popupwidth="320" popupheight="260"/>
+    <link loc="143 541 59 12" opacity="0.30" color="0xcccccc" linktype="0" target="0" text="Open Page http://rallycasper.com/" url="http://rallycasper.com/" playonhover="false" popupwidth="320" popupheight="260"/>
+  </links>
+  <videos/>
+  <audios/>
+  <flashanimation/>
+  <goodiesanimation/>
+  <images/>
+  <products/>
+  <htmls/>
+</page>

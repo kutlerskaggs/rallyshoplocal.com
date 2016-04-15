@@ -31,7 +31,7 @@ export const getBlogs = (dispatch) => {
 }
 
 export const getBlogPost = (blogId, postId) => {
-  
+
 }
 
 export const getBlogPosts = (blogIds) => {

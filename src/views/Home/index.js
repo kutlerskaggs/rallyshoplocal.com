@@ -31,14 +31,10 @@ export default class HomeView extends Component {
     })
 
     return (
-      <div>
-        <div className={styles.splashContent}>
-          <div className='container-fluid'>
-            <div className={'row center-xs middle-xs'}>
-              <div className={`row col-xs-12 col-lg-10 ${styles.cardContainer}`}>
-                {_content}
-              </div>
-            </div>
+      <div className='container-fluid'>
+        <div className={'row center-xs middle-xs'}>
+          <div className={`row col-xs-12 col-lg-10 ${styles.cardContainer}`}>
+            {_content}
           </div>
         </div>
       </div>
