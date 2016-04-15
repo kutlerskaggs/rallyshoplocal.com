@@ -3,6 +3,7 @@
 
 node_modules
 src/static/images
+src/static/magazines
 
 dist
 coverage
