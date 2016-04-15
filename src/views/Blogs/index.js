@@ -20,29 +20,32 @@ export class BlogsView extends Component {
     let { context: { router } } = this
 
     let _featuredPosts = featuredPosts.map((post) => {
-      let onClick = () => router.push(`/blogs/${post.blog.id}/${post.id}`)
+      let { _category, content, featured_image, ID: id, slug } = post
+      let onClick = () => router.push(`/blogs/${_category}/${slug}`)
       let el = document.createElement('div')
-      el.innerHTML = post.content
-      let image = el.getElementsByTagName('img')[0]
-      // get biggest image available up to 600px wide
-      let imgSrc = image.src.replace(/\/s[0-9]+\//, '/w600/')
+      el.innerHTML = content
       let preview = el.textContent.slice(0, 500)
       return (
-        <Post key={post.id} content={preview} imgSrc={imgSrc} post={post} type='blog' onClick={onClick} />
+        <Post
+          key={id}
+          content={preview}
+          imgSrc={featured_image}
+          post={post}
+          onClick={onClick} />
       )
     })
-
     let _blogs = blogs.map((blog) => {
-      let imgSrc = `/images/blogs/${blog.id}.jpg`
-      let onClick = () => this.context.router.push(`/blogs/${blog.id}`)
+      let { ID: id, name, slug } = blog
+      let imgSrc = `/images/blogs/${slug}.jpg`
+      let onClick = () => this.context.router.push(`/blogs/${slug}`)
       return (
-        <div key={blog.id} className='col-xs-12 col-lg-4'>
+        <div key={id} className='col-xs-12 col-lg-4'>
           <div className={styles.cardWrapper} onClick={onClick}>
             <div className={styles.card}>
               <div className={styles.cardImage} style={{backgroundImage: `url('${imgSrc}')`}}></div>
               <div className={styles.cardContent}>
                 <div className={styles.title}>
-                  <h1>{blog.name}</h1>
+                  <h1>{name}</h1>
                 </div>
               </div>
             </div>

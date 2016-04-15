@@ -17,15 +17,19 @@ export class BlogView extends Component {
   render () {
     let { blog } = this.props
     let posts = blog.posts.map((post) => {
-      let onClick = () => this.context.router.push(`/blogs/${post.blog.id}/${post.id}`)
+      let { _category, content, featured_image, ID: id, slug } = post
+      let onClick = () => this.context.router.push(`/blogs/${_category}/${slug}`)
       let el = document.createElement('div')
-      el.innerHTML = post.content
-      let image = el.getElementsByTagName('img')[0]
-      // get biggest image available up to 600px wide
-      let imgSrc = image.src.replace(/\/s[0-9]+\//, '/w600/')
+      el.innerHTML = content
       let preview = el.textContent.slice(0, 500)
       return (
-        <Post key={post.id} content={preview} imgSrc={imgSrc} post={post} type='blog' onClick={onClick} />
+        <Post
+          key={id}
+          content={preview}
+          imgSrc={featured_image}
+          post={post}
+          type='blog'
+          onClick={onClick} />
       )
     })
 
@@ -33,7 +37,7 @@ export class BlogView extends Component {
       <div className='container-fluid'>
         <div className={'row center-xs middle-xs'}>
           <div className={`row col-xs-12 col-lg-10 ${styles.cardContainer}`}>
-            <h1>{this.props.blog.name}</h1>
+            <h1>{this.props.blog.attributes.name}</h1>
             {posts}
           </div>
         </div>

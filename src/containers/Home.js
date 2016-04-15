@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 // redux
 import { connect } from 'react-redux'
-import { getPosts } from 'redux/modules/actions/blogs'
+import { getPosts } from 'redux/modules/actions/blog'
 // components
 import HomeView from 'views/Home'
 import Loader from 'components/Loader'
@@ -11,43 +11,43 @@ import { forOwn, sortBy } from 'lodash'
 export class Home extends Component {
 
   static propTypes = {
-    blogs: PropTypes.object,
+    blog: PropTypes.object,
     podcasts: PropTypes.object,
     getPosts: PropTypes.func.isRequired
   }
 
   constructor (props) {
     super(props)
-    this.state = { content: [] }
+    this.state = { posts: [] }
   }
 
   componentWillMount () {
-    let { getPosts } = this.props
+    let { blog, getPosts } = this.props
     let posts = []
     // request blogs & podcasts
     getPosts().then(() => {
-      let categories = this.props.blogs.byCategory
-      forOwn(categories, (category, type) => {
-        forOwn(category, (item, itemName) => {
-          posts = posts.concat(item.posts.map((post) => ({ category: itemName, post, type })))
+      let types = blog.byType
+      forOwn(types, (categories, type) => {
+        forOwn(categories, (category, name) => {
+          posts = posts.concat(category.posts)
         })
       })
-      posts = sortBy(posts, (post) => post.date).slice(0, 6)
-      this.setState({ content: posts })
+      // combining blogs and posts so sorting is necessary
+      posts = sortBy(posts, (post) => post.date).reverse().slice(0, 6)
+      this.setState({ posts: posts })
     })
   }
 
   render () {
-    let { blogs } = this.props
-    return blogs.loading // || podcasts.loading
+    return this.props.blog.loading
       ? <Loader />
-      : <HomeView content={this.state.content} />
+      : <HomeView posts={this.state.posts} />
   }
 }
 
 let stateToProps = (state) => {
-  let { blogs } = state
-  return { blogs }
+  let { blog } = state
+  return { blog }
 }
 
 let dispatchToProps = {

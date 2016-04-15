@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 import Loader from 'components/Loader'
 // redux
-import { getCategories } from 'redux/modules/actions/blogs'
+import { getCategories } from 'redux/modules/actions/blog'
 // styles
 import 'styles/vendor/styles'
 

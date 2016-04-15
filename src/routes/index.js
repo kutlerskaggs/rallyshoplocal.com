@@ -14,8 +14,8 @@ export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={Home} />
     <Route path='/blogs' component={Blogs}>
-      <Route path='/blogs/:blogId' component={Blog}>
-        <Route path='/blogs/:blogId/:postId' component={Post} />
+      <Route path='/blogs/:blogSlug' component={Blog}>
+        <Route path='/blogs/:blogSlug/:postSlug' component={Post} />
       </Route>
     </Route>
     <Route path='/podcasts' component={Podcasts} />

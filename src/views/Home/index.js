@@ -10,26 +10,25 @@ export default class HomeView extends Component {
   }
 
   static propTypes = {
-    content: PropTypes.array.isRequired
+    posts: PropTypes.array.isRequired
   }
 
   render () {
-    let { content } = this.props
+    let { posts } = this.props
 
-    let _content = content.map((item) => {
-      let { category, post, type } = item
-      let onClick = () => this.context.router.push(`/${type}/${category}/${post.slug}`)
+    let _posts = posts.map((post) => {
+      let { _category, _type, content, featured_image, ID: id, slug } = post
+      let onClick = () => this.context.router.push(`/${_type}s/${_category}/${slug}`)
       let el = document.createElement('div')
-      el.innerHTML = post.content
+      el.innerHTML = content
       let preview = el.textContent.slice(0, 500)
       return (
         <Post
-          key={post.ID}
+          key={id}
           content={preview}
-          imgSrc={post['featured_image']}
+          imgSrc={featured_image}
           onClick={onClick}
-          post={post}
-          type={type} />
+          post={post} />
       )
     })
 
@@ -37,7 +36,7 @@ export default class HomeView extends Component {
       <div className='container-fluid'>
         <div className={'row center-xs middle-xs'}>
           <div className={`row col-xs-12 col-lg-10 ${styles.cardContainer}`}>
-            {_content}
+            {_posts}
           </div>
         </div>
       </div>

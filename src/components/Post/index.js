@@ -11,7 +11,6 @@ export class Post extends Component {
     imgSrc: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
-    type: PropTypes.string.isRequired,
     window: PropTypes.object.isRequired
   }
 
@@ -32,7 +31,7 @@ export class Post extends Component {
   }
 
   render () {
-    let { content, imgSrc, onClick, post, type } = this.props
+    let { content, imgSrc, onClick, post } = this.props
     let showRevealStyle = {
       transform: 'translate3d(0, 0, 0)'
     }
@@ -53,7 +52,7 @@ export class Post extends Component {
                 <p>{truncate(content)}</p>
                 <a className={styles.more} onClick={onClick}>Read more</a>
               </div>
-              <i className={`fa fa-${type === 'blogs' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
+              <i className={`fa fa-${post._type === 'blog' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
             </div>
           </div>
         </div>
