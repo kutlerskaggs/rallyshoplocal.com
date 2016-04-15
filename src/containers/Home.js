@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 // redux
 import { connect } from 'react-redux'
-import { getBlogPosts } from 'redux/modules/actions/blogs'
+import { getPosts } from 'redux/modules/actions/blogs'
 // components
 import HomeView from 'views/Home'
 import Loader from 'components/Loader'
@@ -13,7 +13,7 @@ export class Home extends Component {
   static propTypes = {
     blogs: PropTypes.object,
     podcasts: PropTypes.object,
-    getBlogPosts: PropTypes.func.isRequired
+    getPosts: PropTypes.func.isRequired
   }
 
   constructor (props) {
@@ -22,21 +22,18 @@ export class Home extends Component {
   }
 
   componentWillMount () {
-    let { getBlogPosts } = this.props
+    let { getPosts } = this.props
+    let posts = []
     // request blogs & podcasts
-    let promises = [
-      getBlogPosts()
-      // getPodcasts(podcasts, apiKey)
-    ]
-    // wait on blogs
-    Promise.all(promises).then(() => {
-      let { blogs } = this.props
-      let content = []
-      forOwn(blogs.byId, (blog) => {
-        content = content.concat(blog.posts)
+    getPosts().then(() => {
+      let categories = this.props.blogs.byCategory
+      forOwn(categories, (category, type) => {
+        forOwn(category, (item, itemName) => {
+          posts = posts.concat(item.posts.map((post) => ({ category: itemName, post, type })))
+        })
       })
-      content = sortBy(content, 'published').reverse().slice(0, 6) // TODO update this, add podcasts
-      this.setState({ content: content.map((post) => ({ post, type: 'blog' })) })
+      posts = sortBy(posts, (post) => post.date).slice(0, 6)
+      this.setState({ content: posts })
     })
   }
 
@@ -49,15 +46,12 @@ export class Home extends Component {
 }
 
 let stateToProps = (state) => {
-  let { blogs, podcasts } = state
-  return {
-    blogs,
-    podcasts
-  }
+  let { blogs } = state
+  return { blogs }
 }
 
 let dispatchToProps = {
-  getBlogPosts
+  getPosts
 }
 
 export default connect(stateToProps, dispatchToProps)(Home)

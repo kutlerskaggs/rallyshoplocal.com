@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 import Loader from 'components/Loader'
 // redux
-import { getBlogs } from 'redux/modules/actions/blogs'
+import { getCategories } from 'redux/modules/actions/blogs'
 // styles
 import 'styles/vendor/styles'
 
@@ -20,7 +20,7 @@ export default class Root extends React.Component {
   }
 
   componentWillMount () {
-    getBlogs(this.props.store.dispatch).then(() =>
+    getCategories(this.props.store.dispatch).then(() =>
       this.setState({ initialLoad: false })
     )
   }

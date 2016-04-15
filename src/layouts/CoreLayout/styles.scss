@@ -41,14 +41,14 @@
 
 @media screen and (min-width: 1200px) {
   .content {
-    margin: 100px 60px 30px 60px;
+    margin: 130px 60px 30px 60px;
   }
 }
 
 // tablet-ish
 @media screen and (max-width: 1199px) {
   .content {
-    margin-top: 80px;
+    margin-top: 100px;
   }
   .socialAnimation {
     display: none;
@@ -58,7 +58,7 @@
 // mobile
 @media screen and (max-width: 414px) {
   .content {
-    margin-top: 70px;
+    margin-top: 90px;
   }
   .social {
     margin: 5px;

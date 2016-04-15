@@ -18,8 +18,8 @@ export class Blog extends Component {
 
   componentWillMount () {
     // TODO getBlogs() if none in store
-    let { blogId } = this.props.params
-    let blog = this.props.blogs.byId[blogId]
+    let { blogs, params: { blogId } } = this.props
+    let blog = blogs.byCategory.blogs[blogId]
     this.setState({ blog })
   }
 

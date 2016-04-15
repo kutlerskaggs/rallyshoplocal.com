@@ -1,44 +1,44 @@
+import { forOwn } from 'lodash'
+
 import {
-  RECEIVE_BLOG_POSTS,
-  RECEIVE_BLOGS,
-  REQUEST_BLOG_POSTS,
-  ERROR_FETCHING_BLOGS
+  RECEIVE_POSTS,
+  RECEIVE_CATEGORIES,
+  REQUEST_POSTS,
+  ERROR_FETCHING_POSTS
 } from 'redux/modules/actions/blogs'
 
 let defaultState = {
   loading: false,
-  byId: {}
+  byCategory: { blogs: {}, podcasts: {} }
 }
 
 export function blogs (state = defaultState, action) {
-  const { type, blogs } = action
+  const { type } = action
   let nextState = Object.assign({}, state)
 
   switch (type) {
-    case RECEIVE_BLOG_POSTS: {
-      blogs.forEach((blog) => {
-        let { id, nextPageToken, posts } = blog
-        let currentState = nextState.byId[id]
-        currentState = Object.assign(currentState, {
-          nextPageToken,
-          posts: currentState.posts.concat(posts) // TODO check for duplicates
+    case RECEIVE_POSTS: {
+      // TODO add paging
+      // console.log(action.posts)
+      ['blogs', 'podcasts'].forEach((type) => {
+        let currentCategory = nextState.byCategory[type]
+        forOwn(action.posts[type], (posts, slug) => {
+          let currentPosts = currentCategory[slug].posts
+          nextState.byCategory[type][slug].posts = currentPosts.concat(posts) // TODO check for duplicates
         })
       })
       nextState.loading = false
       return nextState
     }
-    case RECEIVE_BLOGS: {
-      action.blogs.forEach((blog) => {
-        blog.posts = []
-        nextState.byId[blog.id] = blog
-      })
+    case RECEIVE_CATEGORIES: {
+      nextState.byCategory = action.categories
       return nextState
     }
-    case REQUEST_BLOG_POSTS: {
+    case REQUEST_POSTS: {
       nextState.loading = true
       return nextState
     }
-    case ERROR_FETCHING_BLOGS: {
+    case ERROR_FETCHING_POSTS: {
       // TODO display error message
       nextState.loading = false
       return nextState

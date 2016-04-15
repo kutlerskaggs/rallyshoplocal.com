@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 // redux
 import { connect } from 'react-redux'
-import { getBlogPosts } from 'redux/modules/actions/blogs'
+import { getPosts } from 'redux/modules/actions/blogs'
 // components
 import BlogsView from 'views/Blogs'
 import Loader from 'components/Loader'
@@ -13,7 +13,7 @@ export class Blogs extends Component {
   static propTypes = {
     blogs: PropTypes.object.isRequired,
     children: PropTypes.element,
-    getBlogPosts: PropTypes.func.isRequired
+    getPosts: PropTypes.func.isRequired
   }
 
   constructor (props) {
@@ -22,8 +22,8 @@ export class Blogs extends Component {
   }
 
   componentWillMount () {
-    // TODO getBlogs() if none in store
-    this.props.getBlogPosts().then(() => {
+    // TODO update with getPosts()
+    /* this.props.getBlogPosts().then(() => {
       let blogs = []
       let featuredPosts = []
       forOwn(this.props.blogs.byId, (blog) => {
@@ -32,7 +32,7 @@ export class Blogs extends Component {
       })
       featuredPosts = sortBy(featuredPosts, 'published').reverse().slice(0, 2)
       this.setState({ blogs, featuredPosts })
-    })
+    }) */
   }
 
   render () {
@@ -51,6 +51,6 @@ let stateToProps = (state) => {
   return { blogs }
 }
 
-let dispatchToProps = { getBlogPosts }
+let dispatchToProps = { getPosts }
 
 export default connect(stateToProps, dispatchToProps)(Blogs)

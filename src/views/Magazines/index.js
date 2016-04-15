@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+// css
+import styles from './styles.scss'
 
 export class MagazineView extends Component {
   render () {
@@ -19,17 +21,21 @@ export class MagazineView extends Component {
       src: 'magazines/fall-15/index.html',
       title: 'Fall 2015'
     }]
-    let _magazines = magazines.map((magazine) => {
+    let _magazines = magazines.map((magazine, index) => {
       return (
-        <div className='row middle-xs' key={magazine.id} style={{ position: 'relative' }}>
-          <img src='images/Brush.1.svg' style={{ position: 'absolute', top: 50, left: 0, zIndex: 1 }} />
-          <div className='col-xs-12 col-lg-6' style={{ marginBottom: 30, textAlign: 'right', zIndex: 2 }}>
-            <a href={magazine.src} target='_blank'>
-              <img src={magazine.image} style={{ width: 300 }}/>
-            </a>
+        <div className={`row middle-xs ${styles.wrapper}`} key={magazine.id}>
+          <div className={`col-xs-12 ${styles.brush}`}>
+            <img src={`images/Brush.${index + 1}.svg`} />
           </div>
-          <div className='col-xs-12 col-lg-6' style={{ marginBottom: 30, zIndex: 2 }}>
-            <h1 style={{ fontSize: '4rem', color: '#111' }}>{magazine.title}</h1>
+          <div className='row middle-xs col-xs-12'>
+            <div className='col-xs-12 col-lg-6' style={{ marginBottom: 30, textAlign: 'right', zIndex: 2 }}>
+              <a href={magazine.src} target='_blank'>
+                <img src={magazine.image} style={{ width: 300 }}/>
+              </a>
+            </div>
+            <div className='col-xs-12 col-lg-6' style={{ marginBottom: 30, zIndex: 2 }}>
+              <h1 style={{ fontSize: '4rem', color: '#111' }}>{magazine.title}</h1>
+            </div>
           </div>
         </div>
       )

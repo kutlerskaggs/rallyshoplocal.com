@@ -53,7 +53,7 @@ export class Post extends Component {
                 <p>{truncate(content)}</p>
                 <a className={styles.more} onClick={onClick}>Read more</a>
               </div>
-              <i className={`fa fa-${type === 'blog' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
+              <i className={`fa fa-${type === 'blogs' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
             </div>
           </div>
         </div>

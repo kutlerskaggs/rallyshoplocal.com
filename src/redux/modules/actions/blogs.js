@@ -1,84 +1,86 @@
-export const RECEIVE_BLOGS = 'RECEIVE_BLOGS'
-export const RECEIVE_BLOG_POSTS = 'RECEIVE_BLOG_POSTS'
-export const REQUEST_BLOG_POSTS = 'REQUEST_BLOG_POSTS'
-export const ERROR_FETCHING_BLOGS = 'ERROR_FETCHING_BLOGS'
+import { forOwn } from 'lodash'
 
-let apiKey = 'AIzaSyA3zd8Vp7IDsWvkepT0h0fNKBkCFku58j0'
-let blogs = ['2901360073818541851', '4269772225470041486', '6224536896252388655']
-let podcasts = []
-let urlBase = 'https://www.googleapis.com/blogger/v3/blogs'
+export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
+export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const REQUEST_POSTS = 'REQUEST_POSTS'
+export const ERROR_FETCHING_POSTS = 'ERROR_FETCHING_POSTS'
+
+// let apiKey = 'AIzaSyA3zd8Vp7IDsWvkepT0h0fNKBkCFku58j0'
+let blogs = ['thomas-foolery', 'horse-trough-time-machine', 'connie-lingus', 'blog'] // TODO remove 'Blog'
+let podcasts = ['cinema-danger-duo', 'no-label-round-table']
+let urlBase = 'https://public-api.wordpress.com/rest/v1.1/sites/rallycasper.com'
 
 // called once on app startup
-export const getBlogs = (dispatch) => {
-  let promises = []
-  blogs.concat(podcasts).forEach((id) => {
-    let url = `${urlBase}/${id}?key=${apiKey}`
-    let promise = fetch(url).then((res) => {
-      if (res.ok) {
-        return res.json().then((json) => ({
-          id,
-          name: json.name,
-          totalPosts: json.posts.totalItems
-        }))
-      }
-      // TODO error handling
-    })
-    promises.push(promise)
-  })
-  return Promise.all(promises).then((results) => {
-    dispatch(receiveBlogs(results))
-  })
-}
-
-export const getBlogPost = (blogId, postId) => {
-
-}
-
-export const getBlogPosts = (blogIds) => {
-  let _blogIds = blogIds ? Array.isArray(blogIds) ? blogIds : [blogIds] : blogs
-
-  return (dispatch, getState) => {
-    // fetch blogs
-    let promises = []
-    let { blogs: currentState } = getState()
-    _blogIds.forEach((blogId) => {
-      let { nextPageToken, posts, totalPosts } = currentState.byId[blogId] || {}
-      // fetch if blog has no records in the store
-      // or blogs were explicitly passed then page
-      let shouldFetch = !posts.length || (blogIds && posts.length < totalPosts)
-
-      // only fetch posts if necessary
-      if (shouldFetch) {
-        dispatch(requestBlogPosts())
-        let pageQuery = nextPageToken ? `&pageToken=${nextPageToken}` : ''
-        let url = `${urlBase}/${blogId}/posts?key=${apiKey}&maxResults=6${pageQuery}&view=READER`
-        let promise = fetch(url).then((res) => {
-          if (res.ok) {
-            return res.json().then((json) => ({
-              id: blogId,
-              nextPageToken: json.nextPageToken,
-              posts: json.items
-            }))
+export const getCategories = (dispatch) => {
+  let url = `${urlBase}/categories`
+  return fetch(url).then((res) => {
+    if (res.ok) {
+      return res.json().then((json) => {
+        let _categories = { blogs: {}, podcasts: {} }
+        json.categories.forEach((category) => {
+          let validBlog = blogs.some((_blog) => _blog === category.slug)
+          if (validBlog) {
+            _categories.blogs[category.slug] = { attributes: category, posts: [] }
+          } else {
+            let validPodcast = podcasts.some((_podcast) => _podcast === category.slug)
+            if (validPodcast) {
+              _categories.podcasts[category.slug] = { attributes: category, posts: [] }
+            }
           }
-          // TODO improve error handling
-          dispatch(errorFetchingBlogs())
-          return { id: blogId, posts: [] }
         })
-        promises.push(promise)
-      }
-    })
-
-    // TODO add error checking
-    // if any requests were made, pass results to store
-    if (promises.length) {
-      return Promise.all(promises).then((results) => dispatch(receiveBlogPosts(results)))
+        dispatch(receiveCategories(_categories))
+      })
     }
-    // no action required, resolve immediately
-    return Promise.resolve()
+  })
+}
+
+export const getPost = (blogId, postId) => {
+
+}
+
+export const getPosts = (params) => {
+  return (dispatch, getState) => {
+    let url = `${urlBase}/posts?number=7`
+
+    dispatch(requestPosts())
+    // TODO only fetch if necessary
+    return fetch(url).then((res) => {
+      if (res.ok) {
+        return res.json().then((json) => {
+          let posts = { blogs: {}, podcasts: {} }
+          json.posts.forEach((post) => {
+            let found = false
+
+            forOwn(post.categories, (category) => {
+              if (!found) {
+                let blog = blogs.find((blog) => blog === category.slug)
+                if (blog) {
+                  posts.blogs[blog] = posts.blogs[blog] ? posts.blogs[blog] : []
+                  posts.blogs[blog].push(post)
+                  found = true
+                }
+                // TODO make this better
+                let podcast = podcasts.find((podcast) => podcast === category.slug)
+                if (!found && podcast) {
+                  posts.podcasts[podcast] = posts.podcasts[podcast] ? posts.podcasts[podcast] : []
+                  posts.podcasts[podcast].push(post)
+                  found = true
+                }
+              }
+
+              // return false
+            })
+          })
+          dispatch(receivePosts(posts))
+        })
+      }
+      // something bad happened
+      dispatch(errorFetchingPosts())
+    })
   }
 }
 
-export const errorFetchingBlogs = () => ({ type: ERROR_FETCHING_BLOGS })
-export const receiveBlogPosts = (blogs) => ({ type: RECEIVE_BLOG_POSTS, blogs })
-export const receiveBlogs = (blogs) => ({ type: RECEIVE_BLOGS, blogs })
-export const requestBlogPosts = () => ({ type: REQUEST_BLOG_POSTS })
+export const errorFetchingPosts = () => ({ type: ERROR_FETCHING_POSTS })
+export const receivePosts = (posts) => ({ type: RECEIVE_POSTS, posts })
+export const receiveCategories = (categories) => ({ type: RECEIVE_CATEGORIES, categories })
+export const requestPosts = () => ({ type: REQUEST_POSTS })

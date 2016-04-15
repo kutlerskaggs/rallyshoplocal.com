@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 // components
 import PostView from 'views/Blogs/Blog/Post'
 
-export class Blog extends Component {
+export class Post extends Component {
 
   static propTypes = {
     blog: PropTypes.object.isRequired,
@@ -18,7 +18,7 @@ export class Blog extends Component {
 
   componentWillMount () {
     let { postId } = this.props.params
-    let post = this.props.blog.posts.find((post) => post.id === postId)
+    let post = this.props.blog.posts.find((post) => post.slug === postId)
     this.setState({ post })
   }
 
@@ -28,8 +28,8 @@ export class Blog extends Component {
 }
 
 let stateToProps = (state, props) => {
-  let blog = state.blogs.byId[props.params.blogId]
+  let blog = state.blogs.byCategory.blogs[props.params.blogId]
   return { blog }
 }
 
-export default connect(stateToProps)(Blog)
+export default connect(stateToProps)(Post)
