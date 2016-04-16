@@ -59,6 +59,20 @@
   }
 }
 
+.loadMore {
+  background-color: #dedede;
+  color: $alternateTextColor;
+  font-family: 'Helvetica';
+  font-size: 1.1rem;
+  padding: 12px 24px;
+  margin: 25px 0px 75px 0px;
+  border-radius: 2px;
+  border: none;
+  &:hover {
+    background-color: #fff;
+  }
+}
+
 // tablet-ish
 @media screen and (max-width: 1199px) {
   .cardContainer {

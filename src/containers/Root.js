@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 import Loader from 'components/Loader'
 // redux
-import { getCategories } from 'redux/modules/actions/blog'
+import { getCategories, getPosts } from 'redux/modules/actions/blog'
 // styles
 import 'styles/vendor/styles'
 
@@ -20,9 +20,16 @@ export default class Root extends React.Component {
   }
 
   componentWillMount () {
-    getCategories(this.props.store.dispatch).then(() =>
+    let { dispatch, getState } = this.props.store
+    Promise.all([
+      getCategories()(dispatch, getState),
+      getPosts('blogs')(dispatch, getState),
+      getPosts('podcasts')(dispatch, getState)
+    ]).then(() => { this.setState({ initialLoad: false }) })
+
+    /* getCategories()(this.props.store.dispatch).then(() =>
       this.setState({ initialLoad: false })
-    )
+    ) */
   }
 
   get content () {

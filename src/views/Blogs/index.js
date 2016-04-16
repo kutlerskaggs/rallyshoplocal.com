@@ -12,14 +12,15 @@ export class BlogsView extends Component {
 
   static propTypes = {
     blogs: PropTypes.array.isRequired,
-    featuredPosts: PropTypes.array.isRequired
+    posts: PropTypes.array.isRequired,
+    loadMore: PropTypes.func.isRequired,
+    moreAvailable: PropTypes.bool.isRequired
   }
 
   render () {
-    let { blogs, featuredPosts } = this.props
+    let { blogs, posts } = this.props
     let { context: { router } } = this
-
-    let _featuredPosts = featuredPosts.map((post) => {
+    let _featuredPosts = posts.map((post) => {
       let { _category, content, featured_image, ID: id, slug } = post
       let onClick = () => router.push(`/blogs/${_category}/${slug}`)
       let el = document.createElement('div')
@@ -58,10 +59,18 @@ export class BlogsView extends Component {
       <div className='container-fluid'>
         <div className={'row center-xs middle-xs'}>
           <div className={`row col-xs-12 col-lg-10 ${styles.cardContainer}`}>
-            <h1 style={{ textAlign: 'left' }}>Featured Posts</h1>
-            {_featuredPosts}
             <h1>Blogs</h1>
             {_blogs}
+            <h1 style={{ textAlign: 'left' }}>Posts</h1>
+            {_featuredPosts}
+          </div>
+          <div className='col-xs-12'>
+            <input
+              type='button'
+              value='Load more'
+              className={styles.loadMore}
+              onClick={this.props.loadMore}
+              style={{ display: this.props.moreAvailable ? 'initial' : 'none' }} />
           </div>
         </div>
       </div>

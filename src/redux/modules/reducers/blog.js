@@ -10,10 +10,18 @@ import {
 
 let defaultState = {
   loading: false,
-  byType: { blogs: {}, podcasts: {} },
-  paging: { blogs: {}, podcasts: {} }
+  byType: {
+    blogs: {
+      _fetched: 0,
+      _post_count: 0
+    },
+    podcasts: {
+      _fetched: 0,
+      _post_count: 0
+    }
+  }
 }
-
+// default state set in main.js
 export function blog (state = defaultState, action) {
   const { type } = action
   let nextState = Object.assign({}, state)
@@ -23,15 +31,12 @@ export function blog (state = defaultState, action) {
       // TODO add paging
       // console.log(action.posts)
       ['blogs', 'podcasts'].forEach((type) => {
-        let currentCategory = nextState.byType[type]
-        forOwn(action.posts[type], (posts, slug) => {
-          let currentPosts = currentCategory[slug].posts
-          // TODO maintain uniqueness and sorting
-          // TODO maintain uniqueness and sorting
-          // TODO maintain uniqueness and sorting
+        let currentType = nextState.byType[type]
+        forOwn(action.posts[type], (posts, category) => {
+          let currentPosts = currentType[category].posts
           currentPosts = currentPosts.concat(posts)
           currentPosts = uniqBy(currentPosts, (post) => post.ID)
-          nextState.byType[type][slug].posts = sortBy(currentPosts, 'date').reverse()
+          nextState.byType[type][category].posts = sortBy(currentPosts, 'date').reverse()
         })
       })
       nextState.loading = false
@@ -46,13 +51,8 @@ export function blog (state = defaultState, action) {
       return nextState
     }
     case UPDATE_PAGING: {
-      let { paging } = action
-      let { blogs, podcasts } = nextState.paging
-      nextState.paging.blogs = Object.assign(blogs, paging.blogs)
-      nextState.paging.podcasts = Object.assign(podcasts, paging.podcasts)
-      if (paging.nextPage) {
-        nextState.paging.nextPage = paging.nextPage
-      }
+      let { payload, payload: { type } } = action
+      nextState.byType[type] = Object.assign(nextState.byType[type], payload)
       return nextState
     }
     case ERROR_FETCHING_POSTS: {

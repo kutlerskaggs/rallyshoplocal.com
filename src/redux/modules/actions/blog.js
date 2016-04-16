@@ -8,98 +8,113 @@ export const ERROR_FETCHING_POSTS = 'ERROR_FETCHING_POSTS'
 
 // let apiKey = 'AIzaSyA3zd8Vp7IDsWvkepT0h0fNKBkCFku58j0'
 let types = {
-  blogs: ['thomas-foolery', 'horse-trough-time-machine', 'connie-lingus', 'blog'], // TODO remove 'Blog'
-  podcasts: ['cinema-danger-duo', 'no-label-round-table']
+  blogs: ['thomas-foolery', 'horse-trough-time-machine', 'connie-lingus'], // TODO remove 'Blog'
+  podcasts: ['cinema-danger-duo', 'no-label-roundtable']
 }
-let urlBase = 'https://public-api.wordpress.com/rest/v1.1/sites/rallycasper.com'
+let urlBase = 'https://public-api.wordpress.com/rest/v1.1/sites/rallyshoplocal.wordpress.com'
 
 // called once on app startup
-export const getCategories = (dispatch) => {
-  let url = `${urlBase}/categories`
-  return fetch(url).then((res) => {
-    if (res.ok) {
-      return res.json().then((json) => {
-        let _categories = { blogs: {}, podcasts: {} }
-        let { blogs, podcasts } = types
-        json.categories.forEach((category) => {
-          let validBlog = blogs.some((_blog) => _blog === category.slug)
-          if (validBlog) {
-            _categories.blogs[category.slug] = { attributes: category, posts: [] }
-          } else {
-            let validPodcast = podcasts.some((_podcast) => _podcast === category.slug)
-            if (validPodcast) {
-              _categories.podcasts[category.slug] = { attributes: category, posts: [] }
-            }
+export const getCategories = () => {
+  return (dispatch) => {
+    let url = `${urlBase}/categories`
+    return fetch(url).then((res) => {
+      if (res.ok) {
+        return res.json().then((json) => {
+          let _categories = {
+            blogs: { _post_count: 0 },
+            podcasts: { _post_count: 0 }
           }
+          let { blogs, podcasts } = types
+          json.categories.forEach((category) => {
+            let validBlog = blogs.some((_blog) => _blog === category.slug)
+            if (validBlog) {
+              _categories.blogs._post_count += category.post_count
+              _categories.blogs[category.slug] = { attributes: category, posts: [] }
+            } else {
+              let validPodcast = podcasts.some((_podcast) => _podcast === category.slug)
+              if (validPodcast) {
+                _categories.podcasts._post_count += category.post_count
+                _categories.podcasts[category.slug] = { attributes: category, posts: [] }
+              }
+            }
+          })
+          dispatch(receiveCategories(_categories))
         })
-        dispatch(receiveCategories(_categories))
-      })
-    }
-  })
+      }
+    })
+  }
 }
 
-export const getPost = (blogId, postId) => {
-  // TODO 
+export const getPost = (postSlug) => {
+  return (dispatch) => {
+    let url = `${urlBase}/posts/slug:${postSlug}`
+    dispatch(requestPosts())
+    return fetch(url).then((res) => {
+      if (res.ok) {
+        return res.json().then((post) => {
+          _categorizePost(post)
+          let posts = { [`${post._type}s`]: { [post._category]: [post] } }
+          dispatch(receivePosts(posts))
+        })
+      }
+    })
+  }
 }
 
-export const getPosts = (type, items) => {
+export const getPosts = (type, category) => {
   return (dispatch, getState) => {
     let state = getState().blog
+    let { byType } = state
     let categoryParam = ''
+    let offsetParam = ''
+    // maybe overridden below ( if > 0 we already have home page posts )
+    let shouldGetPosts = !(byType.blogs._fetched + byType.podcasts._fetched)
 
-    // one or many blogs or podcasts
     if (type) {
-      items = items || types[type]
-      categoryParam += `&category=${Array.isArray(items)
-        ? `${items.join('&category=')}`
-        : `${items}`}`
+      // category param
+      categoryParam += `&category=${category
+        ? `${category}`
+        : `${types[type].join(',')}`}`
+
+      // offset param
+      let offset
+      if (category) {
+        let { attributes, posts } = byType[type][category]
+        offset = posts.length < attributes.post_count ? posts.length : undefined
+      } else {
+        let { _fetched, _post_count } = byType[type]
+        offset = _fetched < _post_count || !_post_count ? _fetched : undefined
+      }
+      shouldGetPosts = offset !== undefined
+      offsetParam = offset ? `&offset=${offset}` : ''
     }
-    // paging
-    let { paging } = state
-    let nextPage = type ? paging[type].nextPage : paging.nextPage
-    let pagingParam = nextPage && nextPage !== 'end' ? `&page_handle=${nextPage}` : ''
 
-    let url = `${urlBase}/posts?number=8${categoryParam}${pagingParam}`
+    let url = `${urlBase}/posts?number=6${categoryParam}${offsetParam}`
 
-    if (nextPage !== 'end') {
+    if (shouldGetPosts) {
       dispatch(requestPosts())
-      // TODO only fetch if necessary
+
       return fetch(url).then((res) => {
         if (res.ok) {
           return res.json().then((json) => {
             let posts = { blogs: {}, podcasts: {} }
             json.posts.forEach((post) => {
-              let found = false
-
-              forOwn(post.categories, (category) => {
-                let { blogs, podcasts } = types
-                if (!found) {
-                  let blog = blogs.find((blog) => blog === category.slug)
-                  if (blog) {
-                    post._type = 'blog'
-                    post._category = blog
-                    posts.blogs[blog] = posts.blogs[blog] ? posts.blogs[blog] : []
-                    posts.blogs[blog].push(post)
-                    found = true
-                  }
-                  // TODO make this better
-                  let podcast = podcasts.find((podcast) => podcast === category.slug)
-                  if (!found && podcast) {
-                    post._type = 'podcast'
-                    post._category = podcast
-                    posts.podcasts[podcast] = posts.podcasts[podcast] ? posts.podcasts[podcast] : []
-                    posts.podcasts[podcast].push(post)
-                    found = true
-                  }
-                }
-
-                // return false
-              })
+              _categorizePost(post)
+              if (post._type === 'blog') {
+                let blog = post._category
+                posts.blogs[blog] = posts.blogs[blog] ? posts.blogs[blog] : []
+                posts.blogs[blog].push(post)
+              } else if (post._type === 'podcast') {
+                let podcast = post._category
+                posts.podcasts[podcast] = posts.podcasts[podcast] ? posts.podcasts[podcast] : []
+                posts.podcasts[podcast].push(post)
+              }
             })
 
-            // home page preview fetched
-            if (!type) {
-              dispatch(updatePaging({ nextPage: 'end' }))
+            // update fetched count for blogs || podcasts
+            if (type && !category) {
+              let _fetched = state.byType[type]._fetched + json.posts.length
+              dispatch(updatePaging({ type, _fetched }))
             }
             dispatch(receivePosts(posts))
           })
@@ -117,4 +132,26 @@ export const errorFetchingPosts = () => ({ type: ERROR_FETCHING_POSTS })
 export const receivePosts = (posts) => ({ type: RECEIVE_POSTS, posts })
 export const receiveCategories = (categories) => ({ type: RECEIVE_CATEGORIES, categories })
 export const requestPosts = () => ({ type: REQUEST_POSTS })
-export const updatePaging = (paging) => ({ type: UPDATE_PAGING, paging })
+export const updatePaging = (payload) => ({ type: UPDATE_PAGING, payload })
+
+function _categorizePost (post) {
+  forOwn(post.categories, (category) => {
+    let found = false
+    let { blogs, podcasts } = types
+    if (!found) {
+      let blog = blogs.find((blog) => blog === category.slug)
+      if (blog) {
+        post._type = 'blog'
+        post._category = blog
+        found = true
+      }
+      // TODO make this better
+      let podcast = podcasts.find((podcast) => podcast === category.slug)
+      if (!found && podcast) {
+        post._type = 'podcast'
+        post._category = podcast
+        found = true
+      }
+    }
+  })
+}

@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { getPosts } from 'redux/modules/actions/blog'
 // components
 import BlogsView from 'views/Blogs'
-import Loader from 'components/Loader'
 // utils
 import { forOwn, sortBy } from 'lodash'
 
@@ -19,60 +18,66 @@ export class Blogs extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      blogs: [],
-      featuredPosts: [],
-      requestedPosts: false
-    }
-    this.getBlogsAndPostsIfNeeded = this.getBlogsAndPostsIfNeeded.bind(this)
+    this.state = { blogs: [], posts: [] }
+    this.concatPosts = this.concatPosts.bind(this)
+    this.loadPosts = this.loadPosts.bind(this)
   }
 
   componentWillMount () {
-    if (!this.props.params.blogSlug) {
-      this.getBlogsAndPostsIfNeeded()
+    let { blogSlug } = this.props.params
+    let nextState = this.concatPosts(blogSlug)
+    if (nextState.posts.length < 6) {
+      this.loadPosts()
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    if (!nextProps.params.blogSlug && !this.state.requestedPosts) {
-      this.getBlogsAndPostsIfNeeded()
+    let { blogSlug } = this.props.params
+    let { blogSlug: nextBlogSlug } = nextProps.params
+    if (blogSlug !== nextBlogSlug) {
+      let nextState = this.concatPosts(nextBlogSlug)
+      if (nextState.posts.length < 6) {
+        this.loadPosts(nextBlogSlug)
+      }
     }
   }
 
-  getBlogsAndPostsIfNeeded () {
-    // return
-    let featuredPosts
-    let getFeaturedPosts = () => {
-      featuredPosts = []
-      let blogs = []
-      forOwn(this.props.blog.byType.blogs, (category) => {
-        blogs.push(category.attributes)
-        featuredPosts = featuredPosts.concat(category.posts)
-      })
-      if (featuredPosts.length >= 2) {
-        // TODO change to 3 with new cards
-        // TODO change to 3 with new cards
-        featuredPosts = sortBy(featuredPosts, 'date').reverse().slice(0, 2)
-        let state = { blogs, featuredPosts }
-        this.setState(state)
+  concatPosts (blogSlug) {
+    let state = { blogs: [], posts: [] }
+    forOwn(this.props.blog.byType.blogs, (category) => {
+      // ignore props
+      if (category.posts) {
+        state.blogs.push(category.attributes)
+        if (!blogSlug || category.attributes.slug === blogSlug) {
+          state.posts = state.posts.concat(category.posts)
+        }
       }
-    }
+    })
+    state.posts = sortBy(state.posts, 'date').reverse()
+    this.setState(state)
+    return state
+  }
 
-    getFeaturedPosts()
-    if (featuredPosts.length < 2) {
-      this.setState({ requestedPosts: true })
-      this.props.getPosts('blogs').then(getFeaturedPosts)
-    }
+  loadPosts (blogSlug) {
+    let { getPosts, params } = this.props
+    blogSlug = blogSlug || params.blogSlug
+    getPosts('blogs', blogSlug).then(() => this.concatPosts(blogSlug))
   }
 
   render () {
-    let { blogs, featuredPosts } = this.state
-    let _BlogsView = this.props.blog.loading
-      ? <Loader />
-      : <BlogsView blogs={blogs} featuredPosts={featuredPosts} />
-    return (
-      this.props.children || _BlogsView
-    )
+    let { blogs, posts } = this.state
+    let { blog: { byType }, params: { blogSlug } } = this.props
+    let moreAvailable
+    if (blogSlug) {
+      let { attributes, posts } = byType.blogs[blogSlug]
+      moreAvailable = posts.length < attributes.post_count
+    } else {
+      let { _fetched, _post_count } = this.props.blog.byType.blogs
+      moreAvailable = _fetched < _post_count
+    }
+
+    return this.props.children ||
+      <BlogsView blogs={blogs} posts={posts} loadMore={this.loadPosts} moreAvailable={moreAvailable} />
   }
 }
 
