@@ -23,26 +23,22 @@ export class MagazineView extends Component {
     }]
     let _magazines = magazines.map((magazine, index) => {
       return (
-        <div className={`row middle-xs ${styles.wrapper}`} key={magazine.id}>
-          <div className={`col-xs-12 ${styles.brush}`}>
-            <img src={`images/Brush.${index + 1}.svg`} />
-          </div>
-          <div className='row middle-xs col-xs-12'>
-            <div className='col-xs-12 col-lg-6' style={{ marginBottom: 30, textAlign: 'right', zIndex: 2 }}>
-              <a href={magazine.src} target='_blank'>
-                <img src={magazine.image} style={{ width: 300 }}/>
-              </a>
-            </div>
-            <div className='col-xs-12 col-lg-6' style={{ marginBottom: 30, zIndex: 2 }}>
-              <h1 style={{ fontSize: '4rem', color: '#111' }}>{magazine.title}</h1>
-            </div>
-          </div>
+        <div key={magazine.id} className={`col-xs-12 col-lg-4 ${styles.magazine}`}>
+          <a href={magazine.src} target='_blank'>
+            <img src={magazine.image} style={{ width: 300 }}/>
+            <h1>{magazine.title}</h1>
+          </a>
         </div>
       )
     })
     return (
       <div className='container-fluid'>
-        {_magazines}
+        <div className='row center-xs'>
+          <div className={`row col-xs-12 col-lg-10 ${styles.cardContainer}`}>
+            <h1>Magazines</h1>
+            {_magazines}
+          </div>
+        </div>
       </div>
     )
   }
