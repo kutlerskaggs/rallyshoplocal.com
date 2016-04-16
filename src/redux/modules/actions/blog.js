@@ -39,7 +39,7 @@ export const getCategories = (dispatch) => {
 }
 
 export const getPost = (blogId, postId) => {
-
+  // TODO 
 }
 
 export const getPosts = (type, items) => {
@@ -77,7 +77,7 @@ export const getPosts = (type, items) => {
                   let blog = blogs.find((blog) => blog === category.slug)
                   if (blog) {
                     post._type = 'blog'
-                    post.category = blog
+                    post._category = blog
                     posts.blogs[blog] = posts.blogs[blog] ? posts.blogs[blog] : []
                     posts.blogs[blog].push(post)
                     found = true
@@ -86,7 +86,7 @@ export const getPosts = (type, items) => {
                   let podcast = podcasts.find((podcast) => podcast === category.slug)
                   if (!found && podcast) {
                     post._type = 'podcast'
-                    post.category = podcast
+                    post._category = podcast
                     posts.podcasts[podcast] = posts.podcasts[podcast] ? posts.podcasts[podcast] : []
                     posts.podcasts[podcast].push(post)
                     found = true

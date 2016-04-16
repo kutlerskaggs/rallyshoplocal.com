@@ -1,4 +1,4 @@
-import { forOwn } from 'lodash'
+import { forOwn, sortBy, uniqBy } from 'lodash'
 
 import {
   RECEIVE_POSTS,
@@ -29,7 +29,9 @@ export function blog (state = defaultState, action) {
           // TODO maintain uniqueness and sorting
           // TODO maintain uniqueness and sorting
           // TODO maintain uniqueness and sorting
-          nextState.byType[type][slug].posts = currentPosts.concat(posts)
+          currentPosts = currentPosts.concat(posts)
+          currentPosts = uniqBy(currentPosts, (post) => post.ID)
+          nextState.byType[type][slug].posts = sortBy(currentPosts, 'date').reverse()
         })
       })
       nextState.loading = false

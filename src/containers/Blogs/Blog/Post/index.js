@@ -17,8 +17,9 @@ export class Post extends Component {
   }
 
   componentWillMount () {
-    let { postId } = this.props.params
-    let post = this.props.blog.posts.find((post) => post.slug === postId)
+    // TODO fetch if not found, need to implement getPost first
+    let { postSlug } = this.props.params
+    let post = this.props.blog.posts.find((post) => post.slug === postSlug)
     this.setState({ post })
   }
 
@@ -28,7 +29,7 @@ export class Post extends Component {
 }
 
 let stateToProps = (state, props) => {
-  let blog = state.blogs.byCategory.blogs[props.params.blogId]
+  let blog = state.blog.byType.blogs[props.params.blogSlug]
   return { blog }
 }
 

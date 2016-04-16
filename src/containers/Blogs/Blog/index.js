@@ -17,23 +17,33 @@ export class Blog extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { blog: undefined }
+    this.state = { blog: undefined, requestedPosts: false }
   }
 
   componentWillMount () {
+    if (!this.props.params.postSlug) {
+      this.getPostsIfNeeded()
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!nextProps.params.postSlug && !this.state.requestedPosts) {
+      this.getPostsIfNeeded()
+    }
+  }
+
+  getPostsIfNeeded () {
     let { blog, getPosts, params: { blogSlug } } = this.props
     let _blog = blog.byType.blogs[blogSlug]
-    console.log(blog.loading)
-    if (!blog.loading) {
-      if (!_blog || _blog.posts.length < 6) {
-        console.log('in here')
-        getPosts('blogs', blogSlug).then(() => {
-          _blog = blog.byType.blogs[blogSlug]
-          this.setState({ blog: _blog })
-        })
-      } else {
-        this.setState({ blog: _blog })
-      }
+
+    if (!_blog || _blog.posts.length < 6) {
+      this.setState({ requestedPosts: true })
+      getPosts('blogs', blogSlug).then(() => {
+        _blog = blog.byType.blogs[blogSlug]
+        this.setState({ blog: _blog, requestedPosts: false })
+      })
+    } else {
+      this.setState({ blog: _blog })
     }
   }
 
