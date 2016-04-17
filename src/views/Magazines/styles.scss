@@ -1,21 +1,13 @@
 @import 'variables';
 
-.cardContainer {
-  padding: 0 !important;
-  > h1 {
-    width: 100%;
-    text-align: left;
-  }
-}
-
 .magazine {
   margin-bottom: 50px;
   > a {
     text-decoration: none;
     color: $textColor;
+    > img {
+      max-width: 300px;
+      width: 100%;
+    }
   }
-}
-
-.header {
-  text-align: left;
 }

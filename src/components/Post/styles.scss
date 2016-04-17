@@ -4,7 +4,7 @@
   display: flex;
   flex: 1;
   margin: 20px 0px;
-  max-width: 600px;
+  width: 100%;
 }
 
 .card {
@@ -79,6 +79,9 @@
         transform: translate3d(0, 0, 0);
       }
     }
+  }
+  .cardWrapper {
+    max-width: 600px;
   }
 }
 

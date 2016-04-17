@@ -27,12 +27,13 @@ export class BlogsView extends Component {
       el.innerHTML = content
       let preview = el.textContent.slice(0, 500)
       return (
-        <Post
-          key={id}
-          content={preview}
-          imgSrc={featured_image}
-          post={post}
-          onClick={onClick} />
+        <div key={id} className='col-xs-12 col-sm-8 col-md-6 col-lg-5'>
+          <Post
+            content={preview}
+            imgSrc={featured_image}
+            post={post}
+            onClick={onClick} />
+        </div>
       )
     })
     let _blogs = blogs.map((blog) => {
@@ -40,16 +41,11 @@ export class BlogsView extends Component {
       let imgSrc = `/images/blogs/${slug}.jpg`
       let onClick = () => this.context.router.push(`/blogs/${slug}`)
       return (
-        <div key={id} className='col-xs-12 col-lg-4'>
-          <div className={styles.cardWrapper} onClick={onClick}>
-            <div className={styles.card}>
-              <div className={styles.cardImage} style={{backgroundImage: `url('${imgSrc}')`}}></div>
-              <div className={styles.cardContent}>
-                <div className={styles.title}>
-                  <h1>{name}</h1>
-                </div>
-              </div>
-            </div>
+        <div key={id} className={styles.blogCard} onClick={onClick}>
+          <div className={styles.blogImage} style={{backgroundImage: `url('${imgSrc}')`}}></div>
+          <div className={styles.blogRotate}></div>
+          <div className={styles.blogTitle}>
+            <h1>{name}</h1>
           </div>
         </div>
       )
@@ -57,13 +53,24 @@ export class BlogsView extends Component {
 
     return (
       <div className='container-fluid'>
-        <div className={'row center-xs middle-xs'}>
-          <div className={`row col-xs-12 col-lg-10 ${styles.cardContainer}`}>
-            <h1>Blogs</h1>
+
+        <div className='row center-xs start-md'>
+          <h1 className='col-xs-12 col-lg-offset-1 col-lg-10'>Blogs</h1>
+        </div>
+        <div className={`row ${styles.blogsContainer}`}>
+          <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
             {_blogs}
-            <h1 style={{ textAlign: 'left' }}>Posts</h1>
-            {_featuredPosts}
           </div>
+        </div>
+
+        <div className='row center-xs start-md'>
+          <h1 className='col-xs-12 col-lg-offset-1 col-lg-10'>Posts</h1>
+        </div>
+        <div className={`row center-xs ${styles.postsContainer}`}>
+          {_featuredPosts}
+        </div>
+
+        <div className='row center-xs'>
           <div className='col-xs-12'>
             <input
               type='button'

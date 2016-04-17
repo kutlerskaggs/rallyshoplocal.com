@@ -23,19 +23,21 @@ export class MagazineView extends Component {
     }]
     let _magazines = magazines.map((magazine, index) => {
       return (
-        <div key={magazine.id} className={`col-xs-12 col-lg-4 ${styles.magazine}`}>
+        <div key={magazine.id} className={`col-xs-12 col-md-6 col-lg-4 ${styles.magazine}`}>
           <a href={magazine.src} target='_blank'>
-            <img src={magazine.image} style={{ width: 300 }}/>
-            <h1>{magazine.title}</h1>
+            <img src={magazine.image} />
+            <h2>{magazine.title}</h2>
           </a>
         </div>
       )
     })
     return (
       <div className='container-fluid'>
+        <div className='row center-xs start-md'>
+          <h1 className='col-xs-12 col-md-offset-1 col-md-10'>Magazines</h1>
+        </div>
         <div className='row center-xs'>
-          <div className={`row col-xs-12 col-lg-10 ${styles.cardContainer}`}>
-            <h1>Magazines</h1>
+          <div className='row col-xs-12 col-md-10'>
             {_magazines}
           </div>
         </div>

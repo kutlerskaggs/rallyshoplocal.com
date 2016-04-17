@@ -101,6 +101,7 @@
   transform: translateX(0) !important;
 }
 
+// medium
 @media screen and (max-width: 1199px) {
   .logo > img {
     height: 50px;
@@ -140,7 +141,8 @@
   }
 }
 
-@media screen and (max-width: 414px) {
+// extra small
+@media screen and (max-width: 767px) {
   .logo > img {
     height: 40px;
   }

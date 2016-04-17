@@ -39,26 +39,27 @@
   }
 }
 
+// large
 @media screen and (min-width: 1200px) {
   .content {
-    margin: 130px 60px 30px 60px;
+    margin-top: 130px;
   }
 }
 
-// tablet-ish
+// medium
 @media screen and (max-width: 1199px) {
   .content {
-    margin-top: 100px;
+    margin: 100px 60px 30px 60px;
   }
   .socialAnimation {
     display: none;
   }
 }
 
-// mobile
-@media screen and (max-width: 414px) {
+// small
+@media screen and (max-width: 991px) {
   .content {
-    margin-top: 90px;
+    margin: 100px 0 0 0;
   }
   .social {
     margin: 5px;
@@ -67,5 +68,12 @@
   .socialIcon {
     display: inline-block !important;
     margin: 10px;
+  }
+}
+
+// extra small
+@media screen and (max-width: 767px) {
+  .content {
+    margin-top: 90px;
   }
 }

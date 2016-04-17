@@ -40,20 +40,18 @@ export class Post extends Component {
     }
 
     return (
-      <div key={post.id} className='col-xs-12 col-lg-6'>
-        <div className={styles.cardWrapper} onClick={this.onClick}>
-          <div className={styles.card}>
-            <div className={styles.cardImage} style={{backgroundImage: `url('${imgSrc}')`}}></div>
-            <div className={styles.cardContent}>
-              <div className={styles.title}>
-                <h1>{post.title}</h1>
-              </div>
-              <div className={styles.reveal} style={this.state.reveal ? showRevealStyle : {}}>
-                <p>{truncate(content)}</p>
-                <a className={styles.more} onClick={onClick}>Read more</a>
-              </div>
-              <i className={`fa fa-${post._type === 'blog' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
+      <div className={styles.cardWrapper} onClick={this.onClick}>
+        <div className={styles.card}>
+          <div className={styles.cardImage} style={{backgroundImage: `url('${imgSrc}')`}}></div>
+          <div className={styles.cardContent}>
+            <div className={styles.title}>
+              <h1>{post.title}</h1>
             </div>
+            <div className={styles.reveal} style={this.state.reveal ? showRevealStyle : {}}>
+              <p>{truncate(content)}</p>
+              <a className={styles.more} onClick={onClick}>Read more</a>
+            </div>
+            <i className={`fa fa-${post._type === 'blog' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
           </div>
         </div>
       </div>
