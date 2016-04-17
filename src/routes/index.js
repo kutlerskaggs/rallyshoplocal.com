@@ -12,8 +12,10 @@ import About from 'containers/About'
 export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={Home} />
-    <Route path='/blogs(/:blogSlug)' component={Blogs}>
-      <Route path='/blogs/:blogSlug/:postSlug' component={Post} />
+    <Route path='/blogs' component={Blogs}>
+      <Route path='/blogs/:blogSlug' component={Blogs}>
+        <Route path='/blogs/:blogSlug/:postSlug' component={Post} />
+      </Route>
     </Route>
     <Route path='/podcasts' component={Podcasts} />
     <Route path='/magazines' component={Magazines} />
