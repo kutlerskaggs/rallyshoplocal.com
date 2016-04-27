@@ -17,7 +17,7 @@ export class AboutView extends Component {
             <span>EDITOR</span>
 
             <h2>RAYMOND CRAIG</h2>
-            <span>AMY HARRIS</span>
+            <span>PHOTOGRAPHY EDITOR</span>
 
             <h2>AMY HARRIS</h2>
             <span>FASHION EDITOR</span>
@@ -29,9 +29,6 @@ export class AboutView extends Component {
             <span>COPY WRITER</span>
           </div>
           <div className='col-xs-12 col-sm-6 col-lg-5'>
-            <h2>MOLLY JOHNSON</h2>
-            <span>BEAUTY EDITOR</span>
-
             <h2>ALYSSA NAVARRO</h2>
             <span>BEAUTY EDITOR</span>
 

@@ -18,32 +18,51 @@ export class Blogs extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { blogs: [], posts: [] }
+    this.state = { blogs: [], moreAvailable: true, posts: [] }
     this.concatPosts = this.concatPosts.bind(this)
     this.loadPosts = this.loadPosts.bind(this)
+    this.checkIfMorePostsAvailable = this.checkIfMorePostsAvailable.bind(this)
   }
 
   componentWillMount () {
     let { blogSlug } = this.props.params
     let nextState = this.concatPosts(blogSlug)
-    if (nextState.posts.length < 6) {
-      this.loadPosts()
+    let moreAvailable = this.checkIfMorePostsAvailable(blogSlug)
+    if (nextState.posts.length < 6 && moreAvailable) {
+      this.loadPosts(blogSlug)
     }
   }
 
   componentWillReceiveProps (nextProps) {
     let { blogSlug } = this.props.params
     let { blogSlug: nextBlogSlug } = nextProps.params
-    if (blogSlug !== nextBlogSlug) {
+    // if !blogSlug componentWillMount will be called
+    if (blogSlug && blogSlug !== nextBlogSlug) {
       let nextState = this.concatPosts(nextBlogSlug)
-      if (nextState.posts.length < 6) {
+      let moreAvailable = this.checkIfMorePostsAvailable(nextBlogSlug)
+      if (nextState.posts.length < 6 && moreAvailable) {
         this.loadPosts(nextBlogSlug)
       }
     }
   }
 
+  checkIfMorePostsAvailable (blogSlug) {
+    let moreAvailable
+    let { byType } = this.props.blog
+    if (blogSlug) {
+      let { attributes, posts } = byType.blogs[blogSlug]
+      moreAvailable = posts.length < attributes.post_count
+    } else {
+      let { _fetched, _post_count } = byType.blogs
+      moreAvailable = _fetched < _post_count
+    }
+    this.setState({ moreAvailable })
+    return moreAvailable
+  }
+
   concatPosts (blogSlug) {
     let state = { blogs: [], posts: [] }
+    this.checkIfMorePostsAvailable(blogSlug)
     forOwn(this.props.blog.byType.blogs, (category) => {
       // ignore props
       if (category.posts) {
@@ -59,25 +78,22 @@ export class Blogs extends Component {
   }
 
   loadPosts (blogSlug) {
-    let { getPosts, params } = this.props
-    blogSlug = blogSlug || params.blogSlug
+    let { getPosts } = this.props
     getPosts('blogs', blogSlug).then(() => this.concatPosts(blogSlug))
   }
 
   render () {
-    let { blogs, posts } = this.state
-    let { blog: { byType }, params: { blogSlug } } = this.props
-    let moreAvailable
-    if (blogSlug) {
-      let { attributes, posts } = byType.blogs[blogSlug]
-      moreAvailable = posts.length < attributes.post_count
-    } else {
-      let { _fetched, _post_count } = this.props.blog.byType.blogs
-      moreAvailable = _fetched < _post_count
-    }
+    let { blogs, moreAvailable, posts } = this.state
+    let { blogSlug } = this.props.params
+    let loadPosts = () => this.loadPosts(blogSlug)
 
     return this.props.children ||
-      <BlogsView blogs={blogs} posts={posts} loadMore={this.loadPosts} moreAvailable={moreAvailable} />
+      <BlogsView
+        activeBlog={blogSlug}
+        blogs={blogs}
+        posts={posts}
+        loadMore={loadPosts}
+        moreAvailable={moreAvailable} />
   }
 }
 

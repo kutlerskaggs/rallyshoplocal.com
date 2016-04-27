@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { getPost } from 'redux/modules/actions/blog'
 // components
 import Loader from 'components/Loader'
-import PostView from 'views/Blogs/Post'
+import PostView from 'views/Podcasts/Post'
 
 export class Post extends Component {
 
   static propTypes = {
-    blog: PropTypes.object.isRequired,
+    podcast: PropTypes.object.isRequired,
     getPost: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired
   }
@@ -20,11 +20,11 @@ export class Post extends Component {
   }
 
   componentWillMount () {
-    let { blog, getPost, params: { postSlug } } = this.props
-    let post = blog.posts.find((post) => post.slug === postSlug)
+    let { podcast, getPost, params: { postSlug } } = this.props
+    let post = podcast.posts.find((post) => post.slug === postSlug)
     if (!post) {
       getPost(postSlug).then(() => {
-        post = blog.posts.find((post) => post.slug === postSlug)
+        post = podcast.posts.find((post) => post.slug === postSlug)
         this.setState({ post })
       })
     } else {
@@ -39,8 +39,8 @@ export class Post extends Component {
 }
 
 let stateToProps = (state, props) => {
-  let blog = state.blog.byType.blogs[props.params.blogSlug]
-  return { blog }
+  let podcast = state.blog.byType.podcasts[props.params.podcastSlug]
+  return { podcast }
 }
 
 let dispatchToProps = { getPost }

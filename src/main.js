@@ -1,4 +1,4 @@
-/* @flow */
+import 'babel-polyfill' // ES6
 import React from 'react'
 import ReactDOM from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
@@ -16,6 +16,13 @@ promise.polyfill()
 // Configure history for react-router
 const browserHistory = useRouterHistory(createBrowserHistory)({
   basename: __BASENAME__
+})
+
+// redirect hash bang (aws s3 hack)
+browserHistory.listen(function (location) {
+  console.log('listen!', location)
+  const path = (/#(\/.*)$/.exec(location.hash) || [])[1]
+  if (path) browserHistory.replace(path)
 })
 
 // Create redux store and sync with react-router-redux. We have installed the

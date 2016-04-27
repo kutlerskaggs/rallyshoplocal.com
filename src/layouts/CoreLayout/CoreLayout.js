@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Header from 'containers/Header'
 // css
 import '../../styles/core.scss'
+import '../../styles/vendor/styles'
 import styles from './styles.scss'
 
 export class CoreLayout extends React.Component {

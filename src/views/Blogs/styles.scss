@@ -1,35 +1,78 @@
 @import 'variables';
 
 .blogCard {
-  flex: 1;
-  height: 400px;
+  cursor: pointer;
+  flex: 1 0 0;
+  height: 300px;
+  max-width: 389.33px;
   position: relative;
   overflow: hidden;
+  margin: 0 16px;
+  > div {
+    transition: all 500ms;
+  }
+  &:hover, &.active {
+    .blogImage {
+      transform: scale(.85);
+      filter: brightness(.7);
+    }
+    .blogTitle > .hidden {
+      opacity: 1;
+      transform: none;
+    }
+  }
 }
 
 .blogImage {
-  background-color: #000;
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background-color: #000;
   background-size: cover;
   background-position: center;
-  filter: brightness(.7);
+  filter: brightness(.7) grayscale(1);
 }
 
-.blogRotate {
-  width: 100%;
-  height: 100%;
-  position: absolute;
+.blogTitle {
+  position: relative;
+  padding: 30px;
+  text-align: left;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  > h1 {
+    margin: 0;
+    max-width: 220px;
+  }
+  .hidden {
+    margin: 0;
+    max-width: 150px;
+    transition: all 500ms;
+    border-left: solid 1px;
+    padding-left: 10px;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    opacity: 0;
+    transform: translateX(25px);
+  }
 }
 
 .blogsContainer {
   > div {
     display: flex;
+    justify-content: center;
+    > div {
+      &:first-of-type {
+        margin-left: 0px;
+      }
+      &:nth-of-type(3) {
+        margin-right: 0px;
+      }
+    }
   }
 }
 
@@ -53,5 +96,12 @@
     &:nth-child(odd) {
       justify-content: flex-end;
     }
+  }
+}
+
+// small
+@media screen and (max-width: 991px) {
+  .hideSmall {
+    display: none !important;
   }
 }

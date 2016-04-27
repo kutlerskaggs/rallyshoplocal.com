@@ -1,0 +1,23 @@
+.wordpress {
+  .alignleft {
+    display: inline;
+    float: left;
+    margin: 20px 20px 20px 0;
+  }
+
+  .alignright {
+    display: inline;
+    float: right;
+    margin: 20px 0 20px 20px;
+  }
+
+  .aligncenter {
+    display: block;
+    clear: both;
+    margin: 20px auto;
+  }
+
+  .wp-audio-shortcode {
+    visibility: visible !important;
+  }
+}

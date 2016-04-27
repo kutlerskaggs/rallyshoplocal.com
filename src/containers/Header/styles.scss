@@ -1,8 +1,8 @@
 @import 'variables';
 
 .logo {
-  flex: 1;
-  > img {
+  flex: 1 0 0;
+  > a > img {
     height: 70px;
     margin: 0 15px;
     vertical-align: bottom;
@@ -55,7 +55,7 @@
 }
 
 .navItemWrapper {
-  flex: 1;
+  flex: 1 0 0;
   max-width: 125px;
   margin: 0 15px;
 }

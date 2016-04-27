@@ -48,7 +48,9 @@ export default class Header extends Component {
     return (
       <div className={styles.wrapper}>
         <div className={styles.logo}>
-          <img src='/images/logo_full_white.svg' />
+          <Link to='/'>
+            <img src='/images/RallyShopLogo.png' alt='RallyShopLogo' />
+          </Link>
         </div>
         <nav className={`${styles.navWrapper} ${openMobileMenu ? styles.openMobileMenu : ''}`}>
           {menuItems}

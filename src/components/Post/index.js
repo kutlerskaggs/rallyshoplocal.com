@@ -7,8 +7,6 @@ import Window from 'HOC/Window'
 export class Post extends Component {
 
   static propTypes = {
-    content: PropTypes.string.isRequired,
-    imgSrc: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
     window: PropTypes.object.isRequired
@@ -31,27 +29,32 @@ export class Post extends Component {
   }
 
   render () {
-    let { content, imgSrc, onClick, post } = this.props
-    let showRevealStyle = {
-      transform: 'translate3d(0, 0, 0)'
-    }
-    function truncate (text) {
-      return `${text.slice(0, 150)}...`
-    }
+    let { onClick, post } = this.props
+    let featuredImage = `${post.featured_image}?resize=600%2C600`
+    let el = document.createElement('div')
+    el.innerHTML = post.excerpt // TODO grabbing image caption ... remove?
+    let contentPreview = `${el.textContent.slice(0, 150)}...`
+    let cardImageStyle = { backgroundImage: `url('${featuredImage}')` }
+    let showRevealStyle = { transform: 'translate3d(0, 0, 0)' }
 
     return (
       <div className={styles.cardWrapper} onClick={this.onClick}>
         <div className={styles.card}>
-          <div className={styles.cardImage} style={{backgroundImage: `url('${imgSrc}')`}}></div>
+          <div className={styles.cardImage} style={cardImageStyle}></div>
           <div className={styles.cardContent}>
             <div className={styles.title}>
               <h1>{post.title}</h1>
             </div>
             <div className={styles.reveal} style={this.state.reveal ? showRevealStyle : {}}>
-              <p>{truncate(content)}</p>
-              <a className={styles.more} onClick={onClick}>Read more</a>
+              <p><span>{contentPreview}</span></p>
+              <a className={styles.more} onClick={onClick}>
+                Read more
+                <i className='fa fa-sign-in fa-fw'></i>
+              </a>
             </div>
-            <i className={`fa fa-${post._type === 'blog' ? 'pencil' : 'microphone'} fa-fw ${styles.icon}`}></i>
+            <div className={styles.icon}>
+              <i className={`fa fa-${post._type === 'blog' ? 'pencil' : 'microphone'} fa-fw`}></i>
+            </div>
           </div>
         </div>
       </div>

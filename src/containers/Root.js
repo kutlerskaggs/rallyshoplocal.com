@@ -5,14 +5,14 @@ import Loader from 'components/Loader'
 // redux
 import { getCategories, getPosts } from 'redux/modules/actions/blog'
 // styles
-import 'styles/vendor/styles'
+// import 'styles/vendor/styles' TODO moved to CoreLayout .... still working?
 
 export default class Root extends React.Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     routes: PropTypes.element.isRequired,
     store: PropTypes.object.isRequired
-  };
+  }
 
   constructor (props) {
     super(props)
@@ -21,15 +21,12 @@ export default class Root extends React.Component {
 
   componentWillMount () {
     let { dispatch, getState } = this.props.store
+    // get categories (bloggers/podcasts) and sample blogs/podcasts
     Promise.all([
       getCategories()(dispatch, getState),
       getPosts('blogs')(dispatch, getState),
       getPosts('podcasts')(dispatch, getState)
     ]).then(() => { this.setState({ initialLoad: false }) })
-
-    /* getCategories()(this.props.store.dispatch).then(() =>
-      this.setState({ initialLoad: false })
-    ) */
   }
 
   get content () {
@@ -56,6 +53,7 @@ export default class Root extends React.Component {
   }
 
   render () {
+    // TODO use transition group to animate initial loader out
     return (
       <Provider store={this.props.store}>
         <div>
