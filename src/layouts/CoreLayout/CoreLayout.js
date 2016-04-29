@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Header from 'containers/Header'
+import { Link } from 'react-router'
 // css
 import '../../styles/core.scss'
 import '../../styles/vendor/styles'
@@ -11,6 +12,18 @@ export class CoreLayout extends React.Component {
   }
 
   render () {
+    // sitemap
+    let sitemapItems = ['HOME', 'BLOGS', 'PODCASTS', 'MAGAZINES', 'CREATIVES', 'ABOUT']
+    let _sitemapItems = sitemapItems.map((item) => {
+      let isHome = item === 'HOME'
+      return (
+        <h5>
+          <Link to={`/${isHome ? '' : item.toLowerCase()}`}>
+            {item}
+          </Link>
+        </h5>
+      )
+    })
     // social media footer
     let _socialItems = [
       { icon: 'facebook', href: 'http://www.facebook.com/rally-casper' },
@@ -33,8 +46,20 @@ export class CoreLayout extends React.Component {
         <div className={styles.content}>
           {this.props.children}
         </div>
-        <div className={styles.social}>
-          {socialItems}
+        <div className={styles.footer}>
+          <div className={styles.copyright}>
+            <img src='/images/RallyShopLogo.png' alt='RallyShopLogo' />
+            <h5>
+              <i className='fa fa-copyright fa-fw'></i>
+              {new Date().getFullYear()}&nbsp;Rally Shop Local,&nbsp;LLC
+            </h5>
+          </div>
+          <div className={styles.sitemap}>
+            {_sitemapItems}
+          </div>
+          <div className={styles.social}>
+            <div>{socialItems}</div>
+          </div>
         </div>
       </div>
     )

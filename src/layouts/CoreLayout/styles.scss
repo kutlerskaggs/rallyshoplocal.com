@@ -1,10 +1,41 @@
 @import 'variables';
 
+.footer {
+  display: flex;
+  align-items: center;
+  padding: 30px 60px;
+}
+
+.copyright {
+  margin-right: 60px;
+  > img {
+    max-width: 175px;
+  }
+  > h5 {
+    font-weight: 400 !important;
+    color: lighten($primary1Color, 50%);
+  }
+}
+
+.sitemap {
+  flex: 2;
+  > h5 {
+    font-weight: 400 !important;
+    > a {
+      text-decoration: none;
+      transition: color 300ms;
+      color: lighten($primary1Color, 50%);
+      &:hover {
+        color: $textColor;
+      }
+    }
+  }
+}
+
 .social {
-  position: fixed;
-  left: 0px;
-  bottom: 0px;
-  z-index: 1000;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .socialAnimation {
@@ -23,7 +54,7 @@
   position: relative;
   vertical-align: bottom;
   z-index: 10;
-  margin: 20px 15px;
+  margin: 20px 0px;
   display: block !important;
   font-size: 1.5rem !important;
   cursor: pointer;
