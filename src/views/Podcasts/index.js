@@ -72,7 +72,7 @@ export class PodcastsView extends Component {
         <div className={`row center-xs start-md ${styles.hideSmall}`}>
           <h1 className='col-xs-12 col-lg-offset-1 col-lg-10'>Posts</h1>
         </div>
-        
+
         <div className={`row center-xs ${styles.postsContainer}`}>
           {_featuredPosts}
         </div>

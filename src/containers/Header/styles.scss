@@ -11,7 +11,8 @@
 
 .navItem {
   transform: translateZ(0); // fix font flicker on safari
-  font-family: 'Modern No 20';
+  font-family: 'Helvetica';
+  font-weight: 100;
   font-size: 1.2rem;
   display: inline-block;
   padding: 0;
