@@ -39,7 +39,7 @@ export default class Header extends Component {
             data-hover={item}
             onClick={this.closeMobileMenu}
           >
-            {item}
+            {item.toLowerCase()}
           </Link>
         </div>
       )

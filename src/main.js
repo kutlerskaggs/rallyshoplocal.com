@@ -20,7 +20,6 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
 
 // redirect hash bang (aws s3 hack)
 browserHistory.listen(function (location) {
-  console.log('listen!', location)
   const path = (/#(\/.*)$/.exec(location.hash) || [])[1]
   if (path) browserHistory.replace(path)
 })

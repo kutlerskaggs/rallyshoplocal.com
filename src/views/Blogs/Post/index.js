@@ -12,6 +12,26 @@ export class PostView extends Component {
 
   render () {
     let { post } = this.props
+    // TODO make conditional based on post date???
+    let rallycasperRegex = /https?:\/\/(i\d+\.wp\.com\/)?rallycasper.com\/wp-content\/uploads/g
+    let urlRegex = /https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+    // replace domain
+    post.content = post.content.replace(rallycasperRegex, 'https://rallyshoplocal.files.wordpress.com')
+    // lowercase and change image resizing
+    post.content = post.content.replace(urlRegex, (match) => {
+      match = match.toLowerCase()
+      let resize = match.match(/-\d+x\d+\.[0-9a-z]+$/i)
+      if (resize) {
+        resize = resize[0]
+        let sizes = resize.match(/\d+/g)
+        // remove sizing tacked onto end of file name
+        match = match.replace(resize, resize.slice(resize.indexOf('.')))
+        // append sizing as query param
+        match += `?w=${sizes[0]}&h=${sizes[1]}`
+      }
+      return match
+    })
+
     return (
       <div className='container-fluid'>
         <div className={'row center-xs middle-xs'}>
