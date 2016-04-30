@@ -28,17 +28,21 @@ export default class HomeView extends Component {
 
     return (
       <div>
-        <div className='container-fluid'>
-          <div className='row center-xs start-md'>
-            <h1 className='col-xs-12 col-lg-offset-1 col-lg-10'>Featured</h1>
-          </div>
+        <div className={`container-fluid ${styles.container}`}>
           <div className={`row center-xs ${styles.postsContainer}`}>
             <div className='col-xs-12 col-lg-10'>
               {_posts}
             </div>
           </div>
         </div>
-        <div className={`container-fluid ${styles.recentContainer}`}></div>
+        <div className={`container-fluid ${styles.container} ${styles.recentContainer}`}>
+          <div className='row center-xs start-md'>
+            <h4 className={`col-xs-12 col-lg-offset-1 col-lg-10 ${styles.header}`}>
+              <span>Recent Posts</span>
+              <hr />
+            </h4>
+          </div>
+        </div>
       </div>
     )
   }

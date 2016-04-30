@@ -17,7 +17,7 @@ export class CoreLayout extends React.Component {
     let _sitemapItems = sitemapItems.map((item) => {
       let isHome = item === 'HOME'
       return (
-        <h5>
+        <h5 key={item}>
           <Link to={`/${isHome ? '' : item.toLowerCase()}`}>
             {item}
           </Link>

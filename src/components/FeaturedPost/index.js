@@ -38,26 +38,30 @@ export class FeaturedPost extends Component {
     let cardImageStyle = { backgroundImage: `url('${featuredImage}')` }
     let showRevealStyle = { transform: 'translate3d(0, 0, 0)' }
 
+    // TODO split title, concat into multiple headers
+    let title = post.title.split(' ').reduce((word) => {
+
+    })
+
     return (
       <div className={`${styles.wrapper} ${styles[position]}`} onClick={this.onClick}>
         <div className={styles.skew}>
-          <div className={styles.card}>
-            <div className={styles.cardImage} style={cardImageStyle}></div>
-            <div className={styles.cardContent}>
-              <div className={styles.title}>
-                <h1>{post.title}</h1>
-              </div>
-              <div className={styles.reveal} style={this.state.reveal ? showRevealStyle : {}}>
-                <p><span>{contentPreview}</span></p>
-                <a className={styles.more} onClick={onClick}>
-                  Read more
-                  <i className='fa fa-sign-in fa-fw'></i>
-                </a>
-              </div>
-              <div className={styles.icon}>
-                <i className={`fa fa-${post._type === 'blog' ? 'pencil' : 'microphone'} fa-fw`}></i>
-              </div>
-            </div>
+          <div className={styles.unskew}>
+            <div className={styles.image} style={cardImageStyle}></div>
+            <div className={styles.overlay}></div>
+          </div>
+        </div>
+
+        <div className={styles.content}>
+          <div className={styles.title}>
+            {title}
+          </div>
+          <div className={styles.reveal} style={this.state.reveal ? showRevealStyle : {}}>
+            <p><span>{contentPreview}</span></p>
+            <a className={styles.more} onClick={onClick}>
+              Read more
+              <i className='fa fa-sign-in fa-fw'></i>
+            </a>
           </div>
         </div>
       </div>
