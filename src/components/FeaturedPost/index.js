@@ -4,10 +4,11 @@ import styles from './styles.scss'
 // HOC
 import Window from 'HOC/Window'
 
-export class Post extends Component {
+export class FeaturedPost extends Component {
 
   static propTypes = {
     onClick: PropTypes.func.isRequired,
+    position: PropTypes.string.isRequired,
     post: PropTypes.object.isRequired,
     window: PropTypes.object.isRequired
   }
@@ -29,7 +30,7 @@ export class Post extends Component {
   }
 
   render () {
-    let { onClick, post } = this.props
+    let { onClick, position, post } = this.props
     let featuredImage = `${post.featured_image}?resize=600%2C600`
     let el = document.createElement('div')
     el.innerHTML = post.excerpt // TODO grabbing image caption ... remove?
@@ -38,22 +39,24 @@ export class Post extends Component {
     let showRevealStyle = { transform: 'translate3d(0, 0, 0)' }
 
     return (
-      <div className={styles.cardWrapper} onClick={this.onClick}>
-        <div className={styles.card}>
-          <div className={styles.cardImage} style={cardImageStyle}></div>
-          <div className={styles.cardContent}>
-            <div className={styles.title}>
-              <h1>{post.title}</h1>
-            </div>
-            <div className={styles.reveal} style={this.state.reveal ? showRevealStyle : {}}>
-              <p><span>{contentPreview}</span></p>
-              <a className={styles.more} onClick={onClick}>
-                Read more
-                <i className='fa fa-sign-in fa-fw'></i>
-              </a>
-            </div>
-            <div className={styles.icon}>
-              <i className={`fa fa-${post._type === 'blog' ? 'pencil' : 'microphone'} fa-fw`}></i>
+      <div className={`${styles.wrapper} ${styles[position]}`} onClick={this.onClick}>
+        <div className={styles.skew}>
+          <div className={styles.card}>
+            <div className={styles.cardImage} style={cardImageStyle}></div>
+            <div className={styles.cardContent}>
+              <div className={styles.title}>
+                <h1>{post.title}</h1>
+              </div>
+              <div className={styles.reveal} style={this.state.reveal ? showRevealStyle : {}}>
+                <p><span>{contentPreview}</span></p>
+                <a className={styles.more} onClick={onClick}>
+                  Read more
+                  <i className='fa fa-sign-in fa-fw'></i>
+                </a>
+              </div>
+              <div className={styles.icon}>
+                <i className={`fa fa-${post._type === 'blog' ? 'pencil' : 'microphone'} fa-fw`}></i>
+              </div>
             </div>
           </div>
         </div>
@@ -62,4 +65,4 @@ export class Post extends Component {
   }
 }
 
-export default Window(Post)
+export default Window(FeaturedPost)
