@@ -23,7 +23,7 @@
   }
 
   p {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
 
   html,
@@ -60,6 +60,10 @@
     }
     p {
       font-size: 1.1rem;
+    }
+    .container-fluid {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
     }
   }
 }

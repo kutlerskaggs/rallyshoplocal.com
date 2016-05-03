@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 // components
 import FeaturedPost from 'components/FeaturedPost'
+import SectionTitle from 'components/SectionTitle'
 // css
 import styles from './styles.scss'
 
@@ -37,10 +38,9 @@ export default class HomeView extends Component {
         </div>
         <div className={`container-fluid ${styles.container} ${styles.recentContainer}`}>
           <div className='row center-xs start-md'>
-            <h4 className={`col-xs-12 col-lg-offset-1 col-lg-10 ${styles.header}`}>
-              <span>Recent Posts</span>
-              <hr />
-            </h4>
+            <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
+              <SectionTitle label='Recent Posts' dark />
+            </div>
           </div>
         </div>
       </div>

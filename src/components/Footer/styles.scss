@@ -2,17 +2,9 @@
 
 .container {
   background-color: $primary1Color;
-  padding: 0 !important;
   > div {
-    margin: 0 !important;
     padding: 30px 0;
   }
-}
-
-.footer {
-  display: flex;
-  align-items: center;
-  padding: 30px 0px;
 }
 
 .copyright {
@@ -83,7 +75,10 @@
 }
 
 .wrapper {
-  padding: 0px !important;
+  display: flex;
+  > div {
+    flex: 1;
+  }
 }
 
 // medium
@@ -95,8 +90,8 @@
 
 // small
 @media screen and (max-width: 767px) {
-  .copyright, .contact, .social {
-    padding: 0 !important;
+  .wrapper {
+    display: block;
   }
   .contact {
     margin: 30px 0px;

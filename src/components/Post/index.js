@@ -3,58 +3,43 @@ import React, { Component, PropTypes } from 'react'
 import styles from './styles.scss'
 // HOC
 import Window from 'HOC/Window'
+// utils
+import moment from 'moment'
 
 export class Post extends Component {
 
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
+    size: PropTypes.string.isRequired,
     window: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
-    // for use on mobile and tablet only
-    this.state = { reveal: false }
-    this.onClick = this.onClick.bind(this)
-  }
-
-  onClick (id) {
-    let { onClick, window } = this.props
-    if (window.isTablet || window.isMobile) {
-      this.setState({ reveal: !this.state.reveal })
-    } else {
-      onClick()
-    }
-  }
-
   render () {
-    let { onClick, post } = this.props
+    let { onClick, post, size } = this.props
     let featuredImage = `${post.featured_image}?resize=600%2C600`
     let el = document.createElement('div')
     el.innerHTML = post.excerpt // TODO grabbing image caption ... remove?
-    let contentPreview = `${el.textContent.slice(0, 150)}...`
+    let previewLengths = { small: 120, medium: 200, large: 350 }
+    let contentPreview = `${el.textContent.slice(0, previewLengths[size])}...`
     let cardImageStyle = { backgroundImage: `url('${featuredImage}')` }
-    let showRevealStyle = { transform: 'translate3d(0, 0, 0)' }
+    let author = post.author.name.split(' ')
+    author = author.length > 1 ? `${author[0][0]}. ${author[1]}` : author.join(' ')
 
     return (
-      <div className={styles.cardWrapper} onClick={this.onClick}>
+      <div className={styles[size]}>
         <div className={styles.card}>
-          <div className={styles.cardImage} style={cardImageStyle}></div>
-          <div className={styles.cardContent}>
+          <div className={styles.target} onClick={onClick}></div>
+          <div className={styles.image} style={cardImageStyle}></div>
+          <div className={styles.overlay}></div>
+          <div className={styles.content}>
             <div className={styles.title}>
-              <h1>{post.title}</h1>
+              <span>{post.title}</span>
             </div>
-            <div className={styles.reveal} style={this.state.reveal ? showRevealStyle : {}}>
+            <div className={styles.preview}>
               <p><span>{contentPreview}</span></p>
-              <a className={styles.more} onClick={onClick}>
-                Read more
-                <i className='fa fa-sign-in fa-fw'></i>
-              </a>
             </div>
-            <div className={styles.icon}>
-              <i className={`fa fa-${post._type === 'blog' ? 'pencil' : 'microphone'} fa-fw`}></i>
-            </div>
+            <h6>{`${author} | ${moment(post.date).format('MMM D, YYYY')}`}</h6>
           </div>
         </div>
       </div>
