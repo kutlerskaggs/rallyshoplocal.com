@@ -2,6 +2,7 @@
 
 .title {
   position: relative;
+  margin: 0;
   > span {
     display: inline-block;
     position: relative;
@@ -30,5 +31,14 @@
   }
   > hr {
     background-color: $primary1Color !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .title {
+    text-align: center;
+    > span {
+      margin-left: 0;
+    }
   }
 }

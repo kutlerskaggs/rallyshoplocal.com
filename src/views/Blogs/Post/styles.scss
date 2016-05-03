@@ -1,5 +1,9 @@
 @import 'variables';
 
+.container {
+  background-color: #fff;
+}
+
 .content {
   color: $alternateTextColor;
   margin: 30px 0px 50px 0px;
@@ -24,9 +28,4 @@
 .title {
   color: #111;
   width: 100%;
-}
-
-.wrapper {
-  background-color: #fff;
-  margin: 20px 0;
 }

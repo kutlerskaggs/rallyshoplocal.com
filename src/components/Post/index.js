@@ -16,12 +16,13 @@ export class Post extends Component {
   }
 
   render () {
-    let { onClick, post, size } = this.props
+    let { onClick, post, size, window: { isTiny, isSmall, isMedium } } = this.props
     let featuredImage = `${post.featured_image}?resize=600%2C600`
     let el = document.createElement('div')
     el.innerHTML = post.excerpt // TODO grabbing image caption ... remove?
     let previewLengths = { small: 120, medium: 200, large: 350 }
-    let contentPreview = `${el.textContent.slice(0, previewLengths[size])}...`
+    let length = isTiny || isSmall || isMedium ? previewLengths.small : previewLengths[size]
+    let contentPreview = `${el.textContent.slice(0, length)}...`
     let cardImageStyle = { backgroundImage: `url('${featuredImage}')` }
     let author = post.author.name.split(' ')
     author = author.length > 1 ? `${author[0][0]}. ${author[1]}` : author.join(' ')

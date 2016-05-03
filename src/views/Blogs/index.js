@@ -42,17 +42,18 @@ export class BlogsView extends Component {
 
     return (
       <div className='container-fluid'>
-        <div className='row center-xs start-md'>
+        <div className='row'>
           <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
             <SectionTitle label='Blog Posts' />
           </div>
         </div>
 
-        <div className='row center-xs start-md'>
+        <div className='row'>
           <div className={`col-xs-12 col-lg-offset-1 col-lg-10 ${styles.postsContainer}`}>
             <TransitionGroup
               transitionName={transitionClasses}
               transitionEnterTimeout={500}
+              transitionLeaveTimeout={0}
             >
               {_featuredPosts}
             </TransitionGroup>

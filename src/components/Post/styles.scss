@@ -2,60 +2,6 @@
 
 .small {
   flex: 0 0 33.33%;
-  .card {
-    height: 300px;
-  }
-}
-
-.medium {
-  position: relative;
-  flex: 1 0 66.66%;
-  .card {
-    height: 300px;
-    .content {
-      display: inline-block;
-      color: $alternateTextColor;
-      float: right;
-      width: calc(50% + 25px);
-
-    }
-    .image {
-      display: inline-block;
-      width: calc(50% - 25px);
-      position: relative;
-    }
-    .overlay {
-      display: none;
-    }
-  }
-}
-
-.large {
-  position: relative;
-  flex: 1 0 66.66%;
-  .card {
-    height: 650px;
-    .content {
-      position: static;
-      height: calc(50% + 25px);
-      > .title {
-        position: absolute;
-        top: 25px;
-        left: 25px;
-        right: 25px;
-        z-index: 31;
-      }
-      > .preview, > h6 {
-        color: $alternateTextColor;
-      }
-    }
-    .image, .overlay {
-      height: calc(50% - 25px);
-    }
-    .image {
-      position: relative;
-    }
-  }
 }
 
 .card {
@@ -124,31 +70,86 @@
 }
 
 @media screen and (min-width: 1200px) {
-  .card {
-    // min-height: 350px; // firefox patch
+  .large {
+    position: relative;
+    flex: 0 0 66.66%;
+    .card {
+      height: 650px;
+      .content {
+        position: static;
+        height: calc(50% + 25px);
+        > .title {
+          position: absolute;
+          top: 25px;
+          left: 25px;
+          right: 25px;
+          z-index: 31;
+        }
+        > .preview, > h6 {
+          color: $alternateTextColor;
+        }
+      }
+      .image, .overlay {
+        height: calc(50% - 25px);
+      }
+      .image {
+        position: relative;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 767px) {
+  .medium {
+    position: relative;
+    flex: 0 0 66.66%;
+    .card {
+      height: 300px;
+      .content {
+        display: inline-block;
+        color: $alternateTextColor;
+        float: right;
+        width: calc(50% + 25px);
+
+      }
+      .image {
+        display: inline-block;
+        width: calc(50% - 25px);
+        position: relative;
+      }
+      .overlay {
+        display: none;
+      }
+    }
   }
 }
 
 // tablet-ish
 @media screen and (max-width: 1199px) {
-  .card {
-    // min-height: 300px; // firefox patch
+  .small, .large {
+    flex: 0 0 50%;
+  }
+
+  .medium {
+    flex: 0 0 100%;
   }
 }
 
 // mobile
 @media screen and (max-width: 767px) {
   .card {
-    // min-height: 250px; // firefox patch
-    // padding: 40% 0; // set height to 80% of parent width
+    margin: 15px 0;
+  }
+  .small, .large {
+    flex: 0 0 100%;
   }
   .content {
+    padding: 15px;
     .title {
       border: solid 2px;
-      margin: 15px;
       padding: 10px;
-      > h1 {
-        font-size: 1.3rem;
+      > span {
+        font-size: 1.1rem;
       }
     }
   }

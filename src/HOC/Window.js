@@ -16,9 +16,11 @@ export default (_Component) => {
         window: {
           height: height,
           width: width,
-          isTablet: width > 414 && width <= 1199,
-          isMobile: width <= 414,
-          isHighRes: width > 1920
+          isTiny: width <= 767,
+          isSmall: width > 767 && width <= 991,
+          isMedium: width > 991 && width <= 1200,
+          isLarge: width > 1200 && width <= 1920,
+          isHuge: width > 1920
         }
       })
     }

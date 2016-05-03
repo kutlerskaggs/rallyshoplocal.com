@@ -33,9 +33,9 @@ export class PostView extends Component {
     })
 
     return (
-      <div className='container-fluid'>
+      <div className={`container-fluid ${styles.container}`}>
         <div className={'row center-xs middle-xs'}>
-          <div className={`row center-xs col-xs-12 col-lg-8 ${styles.wrapper}`}>
+          <div className='row center-xs col-xs-12 col-lg-8'>
             <div className={styles.content}>
               <h1 className={styles.title}>{post.title}</h1>
               <h3 className={styles.subTitle}>
