@@ -7,26 +7,26 @@ import styles from './styles.scss'
 import Waypoint from 'react-waypoint'
 import TransitionGroup from 'react-addons-css-transition-group'
 
-export class BlogsView extends Component {
+export class PostsView extends Component {
 
   static contextTypes = {
     router: PropTypes.object
   }
 
   static propTypes = {
-    activeBlog: PropTypes.string,
-    blogs: PropTypes.array.isRequired,
+    activeCategory: PropTypes.string,
     posts: PropTypes.array.isRequired,
     loadMore: PropTypes.func.isRequired,
-    moreAvailable: PropTypes.bool.isRequired
+    moreAvailable: PropTypes.bool.isRequired,
+    type: PropTypes.string
   }
 
   render () {
-    let { activeBlog, blogs, posts } = this.props
+    let { activeCategory, posts, type } = this.props
     let { context: { router } } = this
     let _featuredPosts = posts.map((post, index) => {
       let { _category, ID: id, slug } = post
-      let onClick = () => router.push(`/blogs/${_category}/${slug}`)
+      let onClick = () => router.push(`/${type}/${_category}/${slug}`)
       let sizes = {
         0: 'medium',
         3: 'large'
@@ -44,7 +44,7 @@ export class BlogsView extends Component {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
-            <SectionTitle label='Blog Posts' />
+            <SectionTitle label='Posts' />
           </div>
         </div>
 
@@ -65,4 +65,4 @@ export class BlogsView extends Component {
   }
 }
 
-export default BlogsView
+export default PostsView

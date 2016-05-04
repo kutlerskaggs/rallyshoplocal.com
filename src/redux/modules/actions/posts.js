@@ -63,7 +63,7 @@ export const getPost = (postSlug) => {
 
 export const getPosts = (type, category) => {
   return (dispatch, getState) => {
-    let state = getState().blog
+    let state = getState().posts
     let { byType } = state
     let categoryParam = ''
     let offsetParam = ''

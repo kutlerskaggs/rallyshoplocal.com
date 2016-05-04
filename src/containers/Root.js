@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 import Loader from 'components/Loader'
 // redux
-import { getCategories, getPosts } from 'redux/modules/actions/blog'
+import { getCategories, getPosts } from 'redux/modules/actions/posts'
 // styles
 // import 'styles/vendor/styles' TODO moved to CoreLayout .... still working?
 

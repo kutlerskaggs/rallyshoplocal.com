@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 // redux
 import { connect } from 'react-redux'
-import { getPost } from 'redux/modules/actions/blog'
+import { getPost } from 'redux/modules/actions/posts'
 // components
 import Loader from 'components/Loader'
-import PostView from 'views/Blogs/Post'
+import PostView from 'views/Posts/Post'
 
 export class Post extends Component {
 
   static propTypes = {
-    blog: PropTypes.object.isRequired,
+    category: PropTypes.object.isRequired,
     getPost: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired
   }
@@ -20,11 +20,11 @@ export class Post extends Component {
   }
 
   componentWillMount () {
-    let { blog, getPost, params: { postSlug } } = this.props
-    let post = blog.posts.find((post) => post.slug === postSlug)
+    let { category, getPost, params: { postSlug } } = this.props
+    let post = category.posts.find((post) => post.slug === postSlug)
     if (!post) {
       getPost(postSlug).then(() => {
-        post = blog.posts.find((post) => post.slug === postSlug)
+        post = category.posts.find((post) => post.slug === postSlug)
         this.setState({ post })
       })
     } else {
@@ -39,8 +39,9 @@ export class Post extends Component {
 }
 
 let stateToProps = (state, props) => {
-  let blog = state.blog.byType.blogs[props.params.blogSlug]
-  return { blog }
+  let { categorySlug, type } = props.params
+  let category = state.posts.byType[type][categorySlug]
+  return { category }
 }
 
 let dispatchToProps = { getPost }

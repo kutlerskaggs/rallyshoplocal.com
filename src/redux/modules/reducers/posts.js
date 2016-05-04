@@ -6,7 +6,7 @@ import {
   REQUEST_POSTS,
   UPDATE_PAGING,
   ERROR_FETCHING_POSTS
-} from 'redux/modules/actions/blog'
+} from 'redux/modules/actions/posts'
 
 let defaultState = {
   loading: false,
@@ -22,7 +22,7 @@ let defaultState = {
   }
 }
 // default state set in main.js
-export function blog (state = defaultState, action) {
+export function posts (state = defaultState, action) {
   const { type } = action
   let nextState = Object.assign({}, state)
 
