@@ -16,6 +16,7 @@ let scrollTop = () => {
 export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute onEnter={scrollTop} component={Home} />
+    {/* Blogs/Podcasts */}
     <Route path='/:type' onEnter={scrollTop} component={Posts}>
       <Route path='/:type/:categorySlug' onEnter={scrollTop} component={Posts}>
         <Route path='/:type/:categorySlug/:postSlug' onEnter={scrollTop} component={Post} />

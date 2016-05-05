@@ -28,8 +28,6 @@ export function posts (state = defaultState, action) {
 
   switch (type) {
     case RECEIVE_POSTS: {
-      // TODO add paging
-      // console.log(action.posts)
       ['blogs', 'podcasts'].forEach((type) => {
         let currentType = nextState.byType[type]
         forOwn(action.posts[type], (posts, category) => {
@@ -51,8 +49,8 @@ export function posts (state = defaultState, action) {
       return nextState
     }
     case UPDATE_PAGING: {
-      let { payload, payload: { type } } = action
-      nextState.byType[type] = Object.assign(nextState.byType[type], payload)
+      let { type, _fetched } = action.payload
+      nextState.byType[type]._fetched = _fetched
       return nextState
     }
     case ERROR_FETCHING_POSTS: {

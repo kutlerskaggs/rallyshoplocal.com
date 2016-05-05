@@ -6,9 +6,8 @@ export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const UPDATE_PAGING = 'UPDATE_PAGING'
 export const ERROR_FETCHING_POSTS = 'ERROR_FETCHING_POSTS'
 
-// let apiKey = 'AIzaSyA3zd8Vp7IDsWvkepT0h0fNKBkCFku58j0'
 let types = {
-  blogs: ['thomas-foolery', 'horse-trough-time-machine', 'connie-lingus'], // TODO remove 'Blog'
+  blogs: ['thomas-foolery', 'horse-trough-time-machine', 'connie-lingus'],
   podcasts: ['cinema-danger-duo', 'no-label-roundtable']
 }
 let urlBase = 'https://public-api.wordpress.com/rest/v1.1/sites/rallyshoplocal.wordpress.com'

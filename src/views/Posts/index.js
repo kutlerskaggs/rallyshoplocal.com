@@ -14,25 +14,26 @@ export class PostsView extends Component {
   }
 
   static propTypes = {
-    activeCategory: PropTypes.string,
+    category: PropTypes.string,
     posts: PropTypes.array.isRequired,
     loadMore: PropTypes.func.isRequired,
-    moreAvailable: PropTypes.bool.isRequired,
     type: PropTypes.string
   }
 
   render () {
-    let { activeCategory, posts, type } = this.props
+    let { category, posts, type } = this.props
     let { context: { router } } = this
+    let title = category || type === 'blogs' ? 'Blog Posts' : 'Podcasts'
     /** fade/slide in */
     let transitionClasses = {
       enter: styles.enter,
-      enterActive: styles.enterActive
+      enterActive: styles.enterActive,
+      leave: '__leave__',
+      leaveActive: '__leaveActive__'
     }
     let featuredPosts = []
     let featuredPostsGroup = []
     posts.forEach((post, index) => {
-      console.log(post.title)
       let { _category, ID: id, slug } = post
       let onClick = () => router.push(`/${type}/${_category}/${slug}`)
       let sizes = {
@@ -55,7 +56,7 @@ export class PostsView extends Component {
         // last item in current group
         let _posts = (
           <TransitionGroup
-            key={featuredPosts.length}
+            key={`${type}${featuredPosts.length}`}
             className={styles[group]}
             transitionName={transitionClasses}
             transitionEnterTimeout={500}
@@ -74,7 +75,7 @@ export class PostsView extends Component {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
-            <SectionTitle label='Posts' />
+            <SectionTitle label={title} />
           </div>
         </div>
 

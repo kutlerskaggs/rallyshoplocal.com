@@ -19,7 +19,7 @@ const config = {
   // ----------------------------------
   // Server Configuration
   // ----------------------------------
-  server_host : '192.168.0.4', // 'localhost',
+  server_host : 'localhost', // '192.168.0.4',
   server_port : process.env.PORT || 3000,
 
   // ----------------------------------

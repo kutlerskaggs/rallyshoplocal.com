@@ -18,37 +18,29 @@ export class Posts extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { posts: [], moreAvailable: true }
-    this.concatPosts = this.concatPosts.bind(this)
-    this.loadPosts = this.loadPosts.bind(this)
-    this.checkIfMorePostsAvailable = this.checkIfMorePostsAvailable.bind(this)
+    // TODO add loader below existing posts
+    this.state = { posts: [], loading: false }
+    // bind functions
+    let funcs = ['checkIfMorePostsAvailable', 'filterPosts', 'loadPosts']
+    funcs.forEach((fn) => { this[fn] = this[fn].bind(this) })
   }
 
   componentWillMount () {
-    let { categorySlug } = this.props.params
-    let nextState = this.concatPosts(categorySlug)
-    let moreAvailable = this.checkIfMorePostsAvailable(categorySlug)
-    if (nextState.posts.length < 6 && moreAvailable) {
-      this.loadPosts(categorySlug)
-    }
+    let { type, categorySlug } = this.props.params
+    this.filterPosts(type, categorySlug)
   }
 
   componentWillReceiveProps (nextProps) {
-    let { categorySlug } = this.props.params
-    let { categorySlug: nextCategorySlug } = nextProps.params
-    // if !categorySlug componentWillMount will be called
-    if (categorySlug && categorySlug !== nextCategorySlug) {
-      let nextState = this.concatPosts(nextCategorySlug)
-      let moreAvailable = this.checkIfMorePostsAvailable(nextCategorySlug)
-      if (nextState.posts.length < 6 && moreAvailable) {
-        this.loadPosts(nextCategorySlug)
-      }
+    let { type, categorySlug } = this.props.params
+    let { type: nextType, categorySlug: nextCategorySlug } = nextProps.params
+    if (type !== nextType || categorySlug !== nextCategorySlug) {
+      this.filterPosts(nextType, nextCategorySlug)
     }
   }
 
-  checkIfMorePostsAvailable (categorySlug) {
+  checkIfMorePostsAvailable (type, categorySlug) {
     let moreAvailable
-    let { posts: { byType }, params: { type } } = this.props
+    let { byType } = this.props.posts
     if (categorySlug) {
       let { attributes, posts } = byType[type][categorySlug]
       moreAvailable = posts.length < attributes.post_count
@@ -56,44 +48,56 @@ export class Posts extends Component {
       let { _fetched, _post_count } = byType[type]
       moreAvailable = _fetched < _post_count
     }
-    this.setState({ moreAvailable })
     return moreAvailable
   }
 
-  concatPosts (categorySlug) {
-    let state = { posts: [] }
-    let { type } = this.props.params
-    this.checkIfMorePostsAvailable(categorySlug)
-    forOwn(this.props.posts.byType[type], (category) => {
-      // ignore props
-      if (category.posts) {
-        if (!categorySlug || category.attributes.slug === categorySlug) {
-          state.posts = state.posts.concat(category.posts)
+  filterPosts (type, categorySlug) {
+    let posts = []
+    let categories = this.props.posts.byType[type]
+    let getAllPosts = (categories) => {
+      let _posts = []
+      forOwn(categories, (category, key) => {
+        // anything beginning with an underscore should be ignored
+        if (key[0] !== '_') {
+          _posts = _posts.concat(category.posts)
         }
-      }
-    })
-    state.posts = sortBy(state.posts, 'date').reverse()
-    this.setState(state)
-    return state
+      })
+      return _posts
+    }
+    // get posts of category or for all categories, then sort
+    posts = categorySlug ? categories[categorySlug].posts : getAllPosts(categories)
+    posts = sortBy(posts, 'date').reverse()
+    // if there are less than 6 matching posts load more, if available
+    if (posts.length < 6 && this.checkIfMorePostsAvailable(type, categorySlug)) {
+      this.loadPosts(type, categorySlug)
+    } else {
+      this.setState({ posts })
+    }
   }
 
-  loadPosts (categorySlug) {
-    let { getPosts, params: { type } } = this.props
-    getPosts(type, categorySlug).then(() => this.concatPosts(categorySlug))
+  loadPosts (type, categorySlug) {
+    this.setState({ loading: true })
+    this.props.getPosts(type, categorySlug).then(() => {
+      this.setState({ loading: false })
+      this.filterPosts(type, categorySlug)
+    })
   }
 
   render () {
-    let { moreAvailable, posts } = this.state
+    let { posts } = this.state
+    console.log('len', posts.length)
     let { categorySlug, type } = this.props.params
-    let loadPosts = () => this.loadPosts(categorySlug)
+    let category = categorySlug
+      ? this.props.posts.byType[type][categorySlug].attributes.name
+      : undefined
+    let loadPosts = () => this.loadPosts(type, categorySlug)
 
     return this.props.children ||
       <PostsView
-        activeCategory={categorySlug}
-        posts={posts}
-        type={type}
+        category={category}
         loadMore={loadPosts}
-        moreAvailable={moreAvailable} />
+        posts={posts}
+        type={type} />
   }
 }
 
