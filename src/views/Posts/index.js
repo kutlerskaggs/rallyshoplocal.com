@@ -24,21 +24,51 @@ export class PostsView extends Component {
   render () {
     let { activeCategory, posts, type } = this.props
     let { context: { router } } = this
-    let _featuredPosts = posts.map((post, index) => {
-      let { _category, ID: id, slug } = post
-      let onClick = () => router.push(`/${type}/${_category}/${slug}`)
-      let sizes = {
-        0: 'medium',
-        3: 'large'
-      }
-      let size = sizes[(index + 7) % 7] || 'small'
-      return <Post key={id} size={size} post={post} onClick={onClick} />
-    })
     /** fade/slide in */
     let transitionClasses = {
       enter: styles.enter,
       enterActive: styles.enterActive
     }
+    let featuredPosts = []
+    let featuredPostsGroup = []
+    posts.forEach((post, index) => {
+      console.log(post.title)
+      let { _category, ID: id, slug } = post
+      let onClick = () => router.push(`/${type}/${_category}/${slug}`)
+      let sizes = {
+        0: 'medium',
+        7: 'large'
+      }
+      let groups = {
+        4: 'medium',
+        7: 'large',
+        13: 'small'
+      }
+
+      let position = (index + 14) % 14
+      let size = sizes[position] || 'small'
+      let _post = <Post key={id} size={size} post={post} onClick={onClick} />
+      featuredPostsGroup.push(_post)
+
+      let group = groups[position]
+      if (group || (index + 1 === posts.length)) {
+        // last item in current group
+        let _posts = (
+          <TransitionGroup
+            key={featuredPosts.length}
+            className={styles[group]}
+            transitionName={transitionClasses}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={0}
+          >
+            {featuredPostsGroup}
+          </TransitionGroup>
+        )
+        featuredPosts.push(_posts)
+        featuredPostsGroup = []
+      }
+      return <Post key={id} size={size} post={post} onClick={onClick} />
+    })
 
     return (
       <div className='container-fluid'>
@@ -50,13 +80,7 @@ export class PostsView extends Component {
 
         <div className='row'>
           <div className={`col-xs-12 col-lg-offset-1 col-lg-10 ${styles.postsContainer}`}>
-            <TransitionGroup
-              transitionName={transitionClasses}
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={0}
-            >
-              {_featuredPosts}
-            </TransitionGroup>
+            {featuredPosts}
             <Waypoint onEnter={this.props.loadMore} />
           </div>
         </div>

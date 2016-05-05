@@ -11,7 +11,19 @@
   transform: translateY(0);
 }
 
+.large {
+  flex-direction: row;
+}
+
 .postsContainer > span {
   display: flex;
-  flex-flow: wrap;
+  flex-wrap: wrap;
+}
+
+@media screen and (min-width: 1200px) {
+  // container with large card
+  .large {
+    flex-direction: column;
+    height: 700px; // large card + padding
+  }
 }

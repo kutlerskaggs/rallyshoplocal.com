@@ -1,9 +1,5 @@
 @import 'variables';
 
-.small {
-  flex: 0 0 33.33%;
-}
-
 .card {
   background-color: #fff;
   height: 300px;
@@ -69,10 +65,68 @@
   }
 }
 
+// all the same on mobile
+.small, .medium, .large {
+  flex: 1 0 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  .card {
+    margin: 20px 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  .small {
+    flex: 1 0 50%;
+    width: 50%;
+    max-width: 50%;
+  }
+
+  .medium, .large {
+    position: relative;
+    flex: 1 0 66.66%;
+    .card {
+      height: 300px;
+      .content {
+        display: inline-block;
+        color: $alternateTextColor;
+        float: right;
+        width: calc(50% + 25px);
+
+      }
+      .image {
+        display: inline-block;
+        width: calc(50% - 25px);
+        position: relative;
+      }
+      .overlay {
+        display: none;
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 1200px) {
+  .small {
+    flex: 1 0 33.33%;
+    width: 33.33%;
+    max-width: 33.33%;
+  }
+
+  .medium {
+    flex: 1 0 66.66%;
+    width: 66.66%;
+    max-width: 66.66%;
+  }
+
   .large {
     position: relative;
-    flex: 0 0 66.66%;
+    flex: 1 0 66.66%;
+    width: 66.66%;
+    max-width: 66.66%;
     .card {
       height: 650px;
       .content {
@@ -99,39 +153,18 @@
   }
 }
 
-@media screen and (min-width: 767px) {
-  .medium {
-    position: relative;
-    flex: 0 0 66.66%;
-    .card {
-      height: 300px;
-      .content {
-        display: inline-block;
-        color: $alternateTextColor;
-        float: right;
-        width: calc(50% + 25px);
-
-      }
-      .image {
-        display: inline-block;
-        width: calc(50% - 25px);
-        position: relative;
-      }
-      .overlay {
-        display: none;
-      }
-    }
-  }
-}
+/*
 
 // tablet-ish
 @media screen and (max-width: 1199px) {
-  .small, .large {
-    flex: 0 0 50%;
+  .small {
+    flex: 1 0 50%;
+    width: 50%;
+    max-width: 50%;
   }
 
   .medium {
-    flex: 0 0 100%;
+    flex: 1 0 100%;
   }
 }
 
@@ -141,7 +174,9 @@
     margin: 15px 0;
   }
   .small, .large {
-    flex: 0 0 100%;
+    flex: 1 0 100%;
+    width: 100%;
+    max-width: 100%;
   }
   .content {
     padding: 15px;
@@ -154,3 +189,5 @@
     }
   }
 }
+
+*/
