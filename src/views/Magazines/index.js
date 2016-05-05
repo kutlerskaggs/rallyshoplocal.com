@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import SectionTitle from 'components/SectionTitle'
 // css
 import styles from './styles.scss'
 
@@ -34,7 +35,9 @@ export class MagazineView extends Component {
     return (
       <div className='container-fluid'>
         <div className='row center-xs start-md'>
-          <h1 className='col-xs-12 col-md-offset-1 col-md-10'>Magazines</h1>
+          <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
+            <SectionTitle label='Magazines' />
+          </div>
         </div>
         <div className='row center-xs'>
           <div className='row col-xs-12 col-md-10'>

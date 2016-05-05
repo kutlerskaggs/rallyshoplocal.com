@@ -85,7 +85,6 @@ export class Posts extends Component {
 
   render () {
     let { posts } = this.state
-    console.log('len', posts.length)
     let { categorySlug, type } = this.props.params
     let category = categorySlug
       ? this.props.posts.byType[type][categorySlug].attributes.name

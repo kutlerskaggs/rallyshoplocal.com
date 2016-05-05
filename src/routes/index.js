@@ -16,14 +16,14 @@ let scrollTop = () => {
 export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute onEnter={scrollTop} component={Home} />
+    <Route path='/magazines' component={Magazines} />
+    <Route path='/creatives' component={Creatives} />
+    <Route path='/about' component={About} />
     {/* Blogs/Podcasts */}
     <Route path='/:type' onEnter={scrollTop} component={Posts}>
       <Route path='/:type/:categorySlug' onEnter={scrollTop} component={Posts}>
         <Route path='/:type/:categorySlug/:postSlug' onEnter={scrollTop} component={Post} />
       </Route>
     </Route>
-    <Route path='/magazines' component={Magazines} />
-    <Route path='/creatives' component={Creatives} />
-    <Route path='/about' component={About} />
   </Route>
 )

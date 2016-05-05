@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import SectionTitle from 'components/SectionTitle'
 import styles from './styles.scss'
 
 export class AboutView extends Component {
@@ -6,7 +7,9 @@ export class AboutView extends Component {
     return (
       <div className='container-fluid'>
         <div className='row center-xs start-md'>
-          <h1 className='col-xs-12 col-lg-offset-1 col-lg-10'>About</h1>
+          <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
+            <SectionTitle label='About' />
+          </div>
         </div>
         <div className={`row ${styles.about}`}>
           <div className='col-xs-12 col-sm-6 col-lg-offset-1 col-lg-5'>

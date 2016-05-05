@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+import SectionTitle from 'components/SectionTitle'
 
 export class CreativesView extends Component {
   render () {
     return (
       <div className='container-fluid'>
         <div className='row center-xs start-md'>
-          <h1 className='col-xs-12 col-lg-offset-1 col-lg-10'>Creatives</h1>
+          <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
+            <SectionTitle label='Creatives' />
+          </div>
         </div>
         <div className='row center-xs middle-xs' style={{ height: 150 }}>
           <h2 className='col-xs-12 col-lg-offset-1 col-lg-10'>

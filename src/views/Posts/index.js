@@ -23,7 +23,7 @@ export class PostsView extends Component {
   render () {
     let { category, posts, type } = this.props
     let { context: { router } } = this
-    let title = category || type === 'blogs' ? 'Blog Posts' : 'Podcasts'
+    let title = category || (type === 'blogs' ? 'Blog Posts' : 'Podcasts')
     /** fade/slide in */
     let transitionClasses = {
       enter: styles.enter,
