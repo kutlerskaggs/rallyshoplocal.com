@@ -18,6 +18,7 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
   basename: __BASENAME__
 })
 
+// TODO setup a web server and get rid of this
 // redirect hash bang (aws s3 hack)
 browserHistory.listen(function (location) {
   const path = (/#(\/.*)$/.exec(location.hash) || [])[1]

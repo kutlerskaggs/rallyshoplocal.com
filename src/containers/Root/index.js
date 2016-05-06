@@ -66,8 +66,8 @@ export default class Root extends React.Component {
         <div>
           <TransitionGroup
             transitionName={transitionClasses}
-            transitionEnterTimeout={2500}
-            transitionLeaveTimeout={2500}
+            transitionEnterTimeout={2000}
+            transitionLeaveTimeout={2000}
           >
             {this.state.initialLoad
             ? <div key='loader' className={styles.loaderWrapper}><Loader /></div>

@@ -78,7 +78,7 @@
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1199px) {
+@media screen and (min-width: 768px) {
   .small {
     flex: 1 0 50%;
     width: 50%;
@@ -95,7 +95,6 @@
         color: $alternateTextColor;
         float: right;
         width: calc(50% + 25px);
-
       }
       .image {
         display: inline-block;
@@ -130,6 +129,10 @@
     .card {
       height: 650px;
       .content {
+        display: block;
+        color: inherit;
+        float: none;
+        width: auto;
         position: static;
         height: calc(50% + 25px);
         > .title {
@@ -147,7 +150,8 @@
         height: calc(50% - 25px);
       }
       .image {
-        position: relative;
+        display: block;
+        width: auto;
       }
     }
   }
