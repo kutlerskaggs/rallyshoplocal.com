@@ -2,10 +2,11 @@ import React, { PropTypes } from 'react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 import Loader from 'components/Loader'
+import TransitionGroup from 'react-addons-css-transition-group'
 // redux
 import { getCategories, getPosts } from 'redux/modules/actions/posts'
-// styles
-// import 'styles/vendor/styles' TODO moved to CoreLayout .... still working?
+// css
+import styles from './styles.scss'
 
 export default class Root extends React.Component {
   static propTypes = {
@@ -31,7 +32,7 @@ export default class Root extends React.Component {
 
   get content () {
     return (
-      <Router history={this.props.history}>
+      <Router key='router' history={this.props.history}>
         {this.props.routes}
       </Router>
     )
@@ -41,7 +42,7 @@ export default class Root extends React.Component {
     if (__DEBUG__) {
       if (__DEBUG_NEW_WINDOW__) {
         if (!window.devToolsExtension) {
-          require('../redux/utils/createDevToolsWindow').default(this.props.store)
+          require('../../redux/utils/createDevToolsWindow').default(this.props.store)
         } else {
           window.devToolsExtension.open()
         }
@@ -53,13 +54,25 @@ export default class Root extends React.Component {
   }
 
   render () {
-    // TODO use transition group to animate initial loader out
+    let transitionClasses = {
+      enter: styles.enter,
+      enterActive: styles.enterActive,
+      leave: styles.leave,
+      leaveActive: styles.leaveActive
+    }
+
     return (
       <Provider store={this.props.store}>
         <div>
-          {this.state.initialLoad
-          ? <Loader />
-          : this.content}
+          <TransitionGroup
+            transitionName={transitionClasses}
+            transitionEnterTimeout={2500}
+            transitionLeaveTimeout={2500}
+          >
+            {this.state.initialLoad
+            ? <div key='loader' className={styles.loaderWrapper}><Loader /></div>
+            : this.content}
+          </TransitionGroup>
           {this.devTools}
         </div>
       </Provider>
