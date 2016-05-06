@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 // components
+import Loader from 'components/Loader'
 import Post from 'components/Post'
 import SectionTitle from 'components/SectionTitle'
 // css
@@ -16,6 +17,7 @@ export class PostsView extends Component {
   static propTypes = {
     category: PropTypes.string,
     posts: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
     loadMore: PropTypes.func.isRequired,
     type: PropTypes.string
   }
@@ -83,6 +85,7 @@ export class PostsView extends Component {
           <div className={`col-xs-12 col-lg-offset-1 col-lg-10 ${styles.postsContainer}`}>
             {featuredPosts}
             <Waypoint onEnter={this.props.loadMore} />
+            <div className={styles.loader}>{this.props.loading ? <Loader /> : ''}</div>
           </div>
         </div>
       </div>

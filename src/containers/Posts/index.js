@@ -84,7 +84,7 @@ export class Posts extends Component {
   }
 
   render () {
-    let { posts } = this.state
+    let { loading, posts } = this.state
     let { categorySlug, type } = this.props.params
     let category = categorySlug
       ? this.props.posts.byType[type][categorySlug].attributes.name
@@ -94,6 +94,7 @@ export class Posts extends Component {
     return this.props.children ||
       <PostsView
         category={category}
+        loading={loading}
         loadMore={loadPosts}
         posts={posts}
         type={type} />
