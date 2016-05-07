@@ -13,7 +13,7 @@ export class MagazineView extends Component {
   render () {
     let { error, magazines } = this.props
     let output = error
-      ? <h3>{error}</h3> // TODO format this
+      ? <h4>{error}</h4>
       : (
         magazines.map((magazine, index) => {
           return (

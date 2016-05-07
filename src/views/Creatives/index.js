@@ -1,7 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import SectionTitle from 'components/SectionTitle'
 
 export class CreativesView extends Component {
+
+  static propTypes = {
+    creatives: PropTypes.array,
+    error: PropTypes.string
+  }
+
   render () {
     return (
       <div className='container-fluid'>
