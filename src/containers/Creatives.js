@@ -9,9 +9,7 @@ export default class Creatives extends Component {
   }
 
   componentWillMount () {
-    let { AWS } = window
-    AWS.config.region = 'us-west-2'
-    let s3 = new AWS.S3()
+    let s3 = new window.AWS.S3()
     let params = {
       Bucket: 'www-rallyshoplocal-com'
     }

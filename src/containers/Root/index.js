@@ -28,6 +28,8 @@ export default class Root extends React.Component {
       getPosts('blogs')(dispatch, getState),
       getPosts('podcasts')(dispatch, getState)
     ]).then(() => { this.setState({ initialLoad: false }) })
+    // configure AWS sdk
+    window.AWS.config.region = 'us-west-2'
   }
 
   get content () {
