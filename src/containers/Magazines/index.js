@@ -18,6 +18,10 @@ export default class Magazines extends Component {
     let magazines = []
     let magazinesPath = 'magazines'
     let params = { Prefix: `${magazinesPath}/covers` }
+    // TODO fetch once, then put in redux store
+    // TODO fetch once, then put in redux store
+    // TODO fetch once, then put in redux store
+    // TODO fetch once, then put in redux store
     s3.listObjectsV2(params, (err, data) => {
       // end here if an error occurred
       if (err) {

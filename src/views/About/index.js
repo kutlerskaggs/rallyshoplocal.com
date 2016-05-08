@@ -13,35 +13,35 @@ export class AboutView extends Component {
         </div>
         <div className={`row ${styles.about}`}>
           <div className='col-xs-12 col-sm-6 col-lg-offset-1 col-lg-5'>
-            <h2>NICOLE CRABB</h2>
+            <h3>NICOLE CRABB</h3>
             <span>ART DIRECTOR</span>
 
-            <h2>MIRANDA BERDAHL</h2>
+            <h3>MIRANDA BERDAHL</h3>
             <span>EDITOR</span>
 
-            <h2>RAYMOND CRAIG</h2>
+            <h3>RAYMOND CRAIG</h3>
             <span>PHOTOGRAPHY EDITOR</span>
 
-            <h2>AMY HARRIS</h2>
+            <h3>AMY HARRIS</h3>
             <span>FASHION EDITOR</span>
 
-            <h2>SEAN INGLEDEW</h2>
+            <h3>SEAN INGLEDEW</h3>
             <span>COPY WRITER</span>
 
-            <h2>MAT CRABB</h2>
+            <h3>MAT CRABB</h3>
             <span>COPY WRITER</span>
           </div>
           <div className='col-xs-12 col-sm-6 col-lg-5'>
-            <h2>ALYSSA NAVARRO</h2>
+            <h3>ALYSSA NAVARRO</h3>
             <span>BEAUTY EDITOR</span>
 
-            <h2>SHAYLEE HERSHMAN</h2>
+            <h3>SHAYLEE HERSHMAN</h3>
             <span>BEAUTY EDITOR</span>
 
-            <h2>DANA MILLER</h2>
+            <h3>DANA MILLER</h3>
             <span>PHOTOGRAPHER</span>
 
-            <h2>CHRIS LUSE</h2>
+            <h3>CHRIS LUSE</h3>
             <span>PHOTOGRAPHER</span>
           </div>
         </div>
