@@ -1,1 +1,36 @@
 @import 'variables';
+
+.contact {
+  > h3 {
+    flex: 0 0 100%;
+  }
+  > span {
+    display: block;
+    > a {
+      color: inherit;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  > h3 {
+    flex: 0 0 100%;
+  }
+  > img {
+    flex: 1;
+  }
+  > p {
+    flex: 3;
+    padding-left: 30px;
+  }
+}
+
+.title {
+  margin-top: 40px;
+  img {
+    width: 100%;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import CreativesView from 'views/Creatives'
-import { s3 } from 'utils/AWS'
+import each from 'async/each'
+import { basePath, s3 } from 'utils/AWS'
 
 export default class Creatives extends Component {
 
@@ -16,7 +17,6 @@ export default class Creatives extends Component {
     let creativesPath = 'creatives/'
     let params = { Delimiter: '/', Prefix: `${creativesPath}` }
     s3.listObjectsV2(params, (err, data) => {
-      console.log(err, data)
       // end here if an error occurred
       if (err) {
         this.setState({
@@ -25,23 +25,48 @@ export default class Creatives extends Component {
         return
       }
 
-      // let slugs = data.CommonPrefixes.map((item) => item.Prefix.split('/')[1])
-      // let capitalize = (word) => `${word[0].toUpperCase()}${word.slice(1)}`
-      // let promises = []
-      /* slugs.map((slug) => {
-        let params = { Key: `${creativesPath}/${slug}/` }
-        // batch requests for all .txt files (feature1.txt & feature2.txt)
-        // https://github.com/aws/aws-sdk-js/issues/623
+      // map result of listObjectsV2 to an array of creatives
+      // {
+      //    name: 'Some Creative Name',
+      //    feature1: 'My business does...',
+      //    feature2: 'We love the earth and shit...',
+      //    prefix: 'creatives/some-creative-name/'
+      // }
+      let capitalize = (word) => `${word[0].toUpperCase()}${word.slice(1)}`
+      let creatives = data.CommonPrefixes.map((commonPrefix) => {
+        let prefix = commonPrefix.Prefix
+        let name = prefix.split('/')[1].split('-').map(capitalize).join(' ')
+        return { name, path: `${basePath}/${prefix}`, prefix }
       })
-      // map slugs/files into objects to be passed to CreativesView
-      creatives = creatives.map((slug) => ({
-        name: slug.split('-').map(capitalize).join(' '),
-        feature1: {
-          content:
+      let files = []
+      let features = ['feature1', 'feature2']
+      creatives.forEach((creative) => {
+        let { name, prefix } = creative
+        features.forEach((feature) => {
+          files.push({
+            creative: name,
+            feature,
+            key: `${prefix}${feature}.txt`
+          })
+        })
+      })
+      each(files, (file, cb) => {
+        s3.getObject({ Key: file.key }, (err, featureDesc) => {
+          if (err) {
+            // TODO error handling
+            return
+          }
+          let creative = creatives.find((creative) => creative.name === file.creative)
+          console.log(featureDesc)
+          creative[file.feature] = featureDesc.Body.toString().replace(/\n/g, '<br/>')
+          cb()
+        })
+      }, (err) => {
+        if (err) {
+          // TODO error handling
         }
-      })) */
-
-      // this.setState({ creatives, error: undefined })
+        this.setState({ creatives })
+      })
     })
   }
 
