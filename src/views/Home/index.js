@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 // components
 import FeaturedPost from 'components/FeaturedPost'
+import RecentPost from 'components/RecentPost'
 import SectionTitle from 'components/SectionTitle'
 // HOC
 import Window from 'HOC/Window'
@@ -21,7 +22,7 @@ class HomeView extends Component {
   render () {
     let { posts, window: { isSmall, isMedium, isHuge } } = this.props
     let len = isSmall || isMedium || isHuge ? 4 : 3
-    let _posts = posts.slice(0, len).map((post, index) => {
+    let featuredPosts = posts.slice(0, len).map((post, index) => {
       let { _category, _type, ID: id, slug } = post
       let onClick = () => this.context.router.push(`/${_type}s/${_category}/${slug}`)
       let positions = ['start', 'centerLeft', 'end']
@@ -31,19 +32,30 @@ class HomeView extends Component {
       )
     })
 
+    let recentPosts = posts.slice(len, len + 4).map((post, index) => {
+      let { _category, _type, ID: id, slug } = post
+      let onClick = () => this.context.router.push(`/${_type}s/${_category}/${slug}`)
+      return (
+        <RecentPost key={id} onClick={onClick} post={post} />
+      )
+    })
+
     return (
-      <div>
-        <div className={`container-fluid ${styles.container}`}>
-          <div className={`row center-xs ${styles.postsContainer}`}>
+      <div className={`${styles.container}`}>
+        <div className='container-fluid'>
+          <div className={`row center-xs ${styles.featuredContainer}`}>
             <div className='col-xs-12 col-lg-10'>
-              {_posts}
+              {featuredPosts}
             </div>
           </div>
         </div>
-        <div className={`container-fluid ${styles.container} ${styles.recentContainer}`}>
+        <div className='container-fluid'>
           <div className='row'>
             <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
               <SectionTitle label='Recent Posts' dark />
+              <div className={styles.recentContainer}>
+                {recentPosts}
+              </div>
             </div>
           </div>
         </div>

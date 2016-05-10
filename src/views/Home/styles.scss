@@ -1,30 +1,24 @@
 @import 'variables';
 
-.container {
+.container > div {
   padding-top: 50px;
   padding-bottom: 50px;
+  &:nth-of-type(2) {
+    background-color: #fff;
+  }
 }
 
-.postsContainer {
+.featuredContainer {
   margin: 0 0 30px 0;
   > div {
     display: flex;
     flex-wrap: wrap;
-    /* &:nth-child(odd) {
-      justify-content: flex-end;
-    } */
   }
 }
 
-.postContainer {
-  position: relative;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
 .recentContainer {
-  background-color: #fff;
-  height: 500px;
+  display: flex;
+  margin: 30px 0;
 }
 
 .header {
@@ -49,7 +43,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  .postsContainer {
+  .featuredContainer {
     margin: 0;
   }
 }

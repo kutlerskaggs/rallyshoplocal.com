@@ -29,7 +29,7 @@ export class Home extends Component {
       })
     })
     // combining blogs and posts so sorting is necessary
-    posts = sortBy(posts, (post) => post.date).reverse().slice(0, 6)
+    posts = sortBy(posts, (post) => post.date).reverse().slice(0, 10)
     this.setState({ posts: posts })
   }
 

@@ -1,0 +1,88 @@
+@import 'variables';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  transition: all 600ms;
+}
+
+.content {
+  color: $alternateTextColor;
+  border: solid 1px $primary1Color;
+  border-radius: 1px;
+  width: 250px;
+  cursor: pointer;
+  margin: 0 20px;
+  .image {
+    width: 100%;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+  }
+  .innerContent {
+    height: 170px;
+    margin: 15px;
+    position: relative;
+    > h4 {
+      margin-top: 0;
+    }
+    > h6 {
+      margin-bottom: 0;
+      position: absolute;
+      bottom: 0;
+    }
+    > p {
+      font-size: .9rem;
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+
+}
+
+// tablet-ish
+@media screen and (max-width: 1199px) {
+  .skew {
+    transform: none;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    .unskew {
+      transform: none;
+    }
+  }
+  .wrapper {
+    flex: 0 0 50%;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 15px;
+    transform: none;
+    > .content {
+      justify-content: flex-start;
+      .preview {
+        display: none;
+      }
+    }
+  }
+}
+
+// mobile
+@media screen and (max-width: 767px) {
+  .skew {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .wrapper {
+    margin: 15px 0;
+    padding: 0;
+    flex: 0 0 100%;
+    .content > .cover {
+      margin: 30px;
+    }
+  }
+}

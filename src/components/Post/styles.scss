@@ -156,3 +156,17 @@
     }
   }
 }
+
+@media screen and (min-width: 1920px) {
+  .small {
+    flex: 1 0 25%;
+    width: 25%;
+    max-width: 25%;
+  }
+
+  .medium, .large {
+    flex: 1 0 50%;
+    width: 50%;
+    max-width: 50%;
+  }
+}
