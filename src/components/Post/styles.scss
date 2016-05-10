@@ -134,7 +134,7 @@
         float: none;
         width: auto;
         position: static;
-        height: calc(50% + 25px);
+        height: calc(50% - 25px);
         > .title {
           position: absolute;
           top: 25px;
@@ -147,7 +147,7 @@
         }
       }
       .image, .overlay {
-        height: calc(50% - 25px);
+        height: calc(50% + 25px);
       }
       .image {
         display: block;

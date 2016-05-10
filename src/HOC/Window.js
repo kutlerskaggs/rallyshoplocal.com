@@ -19,8 +19,8 @@ export default (_Component) => {
           isTiny: width <= 767,
           isSmall: width > 767 && width <= 991,
           isMedium: width > 991 && width <= 1200,
-          isLarge: width > 1200 && width <= 1920,
-          isHuge: width > 1920
+          isLarge: width > 1200 && width <= 1919,
+          isHuge: width > 1919
         }
       })
     }

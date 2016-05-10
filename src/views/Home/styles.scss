@@ -9,9 +9,10 @@
   margin: 0 0 30px 0;
   > div {
     display: flex;
-    &:nth-child(odd) {
+    flex-wrap: wrap;
+    /* &:nth-child(odd) {
       justify-content: flex-end;
-    }
+    } */
   }
 }
 
@@ -44,5 +45,11 @@
     border: none;
     margin: 0;
     z-index: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .postsContainer {
+    margin: 0;
   }
 }
