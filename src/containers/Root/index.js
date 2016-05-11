@@ -4,6 +4,8 @@ import { Router } from 'react-router'
 import Loader from 'components/Loader'
 import TransitionGroup from 'react-addons-css-transition-group'
 // redux
+import { getCreatives } from 'redux/modules/actions/creatives'
+import { getMagazines } from 'redux/modules/actions/magazines'
 import { getCategories, getPosts } from 'redux/modules/actions/posts'
 // css
 import styles from './styles.scss'
@@ -25,6 +27,8 @@ export default class Root extends React.Component {
     // get categories (bloggers/podcasts) and sample blogs/podcasts
     Promise.all([
       getCategories()(dispatch, getState),
+      getCreatives()(dispatch, getState),
+      getMagazines()(dispatch, getState),
       getPosts('blogs')(dispatch, getState),
       getPosts('podcasts')(dispatch, getState)
     ]).then(() => { this.setState({ initialLoad: false }) })
