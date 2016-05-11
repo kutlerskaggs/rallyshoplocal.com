@@ -195,7 +195,10 @@
     transform: none;
     > .content {
       justify-content: flex-start;
-      .preview {
+      > .cover {
+        min-height: 250px;
+      }
+      > .preview {
         display: none;
       }
     }

@@ -21,18 +21,19 @@ class HomeView extends Component {
 
   render () {
     let { posts, window: { isSmall, isMedium, isHuge } } = this.props
-    let len = isSmall || isMedium || isHuge ? 4 : 3
-    let featuredPosts = posts.slice(0, len).map((post, index) => {
+    let featuredLen = isSmall || isMedium || isHuge ? 4 : 3
+    let featuredPosts = posts.slice(0, featuredLen).map((post, index) => {
       let { _category, _type, ID: id, slug } = post
       let onClick = () => this.context.router.push(`/${_type}s/${_category}/${slug}`)
       let positions = ['start', 'centerLeft', 'end']
-      len === 4 && positions.splice(2, 0, 'centerRight')
+      featuredLen === 4 && positions.splice(2, 0, 'centerRight')
       return (
         <FeaturedPost key={id} onClick={onClick} post={post} position={positions[index]} />
       )
     })
 
-    let recentPosts = posts.slice(len, len + 4).map((post, index) => {
+    let recentLen = isHuge ? 5 : 4
+    let recentPosts = posts.slice(featuredLen, featuredLen + recentLen).map((post, index) => {
       let { _category, _type, ID: id, slug } = post
       let onClick = () => this.context.router.push(`/${_type}s/${_category}/${slug}`)
       return (

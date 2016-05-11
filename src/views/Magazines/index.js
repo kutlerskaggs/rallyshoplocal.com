@@ -17,7 +17,7 @@ export class MagazineView extends Component {
       : (
         magazines.map((magazine, index) => {
           return (
-            <div key={magazine.id} className={`col-xs-12 col-md-6 col-lg-4 ${styles.magazine}`}>
+            <div key={magazine.id} className={styles.magazine}>
               <a href={magazine.src} target='_blank'>
                 <img src={magazine.image} />
                 <h2>{magazine.title}</h2>
@@ -34,8 +34,8 @@ export class MagazineView extends Component {
             <SectionTitle label='Magazines' />
           </div>
         </div>
-        <div className='row center-xs'>
-          <div className='row col-xs-12 col-md-10'>
+        <div className='row'>
+          <div className={`col-xs-12 col-lg-offset-1 col-lg-10 ${styles.magazinesContainer}`}>
             {output}
           </div>
         </div>

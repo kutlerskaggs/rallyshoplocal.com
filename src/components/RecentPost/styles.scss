@@ -11,9 +11,10 @@
   color: $alternateTextColor;
   border: solid 1px #b3b3b3;
   border-radius: 1px;
-  width: 250px;
+  max-width: 250px;
   cursor: pointer;
-  margin: 0 20px;
+  margin: 0 20px 20px 20px;
+  transition: all 300ms;
   .image {
     width: 100%;
     height: 100px;
@@ -39,50 +40,23 @@
 }
 
 @media screen and (min-width: 1200px) {
-
+  .content {
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+    }
+  }
 }
 
 // tablet-ish
 @media screen and (max-width: 1199px) {
-  .skew {
-    transform: none;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    .unskew {
-      transform: none;
-    }
-  }
   .wrapper {
     flex: 0 0 50%;
-    justify-content: flex-start;
-    margin: 0;
-    padding: 15px;
-    transform: none;
-    > .content {
-      justify-content: flex-start;
-      .preview {
-        display: none;
-      }
-    }
   }
 }
 
 // mobile
 @media screen and (max-width: 767px) {
-  .skew {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
   .wrapper {
-    margin: 15px 0;
-    padding: 0;
     flex: 0 0 100%;
-    .content > .cover {
-      margin: 30px;
-    }
   }
 }
