@@ -7,10 +7,10 @@ export class Footer extends Component {
   render () {
     // social media footer
     let _socialItems = [
-      { icon: 'facebook', href: 'http://www.facebook.com/rally-casper' },
-      { icon: 'twitter', href: 'http://www.twitter.com/RallyCasper' },
-      { icon: 'pinterest', href: 'http://www.pinterest.com/rallycasper/' },
-      { icon: 'instagram', href: 'http://instagram.com/rallylocal/' }
+      { icon: 'facebook', href: 'http://www.facebook.com/rallyshoplocal' }
+      // { icon: 'twitter', href: 'http://www.twitter.com/RallyCasper' },
+      // { icon: 'pinterest', href: 'http://www.pinterest.com/rallycasper/' },
+      // { icon: 'instagram', href: 'http://instagram.com/rallylocal/' }
     ]
     let socialItems = _socialItems.map((item) => {
       return (

@@ -10,6 +10,11 @@ export class PostView extends Component {
     post: PropTypes.object.isRequired
   }
 
+  componentDidMount () {
+    // show facebook comments
+    window.FB.XFBML.parse()
+  }
+
   render () {
     let { post } = this.props
     // TODO make conditional based on post date???
@@ -31,7 +36,7 @@ export class PostView extends Component {
       }
       return match
     })
-
+    let url = 'http://d1fibhzlja0sk5.cloudfront.net/blogs/connie-lingus/runnerotica-the-alter-g-spot'
     return (
       <div className={`container-fluid ${styles.container}`}>
         <div className={'row center-xs middle-xs'}>
@@ -45,6 +50,7 @@ export class PostView extends Component {
                 </Link>
               </h3>
               <div className='wordpress' dangerouslySetInnerHTML={{ __html: post.content }}></div>
+              <div className='fb-comments' data-href={url} data-numposts='5'></div>
             </div>
           </div>
         </div>

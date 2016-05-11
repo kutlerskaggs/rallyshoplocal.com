@@ -50,6 +50,7 @@
 }
 
 .target {
+  background-color: #fff;
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -58,6 +59,10 @@
   bottom: 0;
   z-index: 32;
   opacity: 0;
+  transition: all 300ms;
+  &:hover {
+    opacity: .7;
+  }
 }
 
 // all the same on mobile
@@ -65,7 +70,6 @@
   flex: 1 0 100%;
   width: 100%;
   max-width: 100%;
-  transition: all 300ms;
 }
 
 @media screen and (max-width: 767px) {
@@ -105,11 +109,6 @@
 }
 
 @media screen and (min-width: 1200px) {
-  .small, .medium, .large {
-    &:hover {
-      transform: scale(1.02);
-    }
-  }
   .small {
     flex: 1 0 33.33%;
     width: 33.33%;
