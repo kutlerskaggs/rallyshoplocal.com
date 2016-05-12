@@ -34,7 +34,9 @@ export class Post extends Component {
 
   render () {
     let { post } = this.state
-    return post ? <PostView post={this.state.post} /> : <Loader />
+    // facebook comments
+    let url = document.URL
+    return post ? <PostView post={this.state.post} fbUrl={url} /> : <Loader />
   }
 }
 
