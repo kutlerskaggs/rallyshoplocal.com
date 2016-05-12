@@ -38,6 +38,15 @@
   *:after {
     box-sizing: inherit;
   }
+  @media screen and (min-width: 1920px) {
+    /* .row {
+      justify-content: center !important;
+      > div {
+        margin-left: 0 !important;
+        max-width: 1200px !important; // TODO fix about columns
+      }
+    } */
+  }
 
   @media screen and (max-width: 1199px) {
     h1 {

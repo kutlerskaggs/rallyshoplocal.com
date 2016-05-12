@@ -13,7 +13,9 @@ export class PostView extends Component {
 
   componentDidMount () {
     // show facebook comments
-    window.FB.XFBML.parse()
+    if (window.FB) {
+      window.FB.XFBML.parse()
+    }
   }
 
   render () {

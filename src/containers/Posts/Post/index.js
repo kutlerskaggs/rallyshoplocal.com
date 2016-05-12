@@ -34,8 +34,10 @@ export class Post extends Component {
 
   render () {
     let { post } = this.state
+    let { host, pathname, protocol } = window.location
     // facebook comments
-    let url = document.URL
+    let url = `${protocol}//${host}${pathname}`
+    console.log('url', url)
     return post ? <PostView post={this.state.post} fbUrl={url} /> : <Loader />
   }
 }
