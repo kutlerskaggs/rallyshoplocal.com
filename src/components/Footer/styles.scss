@@ -28,12 +28,7 @@
   color: lighten($primary1Color, 50%);
   font-weight: 400 !important;
   > div > h5 {
-    &:first-of-type {
-      margin: 0;
-    }
-    &:nth-of-type(2) {
-      margin-bottom: 0;
-    }
+    margin: .5rem 0;
   }
 }
 

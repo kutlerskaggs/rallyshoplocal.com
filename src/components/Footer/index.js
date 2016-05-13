@@ -36,14 +36,8 @@ export class Footer extends Component {
             </div>
             <div className={styles.contact}>
               <div>
-                <h5>
-                  111 E. Main St.<br/>
-                  Casper, WY 12345
-                </h5>
-                <h5>
-                  555-123-0987<br/>
-                  hello@rallyshoplocal.com
-                </h5>
+                <h5>303.587.5387</h5>
+                <h5>hello@rallyshoplocal.com</h5>
               </div>
             </div>
             <div className={styles.social}>

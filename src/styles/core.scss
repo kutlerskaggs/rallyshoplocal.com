@@ -38,14 +38,16 @@
   *:after {
     box-sizing: inherit;
   }
+
+  // limit max width of content area
   @media screen and (min-width: 1920px) {
-    /* .row {
+    .row {
       justify-content: center !important;
       > div {
         margin-left: 0 !important;
-        max-width: 1200px !important; // TODO fix about columns
+        max-width: 1550px !important;
       }
-    } */
+    }
   }
 
   @media screen and (max-width: 1199px) {

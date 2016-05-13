@@ -29,7 +29,7 @@ export class MagazineView extends Component {
 
     return (
       <div className='container-fluid'>
-        <div className='row center-xs start-md'>
+        <div className='row'>
           <div className='col-xs-12 col-lg-offset-1 col-lg-10'>
             <SectionTitle label='Magazines' />
           </div>
