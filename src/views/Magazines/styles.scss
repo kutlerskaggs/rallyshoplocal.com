@@ -1,13 +1,33 @@
 @import 'variables';
 
 .magazine {
-  margin-bottom: 50px;
+  flex: 0 0 33.333%;
+  margin: 25px 0 50px 0;
+  text-align: center;
   > a {
     text-decoration: none;
     color: $textColor;
     > img {
-      max-width: 300px;
+      max-width: 325px;
       width: 100%;
     }
+  }
+}
+
+.magazinesContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1199px) {
+  .magazine {
+    flex: 0 0 50%;
+    margin: 20px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .magazine {
+    flex: 0 0 100%;
   }
 }

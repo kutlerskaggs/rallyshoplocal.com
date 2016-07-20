@@ -1,142 +1,172 @@
 @import 'variables';
 
-.cardWrapper {
-  display: flex;
-  flex: 1 0 0;
-  margin: 0px 0px 30px 0px;
-  width: 100%;
-}
-
 .card {
+  background-color: #fff;
+  height: 300px;
+  margin: 25px;
   position: relative;
-  cursor: pointer;
-  transition: transform 500ms;
-  overflow: hidden;
-  padding: 30% 0; // set height to 60% of parent width
-  width: 100%; // fill parent width
 }
 
-.cardContent {
-  transform-style: preserve-3d;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
+.content {
+  position: relative;
   height: 100%;
-  text-align: left;
+  width: 100%;
+  padding: 25px;
+  z-index: 30;
+  > h6 {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    margin-bottom: 0;
+  }
   .title {
-    margin: 30px;
     padding: 15px;
     border: solid 4px;
-    > h1 {
-      margin: 0;
-    }
-  }
-  .reveal {
-    z-index: 2;
-    position: absolute;
-    bottom: 0px;
-    transition: transform 300ms;
-    transform: translate3d(0, 102%, 0);
-    padding: 30px;
-    background-color: #fff;
-    color: $alternateTextColor;
-    > p {
-      height: 100%;
-      margin: 0;
-      overflow: hidden;
+    > span {
+      display: block;
+      font-size: 1.3rem;
+      font-family: Helvetica;
     }
   }
 }
 
-.cardImage {
-  background-color: #000;
-  transform: translate3d(0, 0, 0);
+.image, .overlay {
   width: 100%;
   height: 100%;
   position: absolute;
   left: 0;
   top: 0;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(.7);
 }
 
-.icon {
+.image {
+  background-size: cover;
+  background-position: center;
+  z-index: 10;
+}
+
+.overlay {
+  background-color: rgba(17, 17, 17, .5);
+  z-index: 20;
+}
+
+.target {
+  background-color: #fff;
+  cursor: pointer;
   position: absolute;
-  padding: 10px;
-  bottom: 0px;
-  right: 0px;
-  > i {
-    font-size: 1.4rem !important;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 32;
+  opacity: 0;
+  transition: all 300ms;
+  &:hover {
+    opacity: .7;
   }
 }
 
-.more {
-  display: none;
+// all the same on mobile
+.small, .medium, .large {
+  flex: 1 0 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  .card {
+    margin: 20px 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .small {
+    flex: 1 0 50%;
+    width: 50%;
+    max-width: 50%;
+  }
+
+  .medium, .large {
+    position: relative;
+    flex: 1 0 66.66%;
+    .card {
+      height: 300px;
+      .content {
+        display: inline-block;
+        color: $alternateTextColor;
+        float: right;
+        width: calc(50% + 25px);
+      }
+      .image {
+        display: inline-block;
+        width: calc(50% - 25px);
+        position: relative;
+      }
+      .overlay {
+        display: none;
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 1200px) {
-  .card {
-    min-height: 350px; // firefox patch
+  .small {
+    flex: 1 0 33.33%;
+    width: 33.33%;
+    max-width: 33.33%;
   }
-  .cardContent {
-    &:hover {
-      .reveal {
-        transform: translate3d(0, 0, 0);
+
+  .medium {
+    flex: 1 0 66.66%;
+    width: 66.66%;
+    max-width: 66.66%;
+  }
+
+  .large {
+    position: relative;
+    flex: 1 0 66.66%;
+    width: 66.66%;
+    max-width: 66.66%;
+    .card {
+      height: 650px;
+      .content {
+        display: block;
+        color: inherit;
+        float: none;
+        width: auto;
+        position: static;
+        height: calc(50% - 25px);
+        > .title {
+          position: absolute;
+          top: 25px;
+          left: 25px;
+          right: 25px;
+          z-index: 31;
+        }
+        > .preview, > h6 {
+          color: $alternateTextColor;
+        }
+      }
+      .image, .overlay {
+        height: calc(50% + 25px);
+      }
+      .image {
+        display: block;
+        width: auto;
       }
     }
   }
-  .cardWrapper {
-    max-width: 600px;
-  }
 }
 
-// tablet-ish
-@media screen and (max-width: 1199px) {
-  .card {
-    min-height: 300px; // firefox patch
+@media screen and (min-width: 1920px) {
+  .small {
+    flex: 1 0 25%;
+    width: 25%;
+    max-width: 25%;
   }
-  .more {
-    font-family: 'Helvetica';
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 15px 25px;
-    border-top: solid 1px;
-    line-height: 24px;
-    cursor: pointer;
-    > i {
-      float: right;
-      font-size: 1.5rem !important;
-    }
-  }
-  .cardContent > .reveal {
-    padding-bottom: 50px;
-    min-height: 60%; // iPad patch
-  }
-}
 
-// mobile
-@media screen and (max-width: 767px) {
-  .card {
-    min-height: 250px; // firefox patch
-    padding: 40% 0; // set height to 80% of parent width
-  }
-  .cardContent {
-    .title {
-      border: solid 2px;
-      margin: 15px;
-      padding: 10px;
-      > h1 {
-        font-size: 1.3rem;
-      }
-    }
-    .reveal {
-      padding: 25px;
-      height: 100%;
-    }
+  .medium, .large {
+    flex: 1 0 50%;
+    width: 50%;
+    max-width: 50%;
   }
 }

@@ -18,12 +18,6 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
   basename: __BASENAME__
 })
 
-// redirect hash bang (aws s3 hack)
-browserHistory.listen(function (location) {
-  const path = (/#(\/.*)$/.exec(location.hash) || [])[1]
-  if (path) browserHistory.replace(path)
-})
-
 // Create redux store and sync with react-router-redux. We have installed the
 // react-router-redux reducer under the key "router" in src/routes/index.js,
 // so we need to provide a custom `selectLocationState` to inform

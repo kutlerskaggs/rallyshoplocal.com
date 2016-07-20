@@ -1,10 +1,6 @@
 @font-face {
   font-family: 'Arno Pro Light';
-  src: url(../static/fonts/ArnoProLight.ttf);
-}
-@font-face {
-  font-family: 'Modern No 20';
-  src: url(../static/fonts/ModernNo20.ttf);
+  src: url('../styles/fonts/ArnoProLight.ttf') format('truetype');
 }
 
 :global {
@@ -23,10 +19,11 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Helvetica';
+    font-weight: 400;
   }
 
   p {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
 
   html,
@@ -40,6 +37,17 @@
   *:before,
   *:after {
     box-sizing: inherit;
+  }
+
+  // limit max width of content area
+  @media screen and (min-width: 1920px) {
+    .row {
+      justify-content: center !important;
+      > div {
+        margin-left: 0 !important;
+        max-width: 1550px !important;
+      }
+    }
   }
 
   @media screen and (max-width: 1199px) {
@@ -56,13 +64,13 @@
 
   @media screen and (max-width: 767px) {
     h1 {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
     }
     h2 {
       font-size: 1.4rem;
     }
     p {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
 }

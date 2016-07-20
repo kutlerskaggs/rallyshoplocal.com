@@ -1,0 +1,45 @@
+@import 'variables';
+
+.title {
+  position: relative;
+  margin: 0;
+  > span {
+    display: inline-block;
+    position: relative;
+    padding: 15px 30px;
+    color: $alternateTextColor;
+    background-color: #fff;
+    margin: 15px 0 15px 50px;
+    z-index: 1;
+  }
+  > hr {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    border: none;
+    margin: 0;
+    z-index: 0;
+  }
+}
+
+.dark {
+  > span {
+    color: $textColor !important;
+    background-color: $primary1Color !important;
+  }
+  > hr {
+    background-color: $primary1Color !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .title {
+    text-align: center;
+    > span {
+      padding: 10px 30px;
+      margin-left: 0;
+    }
+  }
+}

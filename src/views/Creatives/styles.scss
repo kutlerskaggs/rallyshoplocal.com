@@ -1,1 +1,55 @@
 @import 'variables';
+
+.contact {
+  > h3 {
+    flex: 0 0 100%;
+  }
+  > span {
+    display: block;
+    > a {
+      color: inherit;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  > h3 {
+    flex: 0 0 100%;
+  }
+  > div > img {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 20px;
+  }
+  > p {
+    flex: 1;
+    margin: 0;
+    padding-left: 30px;
+  }
+}
+
+.creative {
+  margin-bottom: 40px;
+}
+
+.title {
+  img {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .content {
+    > div {
+      flex: 0 0 100%;
+      text-align: center;
+    }
+    > p {
+      flex: 0 0 100%;
+      padding-left: 0;
+    }
+  }
+}

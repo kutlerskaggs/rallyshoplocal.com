@@ -1,0 +1,48 @@
+@import 'variables';
+
+.enter {
+  opacity: 0;
+  transform: translateY(75px);
+  transition: all 500ms;
+}
+
+.enterActive {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.large {
+  flex-direction: row;
+}
+
+.loader {
+  height: 60px;
+  margin-bottom: 15px;
+  text-align: center;
+  > svg {
+    transform: scale(.6);
+  }
+}
+
+.postsContainer > span {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (min-width: 1200px) {
+  // container with large card
+  .large {
+    flex-direction: column;
+    height: 700px; // large card + padding
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  // TODO this is sloppy and needs to be refactored
+  .postsContainer > .large > div  {
+    flex: 1 0 50%; // small
+    &:nth-of-type(3) {
+      flex: 1 0 100%; // large
+    }
+  }
+}

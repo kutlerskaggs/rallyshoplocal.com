@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
-import { blog } from 'redux/modules/reducers/blog'
+import { creatives } from 'redux/modules/reducers/creatives'
+import { magazines } from 'redux/modules/reducers/magazines'
+import { posts } from 'redux/modules/reducers/posts'
 
 export default combineReducers({
-  blog,
+  creatives,
+  magazines,
+  posts,
   router
 })

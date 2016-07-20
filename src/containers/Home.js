@@ -9,7 +9,7 @@ import { forOwn, sortBy } from 'lodash'
 export class Home extends Component {
 
   static propTypes = {
-    blog: PropTypes.object,
+    posts: PropTypes.object,
     podcasts: PropTypes.object
   }
 
@@ -20,7 +20,7 @@ export class Home extends Component {
 
   componentWillMount () {
     let posts = []
-    forOwn(this.props.blog.byType, (categories, type) => {
+    forOwn(this.props.posts.byType, (categories, type) => {
       forOwn(categories, (category, name) => {
         // ignore category props
         if (category.posts) {
@@ -29,7 +29,7 @@ export class Home extends Component {
       })
     })
     // combining blogs and posts so sorting is necessary
-    posts = sortBy(posts, (post) => post.date).reverse().slice(0, 6)
+    posts = sortBy(posts, (post) => post.date).reverse().slice(0, 10)
     this.setState({ posts: posts })
   }
 
@@ -39,8 +39,8 @@ export class Home extends Component {
 }
 
 let stateToProps = (state) => {
-  let { blog } = state
-  return { blog }
+  let { posts } = state
+  return { posts }
 }
 
 export default connect(stateToProps)(Home)

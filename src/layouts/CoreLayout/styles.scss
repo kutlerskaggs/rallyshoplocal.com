@@ -1,83 +1,26 @@
 @import 'variables';
 
-.social {
-  position: fixed;
-  left: 0px;
-  bottom: 0px;
-  z-index: 1000;
-}
-
-.socialAnimation {
-  display: block;
-  transition: all 300ms;
-  background-color: $primary1Color;
-  opacity: .5;
-  z-index: 11;
-  height: 30px;
-  width: 30px;
-  position: absolute;
-  bottom: -30px;
-}
-
-.socialIcon {
-  position: relative;
-  vertical-align: bottom;
-  z-index: 10;
-  margin: 20px 15px;
-  display: block !important;
-  font-size: 1.5rem !important;
-  cursor: pointer;
-  overflow: hidden;
-  > a {
-    color: $textColor;
-    text-decoration: none;
-  }
-  &:hover {
-    .socialAnimation {
-      transform: translateY(-30px);
-    }
-  }
+.content {
+  min-height: 60vh; // TODO remove after creatives/about are done
 }
 
 // large
 @media screen and (min-width: 1200px) {
   .content {
-    margin-top: 130px;
-    min-height: calc(100vh - 130px);
+    margin-top: 90px;
   }
 }
 
 // medium
 @media screen and (max-width: 1199px) {
   .content {
-    margin: 100px 60px 30px 60px;
-    min-height: calc(100vh - 100px);
-  }
-  .socialAnimation {
-    display: none;
-  }
-}
-
-// small
-@media screen and (max-width: 991px) {
-  .content {
-    margin: 100px 0 0 0;
-    min-height: calc(100vh - 100px - 60px);
-  }
-  .social {
-    margin: 5px;
-    position: static;
-  }
-  .socialIcon {
-    display: inline-block !important;
-    margin: 10px;
+    margin-top: 70px;
   }
 }
 
 // extra small
 @media screen and (max-width: 767px) {
   .content {
-    margin-top: 90px;
-    min-height: calc(100vh - 90px - 60px);
+    margin-top: 60px;
   }
 }
