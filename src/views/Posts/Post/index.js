@@ -43,8 +43,8 @@ export class PostView extends Component {
     return (
       <div className={`container-fluid ${styles.container}`}>
         <div className={'row center-xs middle-xs'}>
-          <div className='row center-xs col-xs-12 col-lg-8'>
-            <div className={styles.content}>
+          <div className={`col-xs-12 col-lg-8 ${styles.content}`}>
+            <div>
               <h1 className={styles.title}>{post.title}</h1>
               <h3 className={styles.subTitle}>
                 <span style={{ fontSize: '1rem' }}>by </span>

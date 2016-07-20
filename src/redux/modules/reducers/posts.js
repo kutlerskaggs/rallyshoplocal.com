@@ -31,6 +31,13 @@ export function posts (state = defaultState, action) {
       ['blogs', 'podcasts'].forEach((type) => {
         let currentType = nextState.byType[type]
         forOwn(action.posts[type], (posts, category) => {
+          // remove html encoding from title
+          posts.forEach((post) => {
+            let title = document.createElement('textarea')
+            title.innerHTML = post.title
+            post.title = title.value
+          })
+
           let currentPosts = currentType[category].posts
           currentPosts = currentPosts.concat(posts)
           currentPosts = uniqBy(currentPosts, (post) => post.ID)

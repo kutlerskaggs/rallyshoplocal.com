@@ -24,7 +24,7 @@ export const getMagazines = () => {
         let image = `${basePath}/${data.Key}`
         let edition = data.Key.split('/').pop().split('.')[0]
         let src = `${basePath}/${magazinesPath}/${edition}/index.html`
-        let title = (edition[0].toUpperCase() + edition.slice(1)).replace('-', ' ')
+        let title = edition.split('-').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
         return { id: index, image, src, title }
       }
       // get files, sort desc, map to objects
